@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f3f1ec">
+<title>Lokesh Labs · Benchmark Operations</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="shell">
+<nav class="nav">
+  <div class="brand"><span class="mark"></span><span class="text">LOKESH LABS<small>Benchmark Operations</small></span></div>
+  <div class="nav-right"><span class="live-dot" id="liveDot"></span><span class="copy" id="freshness">Connecting to pipeline…</span></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-main">
+    <div class="kicker">Autonomous benchmark factory</div>
+    <h1>Watch every task <span>move.</span></h1>
+    <p class="hero-copy">A live view of creation, execution, strong-agent difficulty testing, repair, retesting and final acceptance. Every card is backed by the benchmark repository—not a separate status database.</p>
+    <div class="hero-row">
+      <button class="primary" id="jumpBoard">View running tasks →</button>
+      <button class="ghost" id="manualRefresh">↻ Refresh pipeline</button>
+    </div>
+  </div>
+  <aside class="hero-side">
+    <div class="side-title"><b>Benchmark completion</b><span id="version">V1.0</span></div>
+    <div class="ring-wrap">
+      <div class="ring" id="ring"><strong><span id="acceptedRing">0</span><small>/100</small></strong></div>
+      <div>
+        <div class="ring-note"><span>Hard accepted</span><b id="hardAccepted">0</b></div>
+        <div class="ring-note"><span>Medium accepted</span><b id="mediumAccepted">0</b></div>
+        <div class="ring-note"><span>Remaining</span><b id="remaining">100</b></div>
+      </div>
+    </div>
+    <div class="next-worker"><div><span>Scheduled worker</span><b id="nextWorker">Calculating…</b></div><strong id="nextWorkerTime">—</strong></div>
+  </aside>
+</section>
+
+<section class="metrics">
+  <div class="metric emphasis"><div class="n" id="candidateCount">—</div><div class="l">Candidates in factory</div></div>
+  <div class="metric"><div class="n" id="executingCount">—</div><div class="l">Executing</div></div>
+  <div class="metric"><div class="n" id="strongCount">—</div><div class="l">Strong-agent stage</div></div>
+  <div class="metric"><div class="n" id="repairCount">—</div><div class="l">Repairing</div></div>
+  <div class="metric"><div class="n" id="readyCount">—</div><div class="l">Ready to finalize</div></div>
+  <div class="metric"><div class="n" id="infraCount">—</div><div class="l">Infrastructure errors</div></div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Agent production line</h2><p>The five workers are staggered through each hour so tasks naturally advance through the factory.</p></div><span style="font-size:11px;color:var(--muted)">IST schedule</span></div>
+  <div class="agent-flow" id="agentFlow"></div>
+</section>
+
+<section class="section" id="pipelineBoard">
+  <div class="section-head"><div><h2>Live task pipeline</h2><p>Tap any task to inspect all 17 validation checks and its current failure/repair state.</p></div><span id="visibleCount" style="font-size:11px;color:var(--muted)">—</span></div>
+  <div class="toolbar">
+    <input id="search" placeholder="Search task ID, title, domain or archetype">
+    <select id="stageFilter"><option value="">All stages</option></select>
+    <select id="domainFilter"><option value="">All domains</option></select>
+    <select id="difficultyFilter"><option value="">All difficulties</option><option>Hard</option><option>Medium</option><option>Unclassified</option></select>
+    <button class="refresh" id="clearFilters">Clear</button>
+  </div>
+  <div class="board-scroll"><div class="board" id="board"></div></div>
+</section>
+
+<div class="bottom-grid">
+  <section class="section" style="margin-top:0"><div class="section-head"><div><h2>Factory activity</h2><p>Latest creator, executor, repair and audit transitions.</p></div></div><div class="activity-list" id="activity"></div></section>
+  <section class="section" style="margin-top:0"><div class="section-head"><div><h2>Domain coverage</h2><p>Candidate distribution across the six benchmark domains.</p></div></div><div class="domain-bars" id="domainBars"></div></section>
+</div>
+</div>
+
+<div class="backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"><div class="drawer-inner" id="drawerContent"></div></aside>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
