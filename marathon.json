@@ -1,11 +1,11 @@
 {
-  "batch_id":"marathon-01","status":"RUNNING","batch_size":10,"current_task":"llb-aiml-build-001","current_gate":"RETEST_ENV_BUILD_NOP_ORACLE","completed":0,"accepted":0,"repairing":1,"retired":0,"blocked":0,
+  "batch_id":"marathon-01","status":"RUNNING","batch_size":10,"current_task":"llb-aiml-build-001","current_gate":"DIFFICULTY_REASSESSMENT","completed":0,"accepted":0,"repairing":3,"retired":0,"blocked":0,
   "tasks":["llb-aiml-build-001","llb-aiml-configure-001","llb-aiml-integrate-001","llb-aiml-investigate-001","llb-aiml-optimize-001","llb-aiml-recover-001","llb-data-build-001","llb-data-configure-001","llb-data-investigate-001","llb-data-optimize-001"],
   "task_status":{
-    "llb-aiml-build-001":{"state":"RETESTING","gate":"ENV_BUILD/NOP/ORACLE","result":"Checker runtime layout repaired; fresh execution started. Independent first-pass solution also flagged Hard difficulty for reassessment."},
-    "llb-aiml-configure-001":{"state":"RETESTING","gate":"ENV_BUILD/NOP/ORACLE","result":"Included in fresh runtime-layout retest"},
-    "llb-aiml-integrate-001":{"state":"RETESTING","gate":"ENV_BUILD/NOP/ORACLE","result":"Included in fresh runtime-layout retest"},
-    "llb-aiml-investigate-001":{"state":"RETESTING","gate":"ENV_BUILD/NOP/ORACLE","result":"Included in fresh runtime-layout retest"},
+    "llb-aiml-build-001":{"state":"REPAIRING","gate":"STRUCTURAL_ESS/DIFFICULTY","result":"ENV_BUILD PASS; semantic NOP PASS; Oracle PASS x2; verifier integrity PASS. Independent first-pass solved too shallowly for claimed Hard; difficulty strengthening/reclassification required."},
+    "llb-aiml-configure-001":{"state":"REPAIRING","gate":"NOP","result":"ENV_BUILD PASS; Oracle PASS x2; verifier integrity PASS; NOP FAIL because baseline task already satisfies current verifier. Verifier/task semantics require repair."},
+    "llb-aiml-integrate-001":{"state":"REPAIRING","gate":"ORACLE/PRIVATE_ASSETS","result":"ENV_BUILD PASS; semantic NOP PASS; Oracle FAIL because referenced hidden evaluator/reference asset is absent from package. Repair required; no difficulty inference."},
+    "llb-aiml-investigate-001":{"state":"REPAIRING","gate":"ORACLE/RUNTIME_PATHS","result":"ENV_BUILD PASS; NOP nonzero but checker uses absolute paths not present in canonical runtime; Oracle FAIL on missing /solution path. Runtime/task path contract repair required."},
     "llb-aiml-optimize-001":{"state":"QUEUED","gate":null,"result":null},"llb-aiml-recover-001":{"state":"QUEUED","gate":null,"result":null},"llb-data-build-001":{"state":"QUEUED","gate":null,"result":null},"llb-data-configure-001":{"state":"QUEUED","gate":null,"result":null},"llb-data-investigate-001":{"state":"QUEUED","gate":null,"result":null},"llb-data-optimize-001":{"state":"QUEUED","gate":null,"result":null}
-  },"updated_at":"2026-09-24T04:46:30+05:30"
+  },"updated_at":"2026-09-24T04:52:00+05:30"
 }
