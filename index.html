@@ -47,6 +47,19 @@
   <div class="metric"><div class="n" id="infraCount">—</div><div class="l">Infrastructure errors</div></div>
 </section>
 
+<section class="section marathon-section">
+  <div class="section-head"><div><h2>Marathon Batch</h2><p>Sequential end-to-end validation. The site updates after every pipeline transition while the batch is running.</p></div><span id="batchStatus" class="batch-state">QUEUED</span></div>
+  <div class="marathon-grid">
+    <div class="marathon-now"><span>Current task</span><b id="batchCurrentTask">Waiting to start</b><small id="batchCurrentGate">No active gate</small></div>
+    <div class="batch-stat"><b id="batchCompleted">0/10</b><span>Completed</span></div>
+    <div class="batch-stat"><b id="batchAccepted">0</b><span>Accepted</span></div>
+    <div class="batch-stat"><b id="batchRepairing">0</b><span>Repairing</span></div>
+    <div class="batch-stat"><b id="batchRetired">0</b><span>Retired / Blocked</span></div>
+  </div>
+  <div class="batch-track"><i id="batchProgress"></i></div>
+  <div class="batch-tasks" id="batchTasks"></div>
+</section>
+
 <section class="section">
   <div class="section-head"><div><h2>Agent production line</h2><p>The five workers are staggered through each hour so tasks naturally advance through the factory.</p></div><span style="font-size:11px;color:var(--muted)">IST schedule</span></div>
   <div class="agent-flow" id="agentFlow"></div>
