@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23T23:02:45.294Z",
+  "generated_at": "2026-09-23T23:36:42.376Z",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -183,6 +183,11 @@
     }
   ],
   "activity": [
+    {
+      "type": "TASK_START",
+      "title": "llb-aiml-build-001",
+      "detail": "Manual strict pipeline run started at Gate 01 · Package"
+    },
     {
       "type": "CREATOR",
       "title": "HOLD_CREATION_VALIDATION_BACKLOG",
@@ -5676,9 +5681,9 @@
     "mode": "sequential_end_to_end",
     "frozen_set_size": 36,
     "batch_size": 10,
-    "status": "QUEUED",
-    "current_task": null,
-    "current_gate": null,
+    "status": "RUNNING",
+    "current_task": "llb-aiml-build-001",
+    "current_gate": "PACKAGE",
     "completed": 0,
     "accepted": 0,
     "retired": 0,
@@ -5698,9 +5703,10 @@
     ],
     "task_status": {
       "llb-aiml-build-001": {
-        "state": "QUEUED",
-        "gate": null,
-        "result": null
+        "state": "RUNNING",
+        "gate": "PACKAGE",
+        "result": "RUNNING",
+        "updated_at": "2026-09-23T23:36:42.372Z"
       },
       "llb-aiml-configure-001": {
         "state": "QUEUED",
