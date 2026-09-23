@@ -81,9 +81,54 @@ main{max-width:1780px;margin:0 auto;padding:0 26px 50px}
 @media(max-width:1100px){.hero{grid-template-columns:1fr}.control-row{grid-template-columns:1fr 1fr}.searchbox{grid-column:1/-1}.lower-grid{grid-template-columns:1fr}.hero-stats{max-width:620px}}
 @media(max-width:700px){.topbar,main{padding-left:12px;padding-right:12px}.topbar{padding-top:12px}.brand small{display:none}.hero{padding-top:28px}.hero-stats{grid-template-columns:repeat(2,1fr)}.control-row{grid-template-columns:1fr}.searchbox{grid-column:auto}.pipeline-head{align-items:flex-start;flex-direction:column}.restart-rule{align-items:flex-start;flex-direction:column}.pipe-world{min-width:3300px}.task-row{grid-template-columns:1fr 90px}.task-domain,.task-state{display:none}.drawer-kpis{grid-template-columns:repeat(2,1fr)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* V2 machine identity */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background-image:
+linear-gradient(rgba(85,145,190,.025) 1px,transparent 1px),
+linear-gradient(90deg,rgba(85,145,190,.025) 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.72),transparent 78%);animation:gridDrift 18s linear infinite}
+@keyframes gridDrift{to{background-position:38px 38px}}
+.particle-field{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1}
+.particle-field i{position:absolute;width:2px;height:2px;border-radius:50%;background:#87dfff;opacity:.16;animation:particleFloat var(--dur) ease-in-out infinite alternate}
+@keyframes particleFloat{to{transform:translate3d(var(--dx),-42px,0);opacity:.48}}
+.scanline{position:fixed;left:0;right:0;top:-40px;height:80px;pointer-events:none;z-index:30;background:linear-gradient(to bottom,transparent,rgba(81,207,255,.025),transparent);animation:pageScan 9s linear infinite}
+@keyframes pageScan{to{transform:translateY(calc(100vh + 120px))}}
+.hero{grid-template-columns:minmax(0,1.06fr) minmax(470px,.94fr);align-items:center}
+.hero-copyblock{position:relative;z-index:2}.hero-copyblock:after{content:"";position:absolute;width:120px;height:1px;left:0;bottom:-18px;background:linear-gradient(90deg,var(--cyan),transparent);opacity:.7}
+.hero-signals{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.hero-signals span{display:flex;align-items:center;gap:7px;color:#7891aa;font:700 8.5px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.055em;border:1px solid rgba(61,94,122,.55);background:rgba(9,24,39,.48);border-radius:999px;padding:6px 9px}.hero-signals i{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 9px rgba(57,217,138,.65)}
+.hero-right{display:grid;gap:10px;min-width:0}
+.machine-scene{position:relative;height:270px;border:1px solid #26435d;border-radius:24px;overflow:hidden;background:
+radial-gradient(circle at 52% 48%,rgba(57,169,216,.15),transparent 19%),
+radial-gradient(circle at 52% 48%,rgba(101,91,255,.08),transparent 38%),
+linear-gradient(145deg,rgba(15,36,57,.93),rgba(7,20,34,.94));box-shadow:inset 0 0 60px rgba(0,0,0,.28),0 25px 60px rgba(0,0,0,.18);perspective:900px;transform-style:preserve-3d}
+.machine-scene:before,.machine-scene:after{content:"";position:absolute;inset:14px;border:1px solid rgba(62,98,128,.25);border-radius:17px;pointer-events:none}.machine-scene:after{inset:28px;border-style:dashed;opacity:.25}
+.scene-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(91,145,180,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(91,145,180,.045) 1px,transparent 1px);background-size:23px 23px;transform:rotateX(58deg) scale(1.5) translateY(70px);transform-origin:center bottom;opacity:.75;animation:sceneGrid 7s linear infinite}
+@keyframes sceneGrid{to{background-position:0 23px}}
+.reactor{position:absolute;left:50%;top:49%;width:130px;height:130px;transform:translate(-50%,-50%);display:grid;place-items:center;filter:drop-shadow(0 0 25px rgba(72,215,255,.12))}
+.reactor-ring{position:absolute;border-radius:50%;border:1px solid rgba(91,205,255,.45)}.r1{inset:0;border-style:dashed;animation:spin 10s linear infinite}.r2{inset:17px;border-color:rgba(154,124,255,.48);border-width:2px;animation:spinRev 7s linear infinite}.r3{inset:34px;border-color:rgba(72,215,255,.25);box-shadow:inset 0 0 20px rgba(72,215,255,.1);animation:ringBreathe 2.6s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes spinRev{to{transform:rotate(-360deg)}}@keyframes ringBreathe{50%{transform:scale(1.12);opacity:.5}}
+.reactor-core{width:49px;height:49px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#14344e,#0a1d30);border:1px solid #3d6c8d;box-shadow:0 0 28px rgba(72,215,255,.18),inset 0 0 15px rgba(72,215,255,.06);transform:rotate(45deg);animation:coreHover 3s ease-in-out infinite}.reactor-core b,.reactor-core small{transform:rotate(-45deg);position:absolute}.reactor-core b{font-size:15px;letter-spacing:-.06em}.reactor-core small{font-size:5px;color:var(--cyan);margin-top:23px;letter-spacing:.1em}@keyframes coreHover{50%{transform:rotate(45deg) translate(-3px,-3px);box-shadow:0 0 40px rgba(72,215,255,.25)}}
+.orbit{position:absolute;left:50%;top:49%;border:1px solid rgba(79,125,160,.2);border-radius:50%;transform:translate(-50%,-50%) rotateX(67deg);transform-style:preserve-3d}.orbit-a{width:230px;height:230px;animation:orbitSpin 13s linear infinite}.orbit-b{width:300px;height:300px;animation:orbitSpinRev 18s linear infinite}.orbit i{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}.orbit-a i:nth-child(1){left:10%;top:25%}.orbit-a i:nth-child(2){right:6%;top:48%;background:var(--violet);box-shadow:0 0 14px var(--violet)}.orbit-a i:nth-child(3){left:42%;bottom:0;background:var(--green);box-shadow:0 0 12px var(--green)}.orbit-b i:nth-child(1){left:2%;top:53%;width:5px;height:5px}.orbit-b i:nth-child(2){right:19%;bottom:8%;width:5px;height:5px;background:var(--amber);box-shadow:0 0 12px var(--amber)}
+@keyframes orbitSpin{to{transform:translate(-50%,-50%) rotateX(67deg) rotateZ(360deg)}}@keyframes orbitSpinRev{to{transform:translate(-50%,-50%) rotateX(67deg) rotateZ(-360deg)}}
+.scan-arm{position:absolute;left:50%;top:49%;width:144px;height:2px;transform-origin:left center;background:linear-gradient(90deg,rgba(72,215,255,.8),transparent);animation:scanRotate 4.2s linear infinite}.scan-arm span{position:absolute;left:-4px;top:-4px;width:10px;height:10px;border-radius:50%;border:1px solid #5cdfff;background:#10283c;box-shadow:0 0 14px rgba(72,215,255,.5)}@keyframes scanRotate{to{transform:rotate(360deg)}}
+.machine-chip{position:absolute;min-width:82px;border:1px solid #2f506b;background:rgba(8,24,39,.86);backdrop-filter:blur(8px);border-radius:12px;padding:9px 10px 8px 23px;box-shadow:0 12px 25px rgba(0,0,0,.2);animation:chipFloat 3.5s ease-in-out infinite}.machine-chip i{position:absolute;left:10px;top:13px;width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 9px rgba(57,217,138,.7)}.machine-chip b{display:block;font:800 9px ui-monospace,monospace;letter-spacing:.08em}.machine-chip small{display:block;color:#668198;font:700 7px ui-monospace,monospace;margin-top:2px}.chip-a{left:22px;top:25px}.chip-b{right:22px;top:38px;animation-delay:-1s}.chip-c{right:34px;bottom:27px;animation-delay:-2s}.chip-c i{background:var(--cyan);box-shadow:0 0 9px rgba(72,215,255,.7)}@keyframes chipFloat{50%{transform:translateY(-6px)}}
+.data-rail{position:absolute;display:flex;gap:5px}.data-rail i{display:block;width:15px;height:3px;border-radius:99px;background:#335c78;animation:railBlink 1.8s infinite}.rail-a{left:26px;bottom:32px}.rail-b{right:28px;top:104px;transform:rotate(90deg)}.data-rail i:nth-child(2){animation-delay:.18s}.data-rail i:nth-child(3){animation-delay:.36s}.data-rail i:nth-child(4){animation-delay:.54s}@keyframes railBlink{50%{background:var(--cyan);box-shadow:0 0 10px rgba(72,215,255,.55)}}
+.hero-stats div{position:relative;overflow:hidden}.hero-stats div:after{content:"";position:absolute;left:-60%;top:0;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);transform:skewX(-18deg);animation:statSweep 7s ease-in-out infinite}.hero-stats div:nth-child(2):after{animation-delay:1.2s}.hero-stats div:nth-child(3):after{animation-delay:2.4s}.hero-stats div:nth-child(4):after{animation-delay:3.6s}@keyframes statSweep{0%,70%{left:-60%}100%{left:130%}}
+.pipeline-shell{position:relative}.pipeline-shell:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 0 44%,rgba(72,215,255,.018) 48%,transparent 52%);background-size:280px 100%;animation:shellSweep 8s linear infinite}@keyframes shellSweep{to{background-position:280px 0}}
+.main-pipe{height:42px;top:211px}.main-pipe:before,.main-pipe:after{content:"";position:absolute;top:4px;bottom:4px;width:5px;border-left:1px solid rgba(145,198,230,.16);border-right:1px solid rgba(0,0,0,.28);z-index:4}.main-pipe:before{left:22%}.main-pipe:after{left:67%}
+.pipe-core{top:14px;height:12px}
+.packet-stream{position:absolute;inset:0;overflow:hidden}.pipe-packet{position:absolute;top:9px;left:-28px;width:22px;height:22px;border:1px solid #77dfff;border-radius:7px;background:linear-gradient(135deg,rgba(72,215,255,.26),rgba(95,135,255,.12));box-shadow:0 0 14px rgba(72,215,255,.22),inset 0 0 9px rgba(72,215,255,.12);animation:packetTravel 14s linear infinite;z-index:3}.pipe-packet:before{content:"";position:absolute;inset:6px;border-radius:2px;background:#71e2ff;box-shadow:0 0 7px #71e2ff}.p2{animation-delay:-2.2s}.p3{animation-delay:-4.4s}.p4{animation-delay:-6.6s}.p5{animation-delay:-8.8s}.p6{animation-delay:-11s}@keyframes packetTravel{from{left:-30px;transform:rotate(0)}to{left:calc(100% + 30px);transform:rotate(360deg)}}
+.pipe-scan{position:absolute;top:0;bottom:0;width:90px;left:-100px;background:linear-gradient(90deg,transparent,rgba(115,231,255,.16),transparent);animation:pipeScan 5.5s linear infinite;z-index:2}@keyframes pipeScan{to{left:calc(100% + 100px)}}
+.station-valve:after{content:"";position:absolute;inset:-11px;border-radius:50%;border:1px dashed rgba(102,147,181,.18);animation:spin 9s linear infinite}.station.has-active .station-valve:after{border-color:rgba(72,215,255,.55);animation-duration:3s}.station.has-repair .station-valve:after{border-color:rgba(255,100,113,.45);animation-duration:4s}
+.station-stem{position:relative}.station-stem:after{content:"";position:absolute;left:-5px;bottom:-7px;width:10px;height:10px;border-radius:3px;background:#132a3e;border:1px solid #39546d;transform:rotate(45deg)}
+.task-capsule.running{animation:capsuleIn .35s ease both,activeCapsule 2.2s ease-in-out infinite}@keyframes activeCapsule{50%{box-shadow:0 8px 25px rgba(0,0,0,.25),0 0 17px rgba(72,215,255,.14)}}
+@media(max-width:1100px){.hero{grid-template-columns:1fr}.machine-scene{height:245px}.hero-right{max-width:760px;width:100%}}
+@media(max-width:700px){.machine-scene{height:215px;border-radius:18px}.orbit-b{width:245px;height:245px}.orbit-a{width:190px;height:190px}.reactor{width:112px;height:112px}.chip-c{right:18px}.chip-b{right:14px}.chip-a{left:14px}.hero-signals{gap:5px}.hero-signals span{font-size:7.5px;padding:5px 7px}.machine-chip{transform:scale(.9)}}
+
 </style>
 </head>
 <body>
+<div class="particle-field" id="particleField"></div>
+<div class="scanline"></div>
 <div class="ambient ambient-a"></div>
 <div class="ambient ambient-b"></div>
 
@@ -100,16 +145,40 @@ main{max-width:1780px;margin:0 auto;padding:0 26px 50px}
 
 <main>
   <section class="hero">
-    <div>
+    <div class="hero-copyblock">
       <div class="eyebrow">36 TASKS · STRICT RESTART PIPELINE</div>
       <h1>Watch every task travel through the pipe.</h1>
       <p>Each task must clear every gate on one clean final version. A failure sends it to repair and back to Gate 1 — no stale passes, no skipped reruns.</p>
+      <div class="hero-signals">
+        <span><i></i> deterministic verification</span>
+        <span><i></i> isolated strong-agent run</span>
+        <span><i></i> full restart after repair</span>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div><b id="acceptedCount">0</b><span>Accepted</span></div>
-      <div><b id="activeCount">0</b><span>In pipeline</span></div>
-      <div><b id="repairCount">0</b><span>Repairing</span></div>
-      <div><b id="remainingCount">36</b><span>Remaining</span></div>
+    <div class="hero-right">
+      <div class="machine-scene" id="machineScene" aria-hidden="true">
+        <div class="scene-grid"></div>
+        <div class="orbit orbit-a"><i></i><i></i><i></i></div>
+        <div class="orbit orbit-b"><i></i><i></i></div>
+        <div class="reactor">
+          <div class="reactor-ring r1"></div>
+          <div class="reactor-ring r2"></div>
+          <div class="reactor-ring r3"></div>
+          <div class="reactor-core"><b>LL</b><small>LIVE</small></div>
+        </div>
+        <div class="scan-arm"><span></span></div>
+        <div class="machine-chip chip-a"><i></i><b>NOP</b><small>0%</small></div>
+        <div class="machine-chip chip-b"><i></i><b>ORACLE</b><small>100%</small></div>
+        <div class="machine-chip chip-c"><i></i><b>AGENT</b><small>ISOLATED</small></div>
+        <div class="data-rail rail-a"><i></i><i></i><i></i><i></i></div>
+        <div class="data-rail rail-b"><i></i><i></i><i></i></div>
+      </div>
+      <div class="hero-stats">
+        <div><b id="acceptedCount">0</b><span>Accepted</span></div>
+        <div><b id="activeCount">0</b><span>In pipeline</span></div>
+        <div><b id="repairCount">0</b><span>Repairing</span></div>
+        <div><b id="remainingCount">36</b><span>Remaining</span></div>
+      </div>
     </div>
   </section>
 
@@ -159,6 +228,11 @@ main{max-width:1780px;margin:0 auto;padding:0 26px 50px}
         <div class="main-pipe">
           <div class="pipe-core"></div>
           <div class="flow-lights"></div>
+          <div class="packet-stream">
+            <i class="pipe-packet p1"></i><i class="pipe-packet p2"></i><i class="pipe-packet p3"></i>
+            <i class="pipe-packet p4"></i><i class="pipe-packet p5"></i><i class="pipe-packet p6"></i>
+          </div>
+          <div class="pipe-scan"></div>
         </div>
         <div class="stations" id="stations"></div>
       </div>
@@ -394,6 +468,31 @@ el("drawerClose").onclick=()=>{el("drawer").classList.remove("show");el("backdro
 el("backdrop").onclick=el("drawerClose").onclick;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")el("drawerClose").click()});
 load(true);setInterval(()=>load(true),15000);
+})();
+</script>
+<script>
+(function(){
+  const field=document.getElementById("particleField");
+  if(field&&!field.childElementCount){
+    for(let i=0;i<28;i++){
+      const p=document.createElement("i");
+      const x=(i*37+13)%101,y=(i*61+7)%97;
+      p.style.left=x+"%";p.style.top=y+"%";
+      p.style.setProperty("--dur",(4.5+(i%7)*.7)+"s");
+      p.style.setProperty("--dx",((i%2?1:-1)*(8+(i%5)*5))+"px");
+      p.style.animationDelay=(-(i%9)*.63)+"s";
+      field.appendChild(p);
+    }
+  }
+  const scene=document.getElementById("machineScene");
+  if(scene&&window.matchMedia("(pointer:fine)").matches){
+    scene.addEventListener("pointermove",e=>{
+      const r=scene.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      scene.style.transform="perspective(900px) rotateX("+(-y*3.2)+"deg) rotateY("+(x*4.2)+"deg)";
+    });
+    scene.addEventListener("pointerleave",()=>scene.style.transform="");
+  }
 })();
 </script>
 </body>
