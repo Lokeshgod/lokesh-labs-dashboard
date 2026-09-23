@@ -1,0 +1,5658 @@
+{
+  "generated_at": "2026-09-23T22:45:02.007069+00:00",
+  "benchmark_version": "1.0",
+  "target_tasks": 100,
+  "counts": {
+    "unique_candidates": 36,
+    "accepted_total": 0,
+    "medium": 0,
+    "hard": 0,
+    "awaiting_execution_validation": 36,
+    "execution_validated": 0,
+    "needs_revision": 0,
+    "execution_infrastructure_error": 4,
+    "frozen_released": 0,
+    "provisional_medium": 3,
+    "provisional_hard": 33,
+    "too_easy": 0,
+    "suspicious_ess_0_3": 0,
+    "duplicates_near_duplicates": 0,
+    "accepted_total_live": 0,
+    "accepted_hard_live": 0,
+    "accepted_medium_live": 0,
+    "remaining_live": 100
+  },
+  "stage_counts": {
+    "CANDIDATE": 32,
+    "EXECUTING": 0,
+    "STRONG_AGENT": 0,
+    "REPAIRING": 4,
+    "RETESTING": 0,
+    "READY": 0,
+    "ACCEPTED_HARD": 0,
+    "ACCEPTED_MEDIUM": 0,
+    "BLOCKED": 0,
+    "RETIRED": 0
+  },
+  "domain_counts": {
+    "AI/ML Engineering": 6,
+    "Data & Databases": 6,
+    "Engineering & Simulation": 6,
+    "Scientific Computing & Optimization": 6,
+    "Software Engineering": 6,
+    "Systems & DevOps": 6
+  },
+  "difficulty_counts": {
+    "Hard": 29,
+    "Medium": 3,
+    "Unclassified": 4
+  },
+  "automations": [
+    {
+      "name": "Creator",
+      "minute": 0,
+      "role": "Create candidates",
+      "short": "CREATE"
+    },
+    {
+      "name": "Executor",
+      "minute": 5,
+      "role": "Execution / solvability",
+      "short": "EXECUTE"
+    },
+    {
+      "name": "Strong Agent",
+      "minute": 15,
+      "role": "Independent difficulty run",
+      "short": "DIFFICULTY"
+    },
+    {
+      "name": "Repairer",
+      "minute": 35,
+      "role": "Repair / revalidate / finalize",
+      "short": "REPAIR"
+    },
+    {
+      "name": "Audit",
+      "minute": 55,
+      "role": "Independent oversight",
+      "short": "AUDIT"
+    }
+  ],
+  "pipeline_steps": [
+    {
+      "key": "PACKAGE",
+      "label": "Package"
+    },
+    {
+      "key": "SCHEMA",
+      "label": "Schema"
+    },
+    {
+      "key": "STATIC",
+      "label": "Static"
+    },
+    {
+      "key": "NOVELTY_1",
+      "label": "Novelty I"
+    },
+    {
+      "key": "BUILD",
+      "label": "Environment Build"
+    },
+    {
+      "key": "SECURITY",
+      "label": "Security / Leakage"
+    },
+    {
+      "key": "NOP",
+      "label": "NOP"
+    },
+    {
+      "key": "ORACLE",
+      "label": "Oracle"
+    },
+    {
+      "key": "VERIFIER",
+      "label": "Verifier Integrity"
+    },
+    {
+      "key": "ADVERSARIAL",
+      "label": "Adversarial"
+    },
+    {
+      "key": "QUALITY",
+      "label": "Quality"
+    },
+    {
+      "key": "FEASIBILITY",
+      "label": "Feasibility"
+    },
+    {
+      "key": "STRUCTURAL",
+      "label": "Structural + ESS"
+    },
+    {
+      "key": "PER_TEST",
+      "label": "Per-test Feasibility"
+    },
+    {
+      "key": "NOVELTY_2",
+      "label": "Novelty II"
+    },
+    {
+      "key": "RELEASE",
+      "label": "Release Integrity"
+    },
+    {
+      "key": "FREEZE",
+      "label": "Freeze"
+    }
+  ],
+  "last_creator_run": {
+    "decision": "HOLD_CREATION_VALIDATION_BACKLOG",
+    "created": 0,
+    "reason": "36 staged candidates and 0 accepted; all 36 are awaiting execution-backed validation, so another batch would increase validation debt without improving accepted progress. Resume creation after executor/repair/checker throughput materially reduces the backlog or establishes accepted conversions.",
+    "next_coverage_priority": {
+      "archetypes": [
+        "Build",
+        "Investigate"
+      ],
+      "note": "When creation resumes, prefer underrepresented Build/Investigate cells."
+    }
+  },
+  "last_execution": {
+    "report": "reports/execution/2026-09-24T0352+0530-batch-002-ingested.md",
+    "queue_commit": "8304adc88a823048b332dbb019932a6477ae1d88",
+    "workflow_run": 35922411757,
+    "selected": [
+      "llb-aiml-build-001",
+      "llb-aiml-configure-001",
+      "llb-aiml-integrate-001",
+      "llb-aiml-investigate-001"
+    ],
+    "core_gate_passed": 0,
+    "true_needs_revision": 0,
+    "infrastructure_errors": 4,
+    "workflow_status": "completed_success",
+    "evidence_artifact": "benchmark-execution-results",
+    "artifact_id": 10777293563,
+    "evidence_persistence": "ingested",
+    "diagnosis": "All four images build, but NOP and Oracle execute against an invalid checker runtime layout that does not preserve canonical environment/tests/solution paths. Raw nonzero NOP results are invalid infrastructure failures, not semantic NOP passes. Routed to Repair with CHECKER_CANONICAL_RUNTIME_LAYOUT. Independent participant evidence remains pending."
+  },
+  "last_audit": {
+    "report": "reports/audits/2026-09-24T0325+0530-audit-007.md",
+    "decision": "NO_PROMOTIONS_CORRECTED_EXECUTION_ARTIFACT_NOT_YET_INGESTED",
+    "reviewed": 36,
+    "newly_reviewed": 0,
+    "promoted": 0,
+    "tasks_added_since_previous_audit": 0,
+    "remaining_to_target": 100
+  },
+  "repair_required": [
+    {
+      "scope": "execution_infrastructure",
+      "failure_code": "CHECKER_CANONICAL_RUNTIME_LAYOUT",
+      "affected_tasks": [
+        "llb-aiml-build-001",
+        "llb-aiml-configure-001",
+        "llb-aiml-integrate-001",
+        "llb-aiml-investigate-001"
+      ],
+      "evidence": "reports/execution/2026-09-24T0352+0530-batch-002-ingested.md"
+    }
+  ],
+  "activity": [
+    {
+      "type": "CREATOR",
+      "title": "HOLD_CREATION_VALIDATION_BACKLOG",
+      "detail": "36 staged candidates and 0 accepted; all 36 are awaiting execution-backed validation, so another batch would increase validation debt without improving accepted progress. Resume creation after executor/repair/checker throughput materially reduces the backlog or establishes accepted conversions."
+    },
+    {
+      "type": "EXECUTOR",
+      "title": "4 task(s) in latest execution batch",
+      "detail": "All four images build, but NOP and Oracle execute against an invalid checker runtime layout that does not preserve canonical environment/tests/solution paths. Raw nonzero NOP results are invalid infrastructure failures, not semantic NOP passes. Routed to Repair with CHECKER_CANONICAL_RUNTIME_LAYOUT. Independent participant evidence remains pending.",
+      "tasks": [
+        "llb-aiml-build-001",
+        "llb-aiml-configure-001",
+        "llb-aiml-integrate-001",
+        "llb-aiml-investigate-001"
+      ]
+    },
+    {
+      "type": "REPAIR",
+      "title": "CHECKER_CANONICAL_RUNTIME_LAYOUT",
+      "detail": "execution_infrastructure",
+      "tasks": [
+        "llb-aiml-build-001",
+        "llb-aiml-configure-001",
+        "llb-aiml-integrate-001",
+        "llb-aiml-investigate-001"
+      ]
+    },
+    {
+      "type": "AUDIT",
+      "title": "NO_PROMOTIONS_CORRECTED_EXECUTION_ARTIFACT_NOT_YET_INGESTED",
+      "detail": "reviewed=36 promoted=0"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "llb-aiml-build-001",
+      "title": "Build a Deterministic Capacity-Constrained MoE Router",
+      "domain": "AI/ML Engineering",
+      "archetype": "Build",
+      "subdomain": "mixture-of-experts routing",
+      "difficulty": "Hard",
+      "ess": 15,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "REPAIRING",
+      "lifecycle": "candidate",
+      "failure_codes": [
+        "CHECKER_CANONICAL_RUNTIME_LAYOUT"
+      ],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "DEFERRED_CHECKER"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "UNVERIFIED"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "UNVERIFIED"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "CANDIDATE_ONLY"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "NO"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 8,
+        "failed": 1,
+        "waiting": 8,
+        "total": 17,
+        "percent": 47
+      },
+      "gates": {
+        "package": "PASS",
+        "schema": "PASS",
+        "build": "DEFERRED_CHECKER",
+        "nop": "UNVERIFIED",
+        "oracle": "UNVERIFIED",
+        "quality": "PASS_STATIC",
+        "feasibility": "PROVISIONAL"
+      }
+    },
+    {
+      "id": "llb-aiml-configure-001",
+      "title": "Configure Drift-Aware Feature Freshness",
+      "domain": "AI/ML Engineering",
+      "archetype": "Configure",
+      "subdomain": "online feature serving",
+      "difficulty": "Hard",
+      "ess": 20,
+      "structural_score": 16,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "REPAIRING",
+      "lifecycle": "candidate",
+      "failure_codes": [
+        "CHECKER_CANONICAL_RUNTIME_LAYOUT"
+      ],
+      "unresolved_gates": [
+        "checker execution required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "INFO",
+          "raw": "planned"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "no"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 8,
+        "failed": 1,
+        "waiting": 7,
+        "total": 17,
+        "percent": 47
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "deferred",
+        "nop": "unverified",
+        "oracle": "unverified",
+        "quality": "pass",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-aiml-integrate-001",
+      "title": "Integrate Exact Speculative Decoding",
+      "domain": "AI/ML Engineering",
+      "archetype": "Integrate",
+      "subdomain": "LLM inference algorithms",
+      "difficulty": "Hard",
+      "ess": 10,
+      "structural_score": 19,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "REPAIRING",
+      "lifecycle": "candidate",
+      "failure_codes": [
+        "CHECKER_CANONICAL_RUNTIME_LAYOUT"
+      ],
+      "unresolved_gates": [
+        "checker execution required",
+        "statistical verifier calibration required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 1,
+        "failed": 0,
+        "waiting": 16,
+        "total": 17,
+        "percent": 6
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-aiml-investigate-001",
+      "title": "Diagnose Delayed-Label Calibration Drift",
+      "domain": "AI/ML Engineering",
+      "archetype": "Investigate",
+      "subdomain": "online calibration/event-time semantics",
+      "difficulty": "Hard",
+      "ess": 20,
+      "structural_score": 16,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "REPAIRING",
+      "lifecycle": "candidate",
+      "failure_codes": [
+        "CHECKER_CANONICAL_RUNTIME_LAYOUT"
+      ],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker",
+        "broader adversarial test expansion recommended"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass_by_structure"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": "pass_provisional"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "pass_by_comparison"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "not_run"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": "candidate_only"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 7,
+        "failed": 0,
+        "waiting": 10,
+        "total": 17,
+        "percent": 41
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "deferred",
+        "nop": "deferred",
+        "oracle": "deferred",
+        "quality": "pass_provisional",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-aiml-optimize-001",
+      "title": "Optimize Bounded-Latency Dynamic Batching",
+      "domain": "AI/ML Engineering",
+      "archetype": "Optimize",
+      "subdomain": "online inference serving",
+      "difficulty": "Hard",
+      "ess": 14,
+      "structural_score": 18,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "checker execution required",
+        "independent hidden trace calibration required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 1,
+        "failed": 0,
+        "waiting": 16,
+        "total": 17,
+        "percent": 6
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-aiml-recover-001",
+      "title": "Recover a Resharded Training Checkpoint",
+      "domain": "AI/ML Engineering",
+      "archetype": "Recover",
+      "subdomain": "distributed checkpoint state reconstruction",
+      "difficulty": "Hard",
+      "ess": 14,
+      "structural_score": 18,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "static_pass"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 2,
+        "failed": 0,
+        "waiting": 15,
+        "total": 17,
+        "percent": 12
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": "pending_checker",
+        "nop": "pending_checker",
+        "oracle": "pending_checker",
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-data-build-001",
+      "title": "Build a Bitemporal Entitlement Ledger",
+      "domain": "Data & Databases",
+      "archetype": "Build",
+      "subdomain": "bitemporal relational modeling",
+      "difficulty": "Hard",
+      "ess": 18,
+      "structural_score": 16,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "static_pass"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 2,
+        "failed": 0,
+        "waiting": 15,
+        "total": 17,
+        "percent": 12
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": "pending_checker",
+        "nop": "pending_checker",
+        "oracle": "pending_checker",
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-data-configure-001",
+      "title": "Configure Serializable Cross-Region Ledger Writes",
+      "domain": "Data & Databases",
+      "archetype": "Configure",
+      "subdomain": "distributed SQL transaction routing",
+      "difficulty": "Hard",
+      "ess": 19,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "checker execution required",
+        "fault-schedule verifier expansion required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 1,
+        "failed": 0,
+        "waiting": 16,
+        "total": 17,
+        "percent": 6
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-data-investigate-001",
+      "title": "Investigate a Temporal CDC Divergence",
+      "domain": "Data & Databases",
+      "archetype": "Investigate",
+      "subdomain": "change data capture",
+      "difficulty": "Hard",
+      "ess": 18,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Experimentation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "checker execution required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "INFO",
+          "raw": "planned"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "no"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 8,
+        "failed": 1,
+        "waiting": 7,
+        "total": 17,
+        "percent": 47
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "deferred",
+        "nop": "unverified",
+        "oracle": "unverified",
+        "quality": "pass",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-data-optimize-001",
+      "title": "Optimize a Skewed Interval Join Without Changing Semantics",
+      "domain": "Data & Databases",
+      "archetype": "Optimize",
+      "subdomain": "query execution and temporal joins",
+      "difficulty": "Hard",
+      "ess": 19,
+      "structural_score": 16,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "SQLite runtime/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "DEFERRED_CHECKER"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "UNVERIFIED"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "UNVERIFIED"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "CANDIDATE_ONLY"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "NO"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 8,
+        "failed": 1,
+        "waiting": 8,
+        "total": 17,
+        "percent": 47
+      },
+      "gates": {
+        "package": "PASS",
+        "schema": "PASS",
+        "build": "DEFERRED_CHECKER",
+        "nop": "UNVERIFIED",
+        "oracle": "UNVERIFIED",
+        "quality": "PASS_STATIC",
+        "feasibility": "PROVISIONAL"
+      }
+    },
+    {
+      "id": "llb-data-recover-001",
+      "title": "Recover the Event Ledger After a Faulty Migration",
+      "domain": "Data & Databases",
+      "archetype": "Recover",
+      "subdomain": "SQLite data repair",
+      "difficulty": "Hard",
+      "ess": 21,
+      "structural_score": 15,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "environment execution deferred to checker",
+        "verifier semantic coverage should be strengthened by checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "PENDING_CHECKER"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "PENDING_CHECKER"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "INFO",
+          "raw": "NEEDS_STRENGTHENING"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "PASS_BY_CONSTRUCTION_PENDING_EXECUTION"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "PASS",
+          "raw": "PASS_REVIEW"
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "CANDIDATE_ONLY"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "NO"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 8,
+        "failed": 1,
+        "waiting": 7,
+        "total": 17,
+        "percent": 47
+      },
+      "gates": {
+        "package": "PASS",
+        "schema": "PASS",
+        "build": null,
+        "nop": "PENDING_CHECKER",
+        "oracle": "PENDING_CHECKER",
+        "quality": "PASS",
+        "feasibility": "PASS_BY_CONSTRUCTION_PENDING_EXECUTION"
+      }
+    },
+    {
+      "id": "llb-data-repair-001",
+      "title": "Repair resumable dual-write schema migration",
+      "domain": "Data & Databases",
+      "archetype": "Repair",
+      "subdomain": "online schema migration",
+      "difficulty": "Unclassified",
+      "ess": 17,
+      "structural_score": null,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [
+        "EXECUTION_EVIDENCE_PENDING"
+      ],
+      "unresolved_gates": [
+        "environment_build",
+        "nop",
+        "oracle",
+        "verifier_integrity",
+        "adversarial",
+        "feasibility",
+        "per_test_feasibility",
+        "release_integrity"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 0,
+        "failed": 0,
+        "waiting": 17,
+        "total": 17,
+        "percent": 0
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-eng-build-001",
+      "title": "Build an Event-Accurate Thermal Relay Simulator",
+      "domain": "Engineering & Simulation",
+      "archetype": "Build",
+      "subdomain": "hybrid dynamical systems",
+      "difficulty": "Hard",
+      "ess": 16,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build and oracle/NOP execution deferred to checker",
+        "checker should expand exact-horizon and multi-cycle hidden coverage"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "PENDING_CHECKER"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "PENDING_CHECKER"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "PASS",
+          "raw": "PASS_STATIC_NEEDS_MORE_CASES"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "PASS_BY_CONSTRUCTION_PENDING_EXECUTION"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "PASS",
+          "raw": "PASS_REVIEW"
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "CANDIDATE_ONLY"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "NO"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 9,
+        "failed": 1,
+        "waiting": 7,
+        "total": 17,
+        "percent": 53
+      },
+      "gates": {
+        "package": "PASS",
+        "schema": "PASS",
+        "build": null,
+        "nop": "PENDING_CHECKER",
+        "oracle": "PENDING_CHECKER",
+        "quality": "PASS",
+        "feasibility": "PASS_BY_CONSTRUCTION_PENDING_EXECUTION"
+      }
+    },
+    {
+      "id": "llb-eng-integrate-001",
+      "title": "Integrate Protection Coordination Across Microgrid Modes",
+      "domain": "Engineering & Simulation",
+      "archetype": "Integrate",
+      "subdomain": "power-system protection and inverter-dominated microgrids",
+      "difficulty": "Hard",
+      "ess": 15,
+      "structural_score": 18,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "checker execution required",
+        "hidden fault-set expansion required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 1,
+        "failed": 0,
+        "waiting": 16,
+        "total": 17,
+        "percent": 6
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-eng-investigate-001",
+      "title": "Diagnose Thermal Sensor Bias from Coupled Transients",
+      "domain": "Engineering & Simulation",
+      "archetype": "Investigate",
+      "subdomain": "thermal RC system identification",
+      "difficulty": "Hard",
+      "ess": 19,
+      "structural_score": 16,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Technical Reasoning",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "runtime NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "static_pass"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 2,
+        "failed": 0,
+        "waiting": 15,
+        "total": 17,
+        "percent": 12
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": "pending_checker",
+        "nop": "pending_checker",
+        "oracle": "pending_checker",
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-eng-optimize-001",
+      "title": "Optimize Coupled Coolant Network Operation",
+      "domain": "Engineering & Simulation",
+      "archetype": "Optimize",
+      "subdomain": "thermofluid network optimization",
+      "difficulty": "Hard",
+      "ess": 11,
+      "structural_score": 18,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "checker execution required",
+        "independent optimizer bound calibration required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 1,
+        "failed": 0,
+        "waiting": 16,
+        "total": 17,
+        "percent": 6
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-eng-recover-001",
+      "title": "Recover a Battery Pack State Estimator After Sensor Drift",
+      "domain": "Engineering & Simulation",
+      "archetype": "Recover",
+      "subdomain": "battery management systems",
+      "difficulty": "Hard",
+      "ess": 16,
+      "structural_score": 18,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass_by_metadata_comparison"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "INFO",
+          "raw": "needs_hidden_cycle_expansion"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": "provisional_pass"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "INFO",
+          "raw": "not_ready"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "no"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 6,
+        "failed": 1,
+        "waiting": 8,
+        "total": 17,
+        "percent": 35
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "unverified",
+        "nop": "unverified",
+        "oracle": "unverified",
+        "quality": "provisional",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-eng-repair-001",
+      "title": "Repair Dead-Time Compensation in a Three-Phase Inverter",
+      "domain": "Engineering & Simulation",
+      "archetype": "Repair",
+      "subdomain": "power electronics modulation",
+      "difficulty": "Hard",
+      "ess": 16,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "DEFERRED_CHECKER"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "UNVERIFIED"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "UNVERIFIED"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "CANDIDATE_ONLY"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "NO"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 8,
+        "failed": 1,
+        "waiting": 8,
+        "total": 17,
+        "percent": 47
+      },
+      "gates": {
+        "package": "PASS",
+        "schema": "PASS",
+        "build": "DEFERRED_CHECKER",
+        "nop": "UNVERIFIED",
+        "oracle": "UNVERIFIED",
+        "quality": "PASS_STATIC",
+        "feasibility": "PROVISIONAL"
+      }
+    },
+    {
+      "id": "llb-sci-configure-001",
+      "title": "Configure an Anisotropic Multigrid Solve",
+      "domain": "Scientific Computing & Optimization",
+      "archetype": "Configure",
+      "subdomain": "iterative linear solvers",
+      "difficulty": "Medium",
+      "ess": 34,
+      "structural_score": 13,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Technical Reasoning",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "runtime NOP/oracle and convergence execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "static_pass"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "pending_checker"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 2,
+        "failed": 0,
+        "waiting": 15,
+        "total": 17,
+        "percent": 12
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": "pending_checker",
+        "nop": "pending_checker",
+        "oracle": "pending_checker",
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-sci-integrate-001",
+      "title": "Integrate an Event-Driven Multirate Solver",
+      "domain": "Scientific Computing & Optimization",
+      "archetype": "Integrate",
+      "subdomain": "hybrid numerical integration",
+      "difficulty": "Hard",
+      "ess": 16,
+      "structural_score": 18,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "INFO",
+          "raw": "planned"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "no"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 8,
+        "failed": 1,
+        "waiting": 7,
+        "total": 17,
+        "percent": 47
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "deferred",
+        "nop": "unverified",
+        "oracle": "unverified",
+        "quality": "pass",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-sci-investigate-001",
+      "title": "Diagnose a Nonlinear Solver Branch Jump",
+      "domain": "Scientific Computing & Optimization",
+      "archetype": "Investigate",
+      "subdomain": "continuation methods",
+      "difficulty": "Hard",
+      "ess": 13,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Experimentation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "full hidden fold-family verifier and execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass_by_metadata_comparison"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "FAIL",
+          "raw": "blocked_incomplete_reference_implementation"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "INFO",
+          "raw": "needs_hidden_fold_family"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": "provisional_pass"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "INFO",
+          "raw": "not_ready"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "no"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 6,
+        "failed": 2,
+        "waiting": 7,
+        "total": 17,
+        "percent": 35
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "unverified",
+        "nop": "unverified",
+        "oracle": "blocked_incomplete_reference_implementation",
+        "quality": "provisional",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-sci-optimize-001",
+      "title": "Stabilize Residual-Replaced Conjugate Gradient",
+      "domain": "Scientific Computing & Optimization",
+      "archetype": "Optimize",
+      "subdomain": "iterative linear solvers",
+      "difficulty": "Hard",
+      "ess": 22,
+      "structural_score": 16,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container/NOP/oracle execution deferred to checker",
+        "adversarial budget probes provisional"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass_by_structure"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": "pass_provisional"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "pass_by_comparison"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "not_run"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": "candidate_only"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 7,
+        "failed": 0,
+        "waiting": 10,
+        "total": 17,
+        "percent": 41
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "deferred",
+        "nop": "deferred",
+        "oracle": "deferred",
+        "quality": "pass_provisional",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-sci-recover-001",
+      "title": "Recover Adaptive-Mesh Solver State",
+      "domain": "Scientific Computing & Optimization",
+      "archetype": "Recover",
+      "subdomain": "adaptive finite-volume checkpoint recovery",
+      "difficulty": "Hard",
+      "ess": 12,
+      "structural_score": 19,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "checker execution required",
+        "independent restart trajectory oracle required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 1,
+        "failed": 0,
+        "waiting": 16,
+        "total": 17,
+        "percent": 6
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-sci-repair-001",
+      "title": "Repair sparse KKT permutation and scaling pipeline",
+      "domain": "Scientific Computing & Optimization",
+      "archetype": "Repair",
+      "subdomain": "sparse numerical linear algebra",
+      "difficulty": "Unclassified",
+      "ess": 12,
+      "structural_score": null,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [
+        "EXECUTION_EVIDENCE_PENDING"
+      ],
+      "unresolved_gates": [
+        "environment_build",
+        "nop",
+        "oracle",
+        "verifier_integrity",
+        "adversarial",
+        "feasibility",
+        "per_test_feasibility",
+        "release_integrity"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 0,
+        "failed": 0,
+        "waiting": 17,
+        "total": 17,
+        "percent": 0
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-se-configure-001",
+      "title": "Configure a Multi-Tenant Feature Rollout Engine",
+      "domain": "Software Engineering",
+      "archetype": "Configure",
+      "subdomain": "feature delivery policy",
+      "difficulty": "Hard",
+      "ess": 18,
+      "structural_score": 16,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass_by_metadata_comparison"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "FAIL",
+          "raw": "blocked_partial_reference_implementation"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "INFO",
+          "raw": "needs_exclusion_and_precedence_expansion"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": "provisional_pass"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "INFO",
+          "raw": "not_ready"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "no"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 6,
+        "failed": 2,
+        "waiting": 7,
+        "total": 17,
+        "percent": 35
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "unverified",
+        "nop": "unverified",
+        "oracle": "blocked_partial_reference_implementation",
+        "quality": "provisional",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-se-integrate-001",
+      "title": "Integrate Ordered Retriable Webhook Delivery",
+      "domain": "Software Engineering",
+      "archetype": "Integrate",
+      "subdomain": "concurrent delivery/stateful retry",
+      "difficulty": "Hard",
+      "ess": 21,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [
+        "CREATOR_VERIFIER_COVERAGE_GAP_CONCURRENCY"
+      ],
+      "unresolved_gates": [
+        "container/NOP/oracle execution deferred to checker",
+        "blocked-sink independent-stream adversarial test must be added before promotion"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass_by_structure"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "INFO",
+          "raw": "needs_expansion"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "FAIL",
+          "raw": "blocked-sink cross-stream case unresolved"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "pass_by_comparison"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "not_run"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": "candidate_only"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 7,
+        "failed": 1,
+        "waiting": 8,
+        "total": 17,
+        "percent": 41
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "deferred",
+        "nop": "deferred",
+        "oracle": "deferred",
+        "quality": "provisional",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-se-optimize-001",
+      "title": "Optimize a Dependency-Aware Incremental Build Cache",
+      "domain": "Software Engineering",
+      "archetype": "Optimize",
+      "subdomain": "incremental build systems",
+      "difficulty": "Hard",
+      "ess": 17,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "DEFERRED_CHECKER"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "UNVERIFIED"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "UNVERIFIED"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "PROVISIONAL"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "CANDIDATE_ONLY"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "NO"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 8,
+        "failed": 1,
+        "waiting": 8,
+        "total": 17,
+        "percent": 47
+      },
+      "gates": {
+        "package": "PASS",
+        "schema": "PASS",
+        "build": "DEFERRED_CHECKER",
+        "nop": "UNVERIFIED",
+        "oracle": "UNVERIFIED",
+        "quality": "PASS_STATIC",
+        "feasibility": "PROVISIONAL"
+      }
+    },
+    {
+      "id": "llb-se-recover-001",
+      "title": "Recover Event-Sourced State After Schema Evolution",
+      "domain": "Software Engineering",
+      "archetype": "Recover",
+      "subdomain": "event sourcing and schema migration",
+      "difficulty": "Hard",
+      "ess": 18,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "checker execution required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 1,
+        "failed": 0,
+        "waiting": 16,
+        "total": 17,
+        "percent": 6
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-se-repair-001",
+      "title": "Repair the Lease-Aware Worker Registry",
+      "domain": "Software Engineering",
+      "archetype": "Repair",
+      "subdomain": "concurrency/state machines",
+      "difficulty": "Hard",
+      "ess": 18,
+      "structural_score": 16,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "environment build not executed in creator runtime",
+        "oracle/NOP execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "PENDING_CHECKER"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "PENDING_CHECKER"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "PASS_BY_CONSTRUCTION_PENDING_EXECUTION"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "PASS",
+          "raw": "PASS_REVIEW"
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "CANDIDATE_ONLY"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "NO"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 9,
+        "failed": 1,
+        "waiting": 7,
+        "total": 17,
+        "percent": 53
+      },
+      "gates": {
+        "package": "PASS",
+        "schema": "PASS",
+        "build": null,
+        "nop": "PENDING_CHECKER",
+        "oracle": "PENDING_CHECKER",
+        "quality": "PASS",
+        "feasibility": "PASS_BY_CONSTRUCTION_PENDING_EXECUTION"
+      }
+    },
+    {
+      "id": "llb-se-repair-002",
+      "title": "Repair hot-reload plugin lifetime corruption",
+      "domain": "Software Engineering",
+      "archetype": "Repair",
+      "subdomain": "runtime/plugin systems",
+      "difficulty": "Unclassified",
+      "ess": 14,
+      "structural_score": null,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [
+        "EXECUTION_EVIDENCE_PENDING"
+      ],
+      "unresolved_gates": [
+        "environment_build",
+        "nop",
+        "oracle",
+        "verifier_integrity",
+        "adversarial",
+        "feasibility",
+        "per_test_feasibility",
+        "release_integrity"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 0,
+        "failed": 0,
+        "waiting": 17,
+        "total": 17,
+        "percent": 0
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-sys-build-001",
+      "title": "Build Crash-Consistent Layered Snapshot Store",
+      "domain": "Systems & DevOps",
+      "archetype": "Build",
+      "subdomain": "storage systems and crash consistency",
+      "difficulty": "Hard",
+      "ess": 13,
+      "structural_score": 18,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "checker execution required",
+        "crash-matrix calibration required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 1,
+        "failed": 0,
+        "waiting": 16,
+        "total": 17,
+        "percent": 6
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    },
+    {
+      "id": "llb-sys-configure-001",
+      "title": "Configure a Crash-Safe Import Pipeline",
+      "domain": "Systems & DevOps",
+      "archetype": "Configure",
+      "subdomain": "systemd dependency semantics",
+      "difficulty": "Medium",
+      "ess": 39,
+      "structural_score": 12,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build and oracle/NOP execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "PENDING_CHECKER"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "PENDING_CHECKER"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "PASS",
+          "raw": "PASS_STATIC"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "PASS_BY_CONSTRUCTION_PENDING_EXECUTION"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "PASS",
+          "raw": "PASS_REVIEW"
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "CANDIDATE_ONLY"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "NO"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 9,
+        "failed": 1,
+        "waiting": 7,
+        "total": 17,
+        "percent": 53
+      },
+      "gates": {
+        "package": "PASS",
+        "schema": "PASS",
+        "build": null,
+        "nop": "PENDING_CHECKER",
+        "oracle": "PENDING_CHECKER",
+        "quality": "PASS",
+        "feasibility": "PASS_BY_CONSTRUCTION_PENDING_EXECUTION"
+      }
+    },
+    {
+      "id": "llb-sys-integrate-001",
+      "title": "Integrate Discovery and Health into Atomic Routes",
+      "domain": "Systems & DevOps",
+      "archetype": "Integrate",
+      "subdomain": "service discovery/reconciliation",
+      "difficulty": "Medium",
+      "ess": 38,
+      "structural_score": 12,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container/NOP/oracle execution deferred to checker",
+        "atomicity adversarial observation test recommended"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass_by_structure"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": "pass_provisional"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "pass_by_comparison"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": "not_run"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": "candidate_only"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 7,
+        "failed": 0,
+        "waiting": 10,
+        "total": 17,
+        "percent": 41
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "deferred",
+        "nop": "deferred",
+        "oracle": "deferred",
+        "quality": "pass_provisional",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-sys-optimize-001",
+      "title": "Optimize NUMA-Aware Queue Placement",
+      "domain": "Systems & DevOps",
+      "archetype": "Optimize",
+      "subdomain": "high-throughput packet processing",
+      "difficulty": "Hard",
+      "ess": 17,
+      "structural_score": 17,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "checker execution required"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "deferred"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "INFO",
+          "raw": "planned"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "no"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 8,
+        "failed": 1,
+        "waiting": 7,
+        "total": 17,
+        "percent": 47
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "deferred",
+        "nop": "unverified",
+        "oracle": "unverified",
+        "quality": "pass",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-sys-repair-001",
+      "title": "Repair a Split-Brain Lease Reconciler",
+      "domain": "Systems & DevOps",
+      "archetype": "Repair",
+      "subdomain": "distributed control planes",
+      "difficulty": "Hard",
+      "ess": 14,
+      "structural_score": 18,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Experimentation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [],
+      "unresolved_gates": [
+        "container build/NOP/oracle execution deferred to checker"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "PASS",
+          "raw": "pass"
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "PASS",
+          "raw": "pass_by_metadata_comparison"
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "PASS",
+          "raw": "pass_by_inspection"
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "INFO",
+          "raw": "needs_hidden_expansion"
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": "unverified"
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": "provisional"
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "PASS",
+          "raw": "PASS"
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": "provisional_pass"
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "INFO",
+          "raw": "not_ready"
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "FAIL",
+          "raw": "no"
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 6,
+        "failed": 1,
+        "waiting": 8,
+        "total": 17,
+        "percent": 35
+      },
+      "gates": {
+        "package": "pass",
+        "schema": "pass",
+        "build": "unverified",
+        "nop": "unverified",
+        "oracle": "unverified",
+        "quality": "provisional",
+        "feasibility": "provisional"
+      }
+    },
+    {
+      "id": "llb-sys-repair-002",
+      "title": "Repair cgroup delegation after daemon restart",
+      "domain": "Systems & DevOps",
+      "archetype": "Repair",
+      "subdomain": "Linux resource isolation",
+      "difficulty": "Unclassified",
+      "ess": 16,
+      "structural_score": null,
+      "version": 1,
+      "capabilities": [
+        "Exploration",
+        "Planning",
+        "Technical Reasoning",
+        "Implementation",
+        "Recovery",
+        "Constraint Tracking",
+        "Verification"
+      ],
+      "stage": "CANDIDATE",
+      "lifecycle": "candidate",
+      "failure_codes": [
+        "EXECUTION_EVIDENCE_PENDING"
+      ],
+      "unresolved_gates": [
+        "environment_build",
+        "nop",
+        "oracle",
+        "verifier_integrity",
+        "adversarial",
+        "feasibility",
+        "per_test_feasibility",
+        "release_integrity"
+      ],
+      "participant_attempted": false,
+      "repair_history": false,
+      "execution_history": false,
+      "pipeline": [
+        {
+          "key": "PACKAGE",
+          "label": "Package",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SCHEMA",
+          "label": "Schema",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STATIC",
+          "label": "Static",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_1",
+          "label": "Novelty I",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "BUILD",
+          "label": "Environment Build",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "SECURITY",
+          "label": "Security / Leakage",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOP",
+          "label": "NOP",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ORACLE",
+          "label": "Oracle",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "VERIFIER",
+          "label": "Verifier Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "ADVERSARIAL",
+          "label": "Adversarial",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "QUALITY",
+          "label": "Quality",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FEASIBILITY",
+          "label": "Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "STRUCTURAL",
+          "label": "Structural + ESS",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "PER_TEST",
+          "label": "Per-test Feasibility",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "NOVELTY_2",
+          "label": "Novelty II",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "RELEASE",
+          "label": "Release Integrity",
+          "status": "WAITING",
+          "raw": null
+        },
+        {
+          "key": "FREEZE",
+          "label": "Freeze",
+          "status": "WAITING",
+          "raw": null
+        }
+      ],
+      "pipeline_summary": {
+        "passed": 0,
+        "failed": 0,
+        "waiting": 17,
+        "total": 17,
+        "percent": 0
+      },
+      "gates": {
+        "package": null,
+        "schema": null,
+        "build": null,
+        "nop": null,
+        "oracle": null,
+        "quality": null,
+        "feasibility": null
+      }
+    }
+  ]
+}
