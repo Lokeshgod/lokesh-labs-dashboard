@@ -1,28 +1,203 @@
 (function(){
-var STAGES=[["CANDIDATE","Candidate"],["EXECUTING","Executing"],["STRONG_AGENT","Strong Agent"],["REPAIRING","Repairing"],["RETESTING","Retesting"],["READY","Ready"],["ACCEPTED_HARD","Accepted Hard"],["ACCEPTED_MEDIUM","Accepted Medium"]];
-var data=null,lastGood=null;
-function el(id){return document.getElementById(id)}
-function esc(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])})}
-function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
-function toast(t){var x=el("toast");x.textContent=t;x.classList.add("show");setTimeout(function(){x.classList.remove("show")},1400)}
-function label(k){for(var i=0;i<STAGES.length;i++)if(STAGES[i][0]===k)return STAGES[i][1];return k}
-function ist(){var p=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date()),h=0,m=0;p.forEach(function(x){if(x.type==="hour")h=+x.value;if(x.type==="minute")m=+x.value});return{h:h,m:m}}
-function nextWorker(){var ws=(data&&data.automations)||[];if(!ws.length)return{name:"—",delta:0};var t=ist(),cur=t.h*60+t.m,best=null;ws.forEach(function(w){for(var dh=0;dh<2;dh++){var at=((t.h+dh)%24)*60+w.minute;if(dh===1&&t.h===23)at=1440+w.minute;var d=at-cur;if(d>=0&&(!best||d<best.delta))best={name:w.name,delta:d}}});return best||{name:ws[0].name,delta:0}}
-function renderAgents(){var n=nextWorker(),h="";(data.automations||[]).forEach(function(a){var on=a.name===n.name;h+='<div class="agent '+(on?'active':'')+'"><span class="node"></span><div class="time">:'+String(a.minute).padStart(2,"0")+'</div><b>'+esc(a.name)+'</b><small>'+esc(a.role)+'</small></div>'});el("agentFlow").innerHTML=h;el("nextWorker").textContent=n.name;el("nextWorkerTime").textContent=n.delta===0?"NOW":"in "+n.delta+"m"}
-function renderMarathon(){var b=data.marathon_batch;if(!b){return}el("batchStatus").textContent=b.status||"UNKNOWN";el("batchCurrentTask").textContent=b.current_task||"Waiting to start";el("batchCurrentGate").textContent=b.current_gate?("Gate: "+b.current_gate):"No active gate";var total=b.batch_size||(b.tasks||[]).length||10,done=b.completed||0;el("batchCompleted").textContent=done+"/"+total;el("batchAccepted").textContent=b.accepted||0;el("batchRepairing").textContent=b.repairing||0;el("batchRetired").textContent=(b.retired||0)+(b.blocked||0);el("batchProgress").style.width=clamp(done/total*100,0,100)+"%";var st=b.task_status||{};el("batchTasks").innerHTML=(b.tasks||[]).map(function(id){var x=st[id]||{},state=x.state||"QUEUED",gate=x.gate||"";return'<div class="batch-chip '+esc(state)+'"><b>'+esc(id)+'</b><small>'+esc(state)+(gate?' · '+esc(gate):'')+'</small></div>'}).join("")}
-function renderMetrics(){var c=data.counts||{},s=data.stage_counts||{},target=data.target_tasks||100,a=c.accepted_total_live!=null?c.accepted_total_live:(c.accepted_total||0);el("acceptedRing").textContent=a;el("hardAccepted").textContent=c.accepted_hard_live!=null?c.accepted_hard_live:(c.hard||0);el("mediumAccepted").textContent=c.accepted_medium_live!=null?c.accepted_medium_live:(c.medium||0);el("remaining").textContent=c.remaining_live!=null?c.remaining_live:Math.max(0,target-a);el("ring").style.setProperty("--pct",clamp(a/target*100,0,100)+"%");el("candidateCount").textContent=c.unique_candidates!=null?c.unique_candidates:(data.tasks||[]).length;el("executingCount").textContent=s.EXECUTING||0;el("strongCount").textContent=s.STRONG_AGENT||0;el("repairCount").textContent=s.REPAIRING||0;el("readyCount").textContent=s.READY||0;el("infraCount").textContent=c.execution_infrastructure_error||0;el("version").textContent="V"+(data.benchmark_version||"1.0")}
-function fillFilters(){var ts=data.tasks||[],d0=el("domainFilter").value,s0=el("stageFilter").value,ds=[...new Set(ts.map(function(t){return t.domain}).filter(Boolean))].sort();el("domainFilter").innerHTML='<option value="">All domains</option>'+ds.map(function(d){return'<option '+(d===d0?'selected':'')+'>'+esc(d)+'</option>'}).join("");el("stageFilter").innerHTML='<option value="">All stages</option>'+STAGES.map(function(s){return'<option value="'+s[0]+'" '+(s[0]===s0?'selected':'')+'>'+esc(s[1])+'</option>'}).join("")}
-function filtered(){var q=el("search").value.toLowerCase().trim(),s=el("stageFilter").value,d=el("domainFilter").value,df=el("difficultyFilter").value;return(data.tasks||[]).filter(function(t){var h=[t.id,t.title,t.domain,t.archetype,t.subdomain].join(" ").toLowerCase();return(!q||h.indexOf(q)>=0)&&(!s||t.stage===s)&&(!d||t.domain===d)&&(!df||t.difficulty===df)})}
-function card(t){var p=t.pipeline_summary||{passed:0,total:17,percent:0},f=t.failure_codes||[];return'<article class="task"><button class="open" data-task="'+esc(t.id)+'" aria-label="Open task"></button><div class="task-id">'+esc(t.id)+'</div><h3>'+esc(t.title)+'</h3><div class="pills"><span class="pill">'+esc(t.domain)+'</span><span class="pill">'+esc(t.archetype)+'</span><span class="pill '+String(t.difficulty||"").toLowerCase()+'">'+esc(t.difficulty)+'</span>'+(t.ess!=null?'<span class="pill">ESS '+esc(t.ess)+'</span>':'')+'</div><div class="mini-progress"><i style="width:'+clamp(p.percent||0,0,100)+'%"></i></div><div class="task-foot"><span>'+esc(p.passed)+' / '+esc(p.total)+' checks passed</span><span>v'+esc(t.version)+'</span></div>'+(f.length?'<div class="fail">⚠ '+esc(f.slice(0,2).join(" · "))+'</div>':'')+'</article>'}
-function renderBoard(){var ts=filtered();el("visibleCount").textContent=ts.length+" visible task"+(ts.length===1?"":"s");el("board").innerHTML=STAGES.map(function(s){var rows=ts.filter(function(t){return t.stage===s[0]});return'<div class="lane"><div class="lane-head"><b>'+esc(s[1])+'</b><span class="count">'+rows.length+'</span></div><div class="cards">'+(rows.length?rows.map(card).join(""):'<div class="empty">No tasks in this stage</div>')+'</div></div>'}).join("");Array.prototype.forEach.call(document.querySelectorAll(".open"),function(b){b.addEventListener("click",function(){openTask(b.getAttribute("data-task"))})})}
-function renderActivity(){var xs=data.activity||[];el("activity").innerHTML=xs.length?xs.map(function(a){return'<div class="activity-item"><div class="activity-type">'+esc(a.type)+'</div><div><b>'+esc(a.title)+'</b><p>'+esc(a.detail||"")+'</p>'+(a.tasks&&a.tasks.length?'<p>'+esc(a.tasks.join(" · "))+'</p>':'')+'</div></div>'}).join(""):'<div class="empty">No activity recorded yet.</div>'}
-function renderDomains(){var d=data.domain_counts||{},vs=Object.values(d),m=Math.max.apply(null,vs.length?vs:[1]);el("domainBars").innerHTML=Object.keys(d).sort().map(function(k){return'<div class="domain-row"><span title="'+esc(k)+'">'+esc(k)+'</span><div class="domain-track"><i style="width:'+d[k]/m*100+'%"></i></div><b>'+d[k]+'</b></div>'}).join("")}
-function openTask(id){var t=(data.tasks||[]).find(function(x){return x.id===id});if(!t)return;var p=t.pipeline_summary||{passed:0,failed:0,waiting:0,total:17},checks=(t.pipeline||[]).map(function(c,i){return'<div class="check"><div class="check-num">'+String(i+1).padStart(2,"0")+'</div><div><b>'+esc(c.label)+'</b><small>'+esc(c.raw==null?"No fresh evidence yet":c.raw)+'</small></div><span class="state '+esc(c.status)+'">'+esc(c.status)+'</span></div>'}).join(""),fails=(t.failure_codes||[]).length?'<div class="failure-box"><b>Current failure / repair reason</b><br>'+esc(t.failure_codes.join(" · "))+'</div>':'',ung=(t.unresolved_gates||[]).length?'<div class="failure-box" style="background:#fff9ec;border-color:#e9dab8;color:#8c6828"><b>Unresolved gates</b><br>'+esc(t.unresolved_gates.join(" · "))+'</div>':'';el("drawerContent").innerHTML='<div class="drawer-top"><div><div class="did">'+esc(t.id)+'</div><h2>'+esc(t.title)+'</h2><div class="drawer-sub">'+esc(t.domain)+' · '+esc(t.archetype)+(t.subdomain?' · '+esc(t.subdomain):'')+'</div></div><button class="close" id="closeDrawer">×</button></div><div class="drawer-stats"><div class="drawer-stat"><b>'+esc(label(t.stage))+'</b><span>Current stage</span></div><div class="drawer-stat"><b>'+esc(t.difficulty)+'</b><span>Difficulty</span></div><div class="drawer-stat"><b>'+(t.ess==null?'—':esc(t.ess))+'</b><span>ESS</span></div><div class="drawer-stat"><b>'+(t.structural_score==null?'—':esc(t.structural_score)+'/20')+'</b><span>Structural</span></div></div>'+fails+ung+'<div class="pipeline-title"><b>17-stage validation pipeline</b><span>'+p.passed+' passed · '+p.failed+' failed · '+p.waiting+' waiting</span></div><div class="checks">'+checks+'</div><div class="pipeline-title"><b>Capabilities</b><span>v'+esc(t.version)+'</span></div><div class="caps">'+((t.capabilities||[]).map(function(x){return'<span class="cap">'+esc(x)+'</span>'}).join("")||'<span class="cap">Not listed</span>')+'</div>';el("drawer").classList.add("show");el("backdrop").classList.add("show");el("drawer").setAttribute("aria-hidden","false");el("closeDrawer").addEventListener("click",closeDrawer)}
-function closeDrawer(){el("drawer").classList.remove("show");el("backdrop").classList.remove("show");el("drawer").setAttribute("aria-hidden","true")}
-function render(){if(!data)return;renderMetrics();renderMarathon();renderAgents();fillFilters();renderBoard();renderActivity();renderDomains();var dt=new Date((data.marathon_batch&&data.marathon_batch.updated_at)||data.generated_at),age=(Date.now()-dt.getTime())/1000;el("freshness").textContent=isNaN(dt)?"Pipeline connected":"Updated "+dt.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})+" · "+(age<90?"live":"stale");el("liveDot").classList.toggle("off",age>180)}
-async function load(silent){try{var stamp=Date.now(),rs=await Promise.all([fetch("status.json?t="+stamp,{cache:"no-store"}),fetch("marathon.json?t="+stamp,{cache:"no-store"})]);if(!rs[0].ok)throw new Error();data=await rs[0].json();if(rs[1].ok)data.marathon_batch=await rs[1].json();lastGood=data;render();if(!silent)toast("Pipeline refreshed")}catch(e){if(lastGood){data=lastGood;render()}el("freshness").textContent="Connection retrying…";el("liveDot").classList.add("off")}}
-["search","stageFilter","domainFilter","difficultyFilter"].forEach(function(id){el(id).addEventListener(id==="search"?"input":"change",renderBoard)});
-el("clearFilters").addEventListener("click",function(){el("search").value="";el("stageFilter").value="";el("domainFilter").value="";el("difficultyFilter").value="";renderBoard()});
-el("manualRefresh").addEventListener("click",function(){load(false)});el("backdrop").addEventListener("click",closeDrawer);el("jumpBoard").addEventListener("click",function(){el("pipelineBoard").scrollIntoView({behavior:"smooth"})});document.addEventListener("keydown",function(e){if(e.key==="Escape")closeDrawer()});
-load(true);setInterval(function(){load(true)},15000);setInterval(renderAgents,30000);
+const STAGES=[
+  ["PACKAGE","Package"],
+  ["SCHEMA","Schema"],
+  ["STATIC","Static"],
+  ["NOVELTY_1","Similarity / Novelty"],
+  ["BUILD","Environment Build"],
+  ["SECURITY","Security"],
+  ["NOP","NOP"],
+  ["ORACLE","Oracle"],
+  ["VERIFIER","Verifier Integrity"],
+  ["ADVERSARIAL","Anti-cheat"],
+  ["QUALITY","Quality Review"],
+  ["FEASIBILITY","Feasibility"],
+  ["STRUCTURAL","ESS + Structural"],
+  ["STRONG_AGENT","Strong Agent"],
+  ["PER_TEST","Per-test Feasibility"],
+  ["NOVELTY_2","Final Similarity"],
+  ["RELEASE","Release Integrity"],
+  ["FREEZE","Freeze / Accept"]
+];
+let data=null,lastGood=null,previousPositions={};
+const el=id=>document.getElementById(id);
+const esc=v=>String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+function toast(msg){const x=el("toast");x.textContent=msg;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1300)}
+function normalizeStatus(v){
+  const s=String(v==null?"":v).toUpperCase();
+  if(["PASS","PASSED","SUCCESS","PASS_STATIC"].includes(s))return"PASS";
+  if(["FAIL","FAILED","ERROR","NO","REJECTED"].includes(s))return"FAIL";
+  if(s.includes("PASS"))return"PASS";
+  if(s.includes("FAIL")||s.includes("ERROR")||s.includes("REJECT"))return"FAIL";
+  if(!s||s.includes("WAIT")||s.includes("UNVERIFIED")||s.includes("DEFER")||s.includes("PROVISIONAL")||s.includes("CANDIDATE"))return"WAITING";
+  return"INFO";
+}
+function virtualPipeline(task){
+  const base={};
+  (task.pipeline||[]).forEach(g=>base[g.key]={key:g.key,label:g.label,status:normalizeStatus(g.status),raw:g.raw});
+  const out=[];
+  STAGES.forEach(([key,label])=>{
+    if(key==="STRONG_AGENT"){
+      let st="WAITING",raw=null;
+      if(task.stage==="STRONG_AGENT"){st="INFO";raw="RUNNING"}
+      else if(task.participant_attempted){st="PASS";raw="RECORDED"}
+      out.push({key,label,status:st,raw});
+    }else{
+      out.push(base[key]||{key,label,status:"WAITING",raw:null});
+    }
+  });
+  return out;
+}
+function taskState(task){
+  const batch=data.marathon_batch||{},bt=(batch.task_status||{})[task.id]||{};
+  const explicit=String(bt.state||"").toUpperCase();
+  if(explicit==="RUNNING"||explicit==="REPAIRING"||explicit==="ACCEPTED"||explicit==="BLOCKED"||explicit==="RETIRED")return explicit;
+  if(String(task.stage).startsWith("ACCEPTED"))return"ACCEPTED";
+  if(task.stage==="REPAIRING")return"REPAIRING";
+  if(["EXECUTING","STRONG_AGENT","RETESTING","READY"].includes(task.stage))return"RUNNING";
+  return"WAITING";
+}
+function currentGate(task){
+  const batch=data.marathon_batch||{},bt=(batch.task_status||{})[task.id]||{};
+  if(bt.gate){
+    const key=String(bt.gate).replace(/^GATE:\s*/,"").toUpperCase().replace(/\s+/g,"_");
+    const direct=STAGES.findIndex(x=>x[0]===key);
+    if(direct>=0)return direct;
+    if(key.includes("STRONG"))return STAGES.findIndex(x=>x[0]==="STRONG_AGENT");
+    if(key.includes("MODEL"))return STAGES.findIndex(x=>x[0]==="STRONG_AGENT");
+  }
+  if(String(task.stage).startsWith("ACCEPTED"))return STAGES.length-1;
+  const pipe=virtualPipeline(task);
+  for(let i=0;i<pipe.length;i++){
+    if(pipe[i].key==="FREEZE")continue;
+    if(pipe[i].status==="FAIL")return i;
+    if(pipe[i].status!=="PASS")return i;
+  }
+  return STAGES.length-1;
+}
+function filteredTasks(){
+  const q=el("search").value.trim().toLowerCase(),domain=el("domainFilter").value,state=el("stateFilter").value;
+  return(data.tasks||[]).filter(t=>{
+    const hay=[t.id,t.title,t.domain,t.archetype,t.subdomain].join(" ").toLowerCase();
+    const st=taskState(t);
+    return(!q||hay.includes(q))&&(!domain||t.domain===domain)&&(!state||st===state);
+  });
+}
+function renderStats(){
+  const tasks=data.tasks||[],accepted=tasks.filter(t=>taskState(t)==="ACCEPTED").length,
+        repairing=tasks.filter(t=>taskState(t)==="REPAIRING").length,
+        running=tasks.filter(t=>taskState(t)==="RUNNING").length;
+  el("acceptedCount").textContent=accepted;
+  el("activeCount").textContent=running;
+  el("repairCount").textContent=repairing;
+  el("remainingCount").textContent=Math.max(0,tasks.length-accepted);
+}
+function renderFilters(){
+  const current=el("domainFilter").value;
+  const domains=[...new Set((data.tasks||[]).map(t=>t.domain).filter(Boolean))].sort();
+  el("domainFilter").innerHTML='<option value="">All domains</option>'+domains.map(d=>'<option '+(d===current?'selected':'')+'>'+esc(d)+'</option>').join("");
+}
+function stationX(i){const left=90,right=3510;return left+(right-left)*(i/(STAGES.length-1))}
+function renderPipeline(){
+  const tasks=filteredTasks();
+  const byStage=Array.from({length:STAGES.length},()=>[]);
+  tasks.forEach(t=>byStage[currentGate(t)].push(t));
+  let html="";
+  STAGES.forEach(([key,label],i)=>{
+    const rows=byStage[i];
+    const hasRepair=rows.some(t=>taskState(t)==="REPAIRING");
+    const hasActive=rows.some(t=>taskState(t)==="RUNNING");
+    const hasPass=rows.length>0&&!hasRepair&&!hasActive&&rows.some(t=>taskState(t)==="ACCEPTED"||currentGate(t)>i);
+    const cls=hasRepair?"has-repair":hasActive?"has-active":hasPass?"has-pass":"";
+    html+='<div class="station '+cls+'" data-stage="'+key+'" style="left:'+stationX(i)+'px">'+
+      '<div class="station-index">'+String(i+1).padStart(2,"0")+'</div>'+
+      '<div class="station-label">'+esc(label)+'</div>'+
+      '<div class="station-valve"></div><div class="station-stem"></div>'+
+      '<div class="task-cluster">'+rows.slice(0,8).map(t=>capsule(t)).join("")+
+      (rows.length>8?'<div class="task-capsule">+'+(rows.length-8)+' more</div>':'')+'</div>'+
+      '<div class="station-count">'+rows.length+'</div></div>';
+  });
+  el("stations").innerHTML=html;
+  bindTaskClicks();
+  const positioned=tasks.filter(t=>taskState(t)!=="WAITING").length;
+  el("pipelineSummary").textContent=tasks.length+" visible · "+positioned+" active/repair/accepted · "+STAGES.length+" strict gates";
+  maybeFollowActive(tasks);
+}
+function capsule(t){
+  const st=taskState(t),cls=st.toLowerCase();
+  const short=t.id.replace(/^llb-/,"");
+  const idx=currentGate(t);
+  const moved=previousPositions[t.id]!=null&&previousPositions[t.id]!==idx;
+  previousPositions[t.id]=idx;
+  return '<button class="task-capsule '+cls+(moved?' moved':'')+'" data-task="'+esc(t.id)+'" title="'+esc(t.title)+'">'+esc(short)+'</button>';
+}
+function maybeFollowActive(tasks){
+  const current=(data.marathon_batch||{}).current_task;
+  const t=tasks.find(x=>x.id===current);
+  if(!t)return;
+  const viewport=el("pipeViewport"),target=stationX(currentGate(t));
+  const desired=Math.max(0,target-viewport.clientWidth*.45);
+  if(Math.abs(viewport.scrollLeft-desired)>250)viewport.scrollTo({left:desired,behavior:"smooth"});
+}
+function renderTaskList(){
+  const tasks=filteredTasks().sort((a,b)=>currentGate(b)-currentGate(a)||a.id.localeCompare(b.id));
+  el("visibleCount").textContent=tasks.length+" tasks";
+  el("taskList").innerHTML=tasks.map(t=>{
+    const idx=currentGate(t),st=taskState(t);
+    return '<div class="task-row" data-task="'+esc(t.id)+'"><div class="task-main"><b>'+esc(t.title)+'</b><small>'+esc(t.id)+'</small></div>'+
+      '<div class="task-domain">'+esc(t.domain)+' · '+esc(t.archetype)+'</div>'+
+      '<div class="task-stage">'+String(idx+1).padStart(2,"0")+' · '+esc(STAGES[idx][1])+'</div>'+
+      '<div class="task-state '+st+'">'+esc(st)+'</div></div>';
+  }).join("")||'<div style="padding:20px;color:#71869d">No tasks match these filters.</div>';
+  bindTaskClicks();
+}
+function renderRun(){
+  const b=data.marathon_batch||{};
+  el("batchBadge").textContent=b.status||"MANUAL";
+  const current=b.current_task||"No task currently marked as running";
+  const gate=b.current_gate||"Waiting for next manual pipeline update";
+  el("currentRun").innerHTML='<div class="run-main"><span>CURRENT TASK</span><b>'+esc(current)+'</b><small>'+esc(gate)+'</small></div>'+
+    '<div class="run-grid"><div><b>'+esc(b.completed||0)+'</b><span>Completed</span></div><div><b>'+esc(b.accepted||0)+'</b><span>Accepted</span></div><div><b>'+esc(b.repairing||0)+'</b><span>Repairing</span></div></div>';
+}
+function renderActivity(){
+  const items=(data.activity||[]).slice(0,6);
+  el("activity").innerHTML=items.map(a=>'<div class="activity-item"><b>'+esc(a.type||"UPDATE")+' · '+esc(a.title||"Pipeline update")+'</b><p>'+esc(a.detail||"")+'</p></div>').join("")||
+    '<div class="activity-item"><b>MANUAL PIPELINE</b><p>Waiting for the next recorded transition.</p></div>';
+}
+function openTask(id){
+  const t=(data.tasks||[]).find(x=>x.id===id);if(!t)return;
+  const p=virtualPipeline(t),idx=currentGate(t),st=taskState(t);
+  const passes=p.filter(x=>x.status==="PASS").length;
+  const fails=p.filter(x=>x.status==="FAIL").length;
+  const failures=(t.failure_codes||[]).length?'<div class="failure-box"><b>Current failure / repair reason</b><br>'+esc(t.failure_codes.join(" · "))+'</div>':"";
+  el("drawerContent").innerHTML='<div class="drawer-id">'+esc(t.id)+'</div><h2>'+esc(t.title)+'</h2>'+
+    '<div class="drawer-meta">'+esc(t.domain)+' · '+esc(t.archetype)+(t.subdomain?' · '+esc(t.subdomain):'')+'</div>'+
+    '<div class="drawer-kpis"><div class="drawer-kpi"><b>'+esc(st)+'</b><span>State</span></div><div class="drawer-kpi"><b>'+String(idx+1).padStart(2,"0")+'</b><span>Current gate</span></div><div class="drawer-kpi"><b>'+(t.ess==null?'—':esc(t.ess))+'</b><span>ESS</span></div><div class="drawer-kpi"><b>'+(t.structural_score==null?'—':esc(t.structural_score)+'/20')+'</b><span>Structural</span></div></div>'+
+    failures+
+    '<div class="gate-list">'+p.map((g,i)=>'<div class="gate-row"><div class="gate-num">'+String(i+1).padStart(2,"0")+'</div><div><b>'+esc(g.label)+'</b><small>'+esc(g.raw==null?"No fresh evidence yet":g.raw)+'</small></div><span class="gate-status '+g.status+'">'+g.status+'</span></div>').join("")+'</div>';
+  el("drawer").classList.add("show");el("backdrop").classList.add("show");
+}
+function bindTaskClicks(){
+  document.querySelectorAll("[data-task]").forEach(n=>{n.onclick=e=>{e.stopPropagation();openTask(n.getAttribute("data-task"))}});
+}
+function renderFreshness(){
+  const dt=new Date(data.generated_at),age=(Date.now()-dt.getTime())/1000;
+  const fresh=!isNaN(dt)&&age<180;
+  el("livePulse").classList.toggle("off",!fresh);
+  el("freshness").textContent=isNaN(dt)?"Live feed connected":"Updated "+dt.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})+(fresh?" · LIVE":" · STALE");
+}
+function render(){if(!data)return;renderStats();renderFilters();renderPipeline();renderTaskList();renderRun();renderActivity();renderFreshness()}
+async function load(silent){
+  try{
+    const r=await fetch("status.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);
+    data=await r.json();lastGood=data;render();if(!silent)toast("Pipeline refreshed");
+  }catch(e){if(lastGood){data=lastGood;render()}el("livePulse").classList.add("off");el("freshness").textContent="Feed reconnecting…"}
+}
+["search","domainFilter","stateFilter"].forEach(id=>el(id).addEventListener(id==="search"?"input":"change",()=>{renderPipeline();renderTaskList()}));
+el("refreshBtn").onclick=()=>load(false);
+el("drawerClose").onclick=()=>{el("drawer").classList.remove("show");el("backdrop").classList.remove("show")};
+el("backdrop").onclick=el("drawerClose").onclick;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")el("drawerClose").click()});
+load(true);setInterval(()=>load(true),15000);
 })();
