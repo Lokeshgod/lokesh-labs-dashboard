@@ -1,11 +1,11 @@
 {
-  "batch_id":"marathon-01","status":"RUNNING","batch_size":10,"current_task":"llb-aiml-configure-001","current_gate":"RETEST_START:NOP_ORACLE","completed":0,"accepted":0,"repairing":4,"retired":0,"blocked":0,
+  "batch_id":"marathon-01","status":"RUNNING","batch_size":10,"current_task":"llb-aiml-configure-001","current_gate":"RETEST_START:NOP_ORACLE","completed":1,"accepted":0,"repairing":3,"retired":1,"blocked":0,
   "tasks":["llb-aiml-build-001","llb-aiml-configure-001","llb-aiml-integrate-001","llb-aiml-investigate-001","llb-aiml-optimize-001","llb-aiml-recover-001","llb-data-build-001","llb-data-configure-001","llb-data-investigate-001","llb-data-optimize-001"],
   "task_status":{
-    "llb-aiml-build-001":{"state":"REPAIRING","gate":"STRUCTURAL_ESS/DIFFICULTY","result":"ENV_BUILD PASS; semantic NOP PASS; Oracle PASS x2; verifier integrity PASS. Independent first-pass solved too shallowly for claimed Hard; difficulty strengthening/reclassification required."},
-    "llb-aiml-configure-001":{"state":"RETESTING","gate":"NOP/ORACLE","result":"Verifier repaired to reject defective baseline and validate semantic per-feature policy; task version bumped to v2. Fresh downstream evidence required."},
-    "llb-aiml-integrate-001":{"state":"REPAIRING","gate":"ORACLE/PRIVATE_ASSETS","result":"ENV_BUILD PASS; semantic NOP PASS; Oracle FAIL because referenced hidden evaluator/reference asset is absent from package. Repair required; no difficulty inference."},
-    "llb-aiml-investigate-001":{"state":"REPAIRING","gate":"ORACLE/RUNTIME_PATHS","result":"ENV_BUILD PASS; NOP nonzero but checker uses absolute paths not present in canonical runtime; Oracle FAIL on missing /solution path. Runtime/task path contract repair required."},
+    "llb-aiml-build-001":{"state":"REPAIRING","gate":"STRUCTURAL_ESS/DIFFICULTY","result":"Core execution passes, but independent solve was too shallow for claimed Hard; difficulty strengthening/reclassification required."},
+    "llb-aiml-configure-001":{"state":"RETESTING","gate":"NOP/ORACLE","result":"v2 verifier repaired to reject defective baseline and semantically validate intended per-feature policy. Fresh downstream evidence required."},
+    "llb-aiml-integrate-001":{"state":"RETIRED","gate":"FEASIBILITY","result":"Package lacks indispensable private evaluator/cases and oracle reference source required by its own verifier/oracle. Retired rather than fabricating assets or difficulty evidence."},
+    "llb-aiml-investigate-001":{"state":"REPAIRING","gate":"ORACLE/RUNTIME_PATHS","result":"Checker path contract invalid; repair required."},
     "llb-aiml-optimize-001":{"state":"QUEUED","gate":null,"result":null},"llb-aiml-recover-001":{"state":"QUEUED","gate":null,"result":null},"llb-data-build-001":{"state":"QUEUED","gate":null,"result":null},"llb-data-configure-001":{"state":"QUEUED","gate":null,"result":null},"llb-data-investigate-001":{"state":"QUEUED","gate":null,"result":null},"llb-data-optimize-001":{"state":"QUEUED","gate":null,"result":null}
-  },"updated_at":"2026-09-24T04:56:00+05:30"
+  },"updated_at":"2026-09-24T04:58:00+05:30"
 }
