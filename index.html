@@ -3,88 +3,117 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f3f1ec">
-<title>Lokesh Labs · Benchmark Operations</title>
+<meta name="theme-color" content="#07111f">
+<title>Lokesh Labs · Live Task Pipeline</title>
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<div class="shell">
-<nav class="nav">
-  <div class="brand"><span class="mark"></span><span class="text">LOKESH LABS<small>Benchmark Operations</small></span></div>
-  <div class="nav-right"><span class="live-dot" id="liveDot"></span><span class="copy" id="freshness">Connecting to pipeline…</span></div>
-</nav>
+<div class="ambient ambient-a"></div>
+<div class="ambient ambient-b"></div>
 
-<section class="hero">
-  <div class="hero-main">
-    <div class="kicker">Autonomous benchmark factory</div>
-    <h1>Watch every task <span>move.</span></h1>
-    <p class="hero-copy">A live view of creation, execution, strong-agent difficulty testing, repair, retesting and final acceptance. Every card is backed by the benchmark repository—not a separate status database.</p>
-    <div class="hero-row">
-      <button class="primary" id="jumpBoard">View running tasks →</button>
-      <button class="ghost" id="manualRefresh">↻ Refresh pipeline</button>
-    </div>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark"><i></i><i></i><i></i></div>
+    <div><strong>LOKESH LABS</strong><small>LIVE BENCHMARK PIPELINE</small></div>
   </div>
-  <aside class="hero-side">
-    <div class="side-title"><b>Benchmark completion</b><span id="version">V1.0</span></div>
-    <div class="ring-wrap">
-      <div class="ring" id="ring"><strong><span id="acceptedRing">0</span><small>/100</small></strong></div>
+  <div class="livebox">
+    <span class="pulse" id="livePulse"></span>
+    <span id="freshness">Connecting…</span>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">36 TASKS · STRICT RESTART PIPELINE</div>
+      <h1>Watch every task travel through the pipe.</h1>
+      <p>Each task must clear every gate on one clean final version. A failure sends it to repair and back to Gate 1 — no stale passes, no skipped reruns.</p>
+    </div>
+    <div class="hero-stats">
+      <div><b id="acceptedCount">0</b><span>Accepted</span></div>
+      <div><b id="activeCount">0</b><span>In pipeline</span></div>
+      <div><b id="repairCount">0</b><span>Repairing</span></div>
+      <div><b id="remainingCount">36</b><span>Remaining</span></div>
+    </div>
+  </section>
+
+  <section class="control-row">
+    <div class="searchbox">
+      <span>⌕</span>
+      <input id="search" placeholder="Find a task, domain or archetype">
+    </div>
+    <select id="domainFilter"><option value="">All domains</option></select>
+    <select id="stateFilter">
+      <option value="">All states</option>
+      <option value="RUNNING">Running</option>
+      <option value="REPAIRING">Repairing</option>
+      <option value="WAITING">Waiting</option>
+      <option value="ACCEPTED">Accepted</option>
+    </select>
+    <button id="refreshBtn">Refresh now</button>
+  </section>
+
+  <section class="pipeline-shell">
+    <div class="pipeline-head">
       <div>
-        <div class="ring-note"><span>Hard accepted</span><b id="hardAccepted">0</b></div>
-        <div class="ring-note"><span>Medium accepted</span><b id="mediumAccepted">0</b></div>
-        <div class="ring-note"><span>Remaining</span><b id="remaining">100</b></div>
+        <h2>Task Pipeline</h2>
+        <p id="pipelineSummary">Loading task positions…</p>
+      </div>
+      <div class="legend">
+        <span><i class="lg running"></i>Running</span>
+        <span><i class="lg pass"></i>Passed</span>
+        <span><i class="lg repair"></i>Repair</span>
+        <span><i class="lg wait"></i>Waiting</span>
       </div>
     </div>
-    <div class="next-worker"><div><span>Scheduled worker</span><b id="nextWorker">Calculating…</b></div><strong id="nextWorkerTime">—</strong></div>
-  </aside>
-</section>
 
-<section class="metrics">
-  <div class="metric emphasis"><div class="n" id="candidateCount">—</div><div class="l">Candidates in factory</div></div>
-  <div class="metric"><div class="n" id="executingCount">—</div><div class="l">Executing</div></div>
-  <div class="metric"><div class="n" id="strongCount">—</div><div class="l">Strong-agent stage</div></div>
-  <div class="metric"><div class="n" id="repairCount">—</div><div class="l">Repairing</div></div>
-  <div class="metric"><div class="n" id="readyCount">—</div><div class="l">Ready to finalize</div></div>
-  <div class="metric"><div class="n" id="infraCount">—</div><div class="l">Infrastructure errors</div></div>
-</section>
+    <div class="restart-rule">
+      <div class="restart-flow">
+        <span class="fail-node">FAIL</span>
+        <span class="restart-arrow">→</span>
+        <span class="repair-node">FIX ROOT CAUSE</span>
+        <span class="restart-arrow">→</span>
+        <span class="restart-node">RESTART AT GATE 01</span>
+      </div>
+      <small>Every repaired version must pass the entire pipeline again from the beginning.</small>
+    </div>
 
-<section class="section marathon-section">
-  <div class="section-head"><div><h2>Marathon Batch</h2><p>Sequential end-to-end validation. The site updates after every pipeline transition while the batch is running.</p></div><span id="batchStatus" class="batch-state">QUEUED</span></div>
-  <div class="marathon-grid">
-    <div class="marathon-now"><span>Current task</span><b id="batchCurrentTask">Waiting to start</b><small id="batchCurrentGate">No active gate</small></div>
-    <div class="batch-stat"><b id="batchCompleted">0/10</b><span>Completed</span></div>
-    <div class="batch-stat"><b id="batchAccepted">0</b><span>Accepted</span></div>
-    <div class="batch-stat"><b id="batchRepairing">0</b><span>Repairing</span></div>
-    <div class="batch-stat"><b id="batchRetired">0</b><span>Retired / Blocked</span></div>
-  </div>
-  <div class="batch-track"><i id="batchProgress"></i></div>
-  <div class="batch-tasks" id="batchTasks"></div>
-</section>
+    <div class="pipe-viewport" id="pipeViewport">
+      <div class="pipe-world" id="pipeWorld">
+        <div class="main-pipe">
+          <div class="pipe-core"></div>
+          <div class="flow-lights"></div>
+        </div>
+        <div class="stations" id="stations"></div>
+      </div>
+    </div>
+  </section>
 
-<section class="section">
-  <div class="section-head"><div><h2>Agent production line</h2><p>The five workers are staggered through each hour so tasks naturally advance through the factory.</p></div><span style="font-size:11px;color:var(--muted)">IST schedule</span></div>
-  <div class="agent-flow" id="agentFlow"></div>
-</section>
+  <section class="lower-grid">
+    <div class="panel">
+      <div class="panel-head">
+        <div><h3>Live task queue</h3><p>Tasks sorted by their current position in the pipeline.</p></div>
+        <span id="visibleCount">0 tasks</span>
+      </div>
+      <div class="task-list" id="taskList"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <div><h3>Current run</h3><p>Manual batch state and recent transitions.</p></div>
+        <span id="batchBadge">IDLE</span>
+      </div>
+      <div id="currentRun" class="current-run"></div>
+      <div id="activity" class="activity"></div>
+    </div>
+  </section>
+</main>
 
-<section class="section" id="pipelineBoard">
-  <div class="section-head"><div><h2>Live task pipeline</h2><p>Tap any task to inspect all 17 validation checks and its current failure/repair state.</p></div><span id="visibleCount" style="font-size:11px;color:var(--muted)">—</span></div>
-  <div class="toolbar">
-    <input id="search" placeholder="Search task ID, title, domain or archetype">
-    <select id="stageFilter"><option value="">All stages</option></select>
-    <select id="domainFilter"><option value="">All domains</option></select>
-    <select id="difficultyFilter"><option value="">All difficulties</option><option>Hard</option><option>Medium</option><option>Unclassified</option></select>
-    <button class="refresh" id="clearFilters">Clear</button>
-  </div>
-  <div class="board-scroll"><div class="board" id="board"></div></div>
-</section>
+<div class="drawer-backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer">
+  <button class="drawer-close" id="drawerClose">×</button>
+  <div id="drawerContent"></div>
+</aside>
 
-<div class="bottom-grid">
-  <section class="section" style="margin-top:0"><div class="section-head"><div><h2>Factory activity</h2><p>Latest creator, executor, repair and audit transitions.</p></div></div><div class="activity-list" id="activity"></div></section>
-  <section class="section" style="margin-top:0"><div class="section-head"><div><h2>Domain coverage</h2><p>Candidate distribution across the six benchmark domains.</p></div></div><div class="domain-bars" id="domainBars"></div></section>
-</div>
-</div>
-
-<div class="backdrop" id="backdrop"></div>
-<aside class="drawer" id="drawer" aria-hidden="true"><div class="drawer-inner" id="drawerContent"></div></aside>
 <div class="toast" id="toast"></div>
 <script src="app.js"></script>
 </body>
