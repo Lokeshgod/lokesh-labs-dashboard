@@ -5,7 +5,83 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07111f">
 <title>Lokesh Labs · Live Task Pipeline</title>
-<link rel="stylesheet" href="app.css">
+<style>
+:root{
+  --bg:#06101c;--bg2:#0a1727;--panel:rgba(11,24,40,.78);--panel2:#0d1d30;
+  --line:#243a55;--line2:#31506f;--text:#f4f8fc;--muted:#8ca0b7;
+  --cyan:#48d7ff;--blue:#5f87ff;--green:#39d98a;--amber:#ffbd59;--red:#ff6471;
+  --violet:#9a7cff;--pipe:#1d3147;--pipe-edge:#34536f;--shadow:0 24px 70px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--text);background:
+radial-gradient(circle at 14% 0%,rgba(72,215,255,.08),transparent 28%),
+radial-gradient(circle at 88% 8%,rgba(154,124,255,.08),transparent 25%),
+linear-gradient(180deg,#06101c 0%,#081421 55%,#07111f 100%);
+font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.ambient{position:fixed;border-radius:50%;filter:blur(90px);opacity:.18;pointer-events:none;z-index:-1}
+.ambient-a{width:360px;height:360px;background:#1db0ff;left:-110px;top:80px}
+.ambient-b{width:440px;height:440px;background:#795bff;right:-140px;top:180px}
+.topbar{max-width:1780px;margin:0 auto;padding:20px 26px 10px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px}.brand strong{font-size:14px;letter-spacing:.08em}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:.16em;margin-top:2px}
+.brand-mark{width:38px;height:38px;border:1px solid #35506a;border-radius:11px;background:#0c1c2e;display:grid;align-content:center;gap:4px;padding:8px;box-shadow:inset 0 0 24px rgba(72,215,255,.04)}
+.brand-mark i{height:3px;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--blue));display:block}.brand-mark i:nth-child(2){width:72%}.brand-mark i:nth-child(3){width:48%}
+.livebox{display:flex;align-items:center;gap:9px;border:1px solid #29435e;background:rgba(10,25,42,.72);backdrop-filter:blur(14px);border-radius:999px;padding:8px 12px;color:#a9bad0;font-size:11px}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(57,217,138,.08);animation:pulse 1.8s infinite}.pulse.off{background:var(--red)}
+@keyframes pulse{50%{box-shadow:0 0 0 10px rgba(57,217,138,0)}}
+main{max-width:1780px;margin:0 auto;padding:0 26px 50px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:end;padding:44px 4px 26px}
+.eyebrow{font:800 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;color:var(--cyan)}
+.hero h1{font-size:clamp(38px,5.2vw,78px);line-height:.98;letter-spacing:-.058em;margin:14px 0 18px;max-width:920px}
+.hero p{margin:0;color:#9cafc4;max-width:760px;font-size:15px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.hero-stats div{background:linear-gradient(180deg,rgba(14,31,51,.88),rgba(10,23,38,.88));border:1px solid #243d57;border-radius:16px;padding:14px}
+.hero-stats b{display:block;font-size:27px;letter-spacing:-.04em}.hero-stats span{color:var(--muted);font-size:10px}
+.control-row{display:grid;grid-template-columns:minmax(280px,1fr) 190px 160px auto;gap:9px;margin-bottom:14px}
+.searchbox{display:flex;align-items:center;gap:9px;border:1px solid #27415b;background:#0b1b2d;border-radius:12px;padding:0 12px}.searchbox span{color:var(--cyan);font-size:20px}.searchbox input{width:100%;min-height:44px;background:transparent;border:0;outline:0;color:#fff}
+.control-row select,.control-row button{min-height:44px;border:1px solid #27415b;background:#0b1b2d;color:#d9e4ef;border-radius:12px;padding:0 12px;outline:0}.control-row button{font-weight:800}
+.pipeline-shell,.panel{border:1px solid #213a54;background:linear-gradient(180deg,rgba(11,25,42,.9),rgba(8,20,34,.88));border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.pipeline-head,.panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:18px 20px}.pipeline-head h2,.panel-head h3{margin:0;font-size:18px;letter-spacing:-.025em}.pipeline-head p,.panel-head p{margin:4px 0 0;color:var(--muted);font-size:11px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;color:#9db0c5;font-size:10px}.legend span{display:flex;align-items:center;gap:6px}.lg{width:8px;height:8px;border-radius:50%;display:inline-block}.lg.running{background:var(--cyan);box-shadow:0 0 12px var(--cyan)}.lg.pass{background:var(--green)}.lg.repair{background:var(--red)}.lg.wait{background:#5b7088}
+.restart-rule{margin:0 18px 10px;border:1px solid rgba(255,100,113,.22);background:linear-gradient(90deg,rgba(255,100,113,.06),rgba(255,189,89,.04));border-radius:14px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.restart-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:800 9px ui-monospace,monospace;letter-spacing:.06em}.restart-rule small{color:#9aaabe;font-size:10px}.fail-node,.repair-node,.restart-node{padding:5px 7px;border-radius:7px}.fail-node{color:#ff8d96;background:rgba(255,100,113,.12)}.repair-node{color:#ffd085;background:rgba(255,189,89,.1)}.restart-node{color:#8fddff;background:rgba(72,215,255,.1)}.restart-arrow{color:#637990;animation:nudge 1.5s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(3px);color:#9edfff}}
+.pipe-viewport{overflow-x:auto;overflow-y:hidden;padding:12px 12px 24px;scrollbar-color:#2c4863 #0c1a2b}
+.pipe-world{position:relative;min-width:3600px;height:430px;padding:0 50px}
+.main-pipe{position:absolute;left:85px;right:85px;top:215px;height:34px;border-radius:99px;background:linear-gradient(180deg,#223b54,#15283c);border:1px solid var(--pipe-edge);box-shadow:inset 0 7px 12px rgba(255,255,255,.025),inset 0 -8px 18px rgba(0,0,0,.3),0 10px 26px rgba(0,0,0,.16);overflow:hidden}
+.pipe-core{position:absolute;left:9px;right:9px;top:11px;height:10px;border-radius:99px;background:linear-gradient(90deg,#2d6480,#3e91ad,#4acfee,#4d8cff,#7d75e8,#2d6480);background-size:420px 100%;opacity:.54;animation:flow 3.4s linear infinite}
+.flow-lights{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 120px,rgba(255,255,255,.18) 120px 124px,transparent 124px 230px);animation:pipeLights 5.5s linear infinite}
+@keyframes flow{to{background-position:420px 0}}@keyframes pipeLights{to{transform:translateX(230px)}}
+.stations{position:absolute;inset:0 40px}
+.station{position:absolute;top:130px;width:150px;transform:translateX(-50%);text-align:center}
+.station-index{font:800 9px ui-monospace,monospace;color:#71869d;letter-spacing:.08em;margin-bottom:5px}
+.station-label{font-size:10px;color:#afbdd0;min-height:28px;display:flex;justify-content:center;align-items:flex-end;line-height:1.15}
+.station-valve{position:relative;width:38px;height:38px;border-radius:50%;margin:13px auto 0;background:#0b1a2b;border:5px solid #405971;box-shadow:0 0 0 5px rgba(8,20,34,.8),0 0 24px rgba(0,0,0,.2);z-index:3;transition:.2s}
+.station-valve:before{content:"";position:absolute;width:8px;height:8px;border-radius:50%;left:10px;top:10px;background:#5c7187}
+.station.has-pass .station-valve{border-color:#2b8f68}.station.has-pass .station-valve:before{background:var(--green);box-shadow:0 0 12px var(--green)}
+.station.has-active .station-valve{border-color:#3098bd;animation:valvePulse 1.45s infinite}.station.has-active .station-valve:before{background:var(--cyan);box-shadow:0 0 15px var(--cyan)}
+.station.has-repair .station-valve{border-color:#a94955}.station.has-repair .station-valve:before{background:var(--red);box-shadow:0 0 14px var(--red)}
+@keyframes valvePulse{50%{box-shadow:0 0 0 8px rgba(72,215,255,.08),0 0 28px rgba(72,215,255,.18)}}
+.station-stem{width:2px;height:45px;background:#314a63;margin:0 auto}
+.task-cluster{position:absolute;left:50%;transform:translateX(-50%);bottom:73px;display:flex;flex-direction:column-reverse;align-items:center;gap:5px;width:160px;pointer-events:none}
+.task-capsule{pointer-events:auto;position:relative;max-width:154px;min-width:100px;border:1px solid #31506c;background:linear-gradient(180deg,#102a42,#0b2033);border-radius:999px;padding:6px 9px 6px 21px;font:750 8.5px/1.2 ui-monospace,monospace;color:#dce9f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 7px 20px rgba(0,0,0,.22);cursor:pointer;transition:.18s;animation:capsuleIn .35s ease both}
+.task-capsule:before{content:"";position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:#667c92}
+.task-capsule:hover{transform:translateY(-2px) scale(1.02);border-color:#5d86aa}
+.task-capsule.running:before{background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:pulse 1.4s infinite}.task-capsule.repairing{border-color:#7f3d49;background:#2b1720}.task-capsule.repairing:before{background:var(--red);box-shadow:0 0 10px var(--red)}.task-capsule.accepted{border-color:#287b5c;background:#102a23}.task-capsule.accepted:before{background:var(--green)}
+@keyframes capsuleIn{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+.station-count{position:absolute;left:50%;top:315px;transform:translateX(-50%);min-width:28px;border-radius:99px;padding:3px 7px;background:#13273a;border:1px solid #2a435c;color:#90a6bd;font-size:9px;font-weight:800}
+.lower-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:14px;margin-top:14px}.panel{min-height:330px}.panel-head span{font:800 9px ui-monospace,monospace;color:#8aa1b8;border:1px solid #29435d;background:#0e2033;border-radius:99px;padding:6px 9px}
+.task-list{padding:0 12px 14px;display:grid;gap:6px;max-height:520px;overflow:auto}.task-row{display:grid;grid-template-columns:minmax(190px,1.3fr) 1fr 120px 90px;gap:10px;align-items:center;border:1px solid #203950;background:#0a1b2d;border-radius:12px;padding:10px 11px;cursor:pointer;transition:.15s}.task-row:hover{border-color:#365979;background:#0c2034}.task-main b{display:block;font-size:11px}.task-main small{display:block;color:#6f879e;font:700 8.5px ui-monospace,monospace;margin-top:2px}.task-domain{color:#91a6bb;font-size:10px}.task-stage{font:800 9px ui-monospace,monospace;color:#8edcff}.task-state{justify-self:end;font:800 8px ui-monospace,monospace;padding:5px 7px;border-radius:7px;background:#142b40;color:#a5bad0}.task-state.REPAIRING{background:#2c1920;color:#ff8c96}.task-state.RUNNING{background:#102f3a;color:#74e4ff}.task-state.ACCEPTED{background:#142d25;color:#74dda7}
+.current-run{padding:0 18px 12px}.run-main{border:1px solid #29465f;background:linear-gradient(180deg,#10263b,#0c1d30);border-radius:14px;padding:13px}.run-main span{display:block;color:#6e879f;font-size:9px}.run-main b{display:block;font-size:13px;margin:4px 0}.run-main small{color:#8edcff;font:750 9px ui-monospace,monospace}.run-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}.run-grid div{background:#0a1a2b;border:1px solid #223b54;border-radius:10px;padding:8px}.run-grid b{font-size:16px}.run-grid span{display:block;color:#71869d;font-size:8px}
+.activity{padding:4px 14px 14px;display:grid;gap:5px}.activity-item{border-top:1px solid #1e344a;padding:8px 4px}.activity-item b{font-size:10px}.activity-item p{margin:2px 0 0;color:#71869d;font-size:9px}
+.drawer-backdrop{position:fixed;inset:0;background:rgba(2,8,14,.62);backdrop-filter:blur(5px);opacity:0;pointer-events:none;transition:.2s;z-index:50}.drawer-backdrop.show{opacity:1;pointer-events:auto}.drawer{position:fixed;top:0;right:0;width:min(560px,100%);height:100%;background:#081727;border-left:1px solid #29445e;box-shadow:-30px 0 80px rgba(0,0,0,.35);transform:translateX(103%);transition:.28s cubic-bezier(.2,.8,.2,1);z-index:51;overflow:auto;padding:28px}.drawer.show{transform:none}.drawer-close{position:absolute;right:18px;top:18px;width:38px;height:38px;border-radius:10px;border:1px solid #2e4a63;background:#0d2033;color:#eaf5ff;font-size:19px}.drawer-id{font:800 9px ui-monospace,monospace;color:var(--cyan);letter-spacing:.08em}.drawer h2{font-size:29px;line-height:1.05;letter-spacing:-.045em;margin:10px 50px 8px 0}.drawer-meta{color:#849bb2;font-size:11px}.drawer-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:17px 0}.drawer-kpi{border:1px solid #233c55;background:#0c1d2f;border-radius:12px;padding:9px}.drawer-kpi b{display:block;font-size:15px}.drawer-kpi span{font-size:8px;color:#70869d}.failure-box{border:1px solid #713944;background:#2b1720;color:#ff9aa2;border-radius:11px;padding:10px;margin:10px 0;font-size:10px}.gate-list{display:grid;gap:5px;margin-top:16px}.gate-row{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;border:1px solid #203950;background:#0b1b2d;border-radius:10px;padding:8px}.gate-num{width:25px;height:25px;border-radius:7px;background:#13273a;display:grid;place-items:center;color:#7890a8;font:800 8px ui-monospace,monospace}.gate-row b{font-size:10px}.gate-row small{display:block;color:#687f96;font-size:8px}.gate-status{font:800 8px ui-monospace,monospace;padding:4px 6px;border-radius:6px}.gate-status.PASS{background:#112c24;color:#65d49d}.gate-status.FAIL{background:#2c1820;color:#ff8f98}.gate-status.WAITING{background:#16283a;color:#8299b0}.gate-status.INFO{background:#15233e;color:#8da7ff}
+.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,20px);background:#0d2237;border:1px solid #32516d;color:#fff;border-radius:11px;padding:9px 13px;font-size:10px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1100px){.hero{grid-template-columns:1fr}.control-row{grid-template-columns:1fr 1fr}.searchbox{grid-column:1/-1}.lower-grid{grid-template-columns:1fr}.hero-stats{max-width:620px}}
+@media(max-width:700px){.topbar,main{padding-left:12px;padding-right:12px}.topbar{padding-top:12px}.brand small{display:none}.hero{padding-top:28px}.hero-stats{grid-template-columns:repeat(2,1fr)}.control-row{grid-template-columns:1fr}.searchbox{grid-column:auto}.pipeline-head{align-items:flex-start;flex-direction:column}.restart-rule{align-items:flex-start;flex-direction:column}.pipe-world{min-width:3300px}.task-row{grid-template-columns:1fr 90px}.task-domain,.task-state{display:none}.drawer-kpis{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
 <div class="ambient ambient-a"></div>
@@ -115,6 +191,210 @@
 </aside>
 
 <div class="toast" id="toast"></div>
-<script src="app.js"></script>
+<script>
+(function(){
+const STAGES=[
+  ["PACKAGE","Package"],
+  ["SCHEMA","Schema"],
+  ["STATIC","Static"],
+  ["NOVELTY_1","Similarity / Novelty"],
+  ["BUILD","Environment Build"],
+  ["SECURITY","Security"],
+  ["NOP","NOP"],
+  ["ORACLE","Oracle"],
+  ["VERIFIER","Verifier Integrity"],
+  ["ADVERSARIAL","Anti-cheat"],
+  ["QUALITY","Quality Review"],
+  ["FEASIBILITY","Feasibility"],
+  ["STRUCTURAL","ESS + Structural"],
+  ["STRONG_AGENT","Strong Agent"],
+  ["PER_TEST","Per-test Feasibility"],
+  ["NOVELTY_2","Final Similarity"],
+  ["RELEASE","Release Integrity"],
+  ["FREEZE","Freeze / Accept"]
+];
+let data=null,lastGood=null,previousPositions={};
+const el=id=>document.getElementById(id);
+const esc=v=>String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+function toast(msg){const x=el("toast");x.textContent=msg;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1300)}
+function normalizeStatus(v){
+  const s=String(v==null?"":v).toUpperCase();
+  if(["PASS","PASSED","SUCCESS","PASS_STATIC"].includes(s))return"PASS";
+  if(["FAIL","FAILED","ERROR","NO","REJECTED"].includes(s))return"FAIL";
+  if(s.includes("PASS"))return"PASS";
+  if(s.includes("FAIL")||s.includes("ERROR")||s.includes("REJECT"))return"FAIL";
+  if(!s||s.includes("WAIT")||s.includes("UNVERIFIED")||s.includes("DEFER")||s.includes("PROVISIONAL")||s.includes("CANDIDATE"))return"WAITING";
+  return"INFO";
+}
+function virtualPipeline(task){
+  const base={};
+  (task.pipeline||[]).forEach(g=>base[g.key]={key:g.key,label:g.label,status:normalizeStatus(g.status),raw:g.raw});
+  const out=[];
+  STAGES.forEach(([key,label])=>{
+    if(key==="STRONG_AGENT"){
+      let st="WAITING",raw=null;
+      if(task.stage==="STRONG_AGENT"){st="INFO";raw="RUNNING"}
+      else if(task.participant_attempted){st="PASS";raw="RECORDED"}
+      out.push({key,label,status:st,raw});
+    }else{
+      out.push(base[key]||{key,label,status:"WAITING",raw:null});
+    }
+  });
+  return out;
+}
+function taskState(task){
+  const batch=data.marathon_batch||{},bt=(batch.task_status||{})[task.id]||{};
+  const explicit=String(bt.state||"").toUpperCase();
+  if(explicit==="RUNNING"||explicit==="REPAIRING"||explicit==="ACCEPTED"||explicit==="BLOCKED"||explicit==="RETIRED")return explicit;
+  if(String(task.stage).startsWith("ACCEPTED"))return"ACCEPTED";
+  if(task.stage==="REPAIRING")return"REPAIRING";
+  if(["EXECUTING","STRONG_AGENT","RETESTING","READY"].includes(task.stage))return"RUNNING";
+  return"WAITING";
+}
+function currentGate(task){
+  const batch=data.marathon_batch||{},bt=(batch.task_status||{})[task.id]||{};
+  if(bt.gate){
+    const key=String(bt.gate).replace(/^GATE:\s*/,"").toUpperCase().replace(/\s+/g,"_");
+    const direct=STAGES.findIndex(x=>x[0]===key);
+    if(direct>=0)return direct;
+    if(key.includes("STRONG"))return STAGES.findIndex(x=>x[0]==="STRONG_AGENT");
+    if(key.includes("MODEL"))return STAGES.findIndex(x=>x[0]==="STRONG_AGENT");
+  }
+  if(String(task.stage).startsWith("ACCEPTED"))return STAGES.length-1;
+  const pipe=virtualPipeline(task);
+  for(let i=0;i<pipe.length;i++){
+    if(pipe[i].key==="FREEZE")continue;
+    if(pipe[i].status==="FAIL")return i;
+    if(pipe[i].status!=="PASS")return i;
+  }
+  return STAGES.length-1;
+}
+function filteredTasks(){
+  const q=el("search").value.trim().toLowerCase(),domain=el("domainFilter").value,state=el("stateFilter").value;
+  return(data.tasks||[]).filter(t=>{
+    const hay=[t.id,t.title,t.domain,t.archetype,t.subdomain].join(" ").toLowerCase();
+    const st=taskState(t);
+    return(!q||hay.includes(q))&&(!domain||t.domain===domain)&&(!state||st===state);
+  });
+}
+function renderStats(){
+  const tasks=data.tasks||[],accepted=tasks.filter(t=>taskState(t)==="ACCEPTED").length,
+        repairing=tasks.filter(t=>taskState(t)==="REPAIRING").length,
+        running=tasks.filter(t=>taskState(t)==="RUNNING").length;
+  el("acceptedCount").textContent=accepted;
+  el("activeCount").textContent=running;
+  el("repairCount").textContent=repairing;
+  el("remainingCount").textContent=Math.max(0,tasks.length-accepted);
+}
+function renderFilters(){
+  const current=el("domainFilter").value;
+  const domains=[...new Set((data.tasks||[]).map(t=>t.domain).filter(Boolean))].sort();
+  el("domainFilter").innerHTML='<option value="">All domains</option>'+domains.map(d=>'<option '+(d===current?'selected':'')+'>'+esc(d)+'</option>').join("");
+}
+function stationX(i){const left=90,right=3510;return left+(right-left)*(i/(STAGES.length-1))}
+function renderPipeline(){
+  const tasks=filteredTasks();
+  const byStage=Array.from({length:STAGES.length},()=>[]);
+  tasks.forEach(t=>byStage[currentGate(t)].push(t));
+  let html="";
+  STAGES.forEach(([key,label],i)=>{
+    const rows=byStage[i];
+    const hasRepair=rows.some(t=>taskState(t)==="REPAIRING");
+    const hasActive=rows.some(t=>taskState(t)==="RUNNING");
+    const hasPass=rows.length>0&&!hasRepair&&!hasActive&&rows.some(t=>taskState(t)==="ACCEPTED"||currentGate(t)>i);
+    const cls=hasRepair?"has-repair":hasActive?"has-active":hasPass?"has-pass":"";
+    html+='<div class="station '+cls+'" data-stage="'+key+'" style="left:'+stationX(i)+'px">'+
+      '<div class="station-index">'+String(i+1).padStart(2,"0")+'</div>'+
+      '<div class="station-label">'+esc(label)+'</div>'+
+      '<div class="station-valve"></div><div class="station-stem"></div>'+
+      '<div class="task-cluster">'+rows.slice(0,8).map(t=>capsule(t)).join("")+
+      (rows.length>8?'<div class="task-capsule">+'+(rows.length-8)+' more</div>':'')+'</div>'+
+      '<div class="station-count">'+rows.length+'</div></div>';
+  });
+  el("stations").innerHTML=html;
+  bindTaskClicks();
+  const positioned=tasks.filter(t=>taskState(t)!=="WAITING").length;
+  el("pipelineSummary").textContent=tasks.length+" visible · "+positioned+" active/repair/accepted · "+STAGES.length+" strict gates";
+  maybeFollowActive(tasks);
+}
+function capsule(t){
+  const st=taskState(t),cls=st.toLowerCase();
+  const short=t.id.replace(/^llb-/,"");
+  const idx=currentGate(t);
+  const moved=previousPositions[t.id]!=null&&previousPositions[t.id]!==idx;
+  previousPositions[t.id]=idx;
+  return '<button class="task-capsule '+cls+(moved?' moved':'')+'" data-task="'+esc(t.id)+'" title="'+esc(t.title)+'">'+esc(short)+'</button>';
+}
+function maybeFollowActive(tasks){
+  const current=(data.marathon_batch||{}).current_task;
+  const t=tasks.find(x=>x.id===current);
+  if(!t)return;
+  const viewport=el("pipeViewport"),target=stationX(currentGate(t));
+  const desired=Math.max(0,target-viewport.clientWidth*.45);
+  if(Math.abs(viewport.scrollLeft-desired)>250)viewport.scrollTo({left:desired,behavior:"smooth"});
+}
+function renderTaskList(){
+  const tasks=filteredTasks().sort((a,b)=>currentGate(b)-currentGate(a)||a.id.localeCompare(b.id));
+  el("visibleCount").textContent=tasks.length+" tasks";
+  el("taskList").innerHTML=tasks.map(t=>{
+    const idx=currentGate(t),st=taskState(t);
+    return '<div class="task-row" data-task="'+esc(t.id)+'"><div class="task-main"><b>'+esc(t.title)+'</b><small>'+esc(t.id)+'</small></div>'+
+      '<div class="task-domain">'+esc(t.domain)+' · '+esc(t.archetype)+'</div>'+
+      '<div class="task-stage">'+String(idx+1).padStart(2,"0")+' · '+esc(STAGES[idx][1])+'</div>'+
+      '<div class="task-state '+st+'">'+esc(st)+'</div></div>';
+  }).join("")||'<div style="padding:20px;color:#71869d">No tasks match these filters.</div>';
+  bindTaskClicks();
+}
+function renderRun(){
+  const b=data.marathon_batch||{};
+  el("batchBadge").textContent=b.status||"MANUAL";
+  const current=b.current_task||"No task currently marked as running";
+  const gate=b.current_gate||"Waiting for next manual pipeline update";
+  el("currentRun").innerHTML='<div class="run-main"><span>CURRENT TASK</span><b>'+esc(current)+'</b><small>'+esc(gate)+'</small></div>'+
+    '<div class="run-grid"><div><b>'+esc(b.completed||0)+'</b><span>Completed</span></div><div><b>'+esc(b.accepted||0)+'</b><span>Accepted</span></div><div><b>'+esc(b.repairing||0)+'</b><span>Repairing</span></div></div>';
+}
+function renderActivity(){
+  const items=(data.activity||[]).slice(0,6);
+  el("activity").innerHTML=items.map(a=>'<div class="activity-item"><b>'+esc(a.type||"UPDATE")+' · '+esc(a.title||"Pipeline update")+'</b><p>'+esc(a.detail||"")+'</p></div>').join("")||
+    '<div class="activity-item"><b>MANUAL PIPELINE</b><p>Waiting for the next recorded transition.</p></div>';
+}
+function openTask(id){
+  const t=(data.tasks||[]).find(x=>x.id===id);if(!t)return;
+  const p=virtualPipeline(t),idx=currentGate(t),st=taskState(t);
+  const passes=p.filter(x=>x.status==="PASS").length;
+  const fails=p.filter(x=>x.status==="FAIL").length;
+  const failures=(t.failure_codes||[]).length?'<div class="failure-box"><b>Current failure / repair reason</b><br>'+esc(t.failure_codes.join(" · "))+'</div>':"";
+  el("drawerContent").innerHTML='<div class="drawer-id">'+esc(t.id)+'</div><h2>'+esc(t.title)+'</h2>'+
+    '<div class="drawer-meta">'+esc(t.domain)+' · '+esc(t.archetype)+(t.subdomain?' · '+esc(t.subdomain):'')+'</div>'+
+    '<div class="drawer-kpis"><div class="drawer-kpi"><b>'+esc(st)+'</b><span>State</span></div><div class="drawer-kpi"><b>'+String(idx+1).padStart(2,"0")+'</b><span>Current gate</span></div><div class="drawer-kpi"><b>'+(t.ess==null?'—':esc(t.ess))+'</b><span>ESS</span></div><div class="drawer-kpi"><b>'+(t.structural_score==null?'—':esc(t.structural_score)+'/20')+'</b><span>Structural</span></div></div>'+
+    failures+
+    '<div class="gate-list">'+p.map((g,i)=>'<div class="gate-row"><div class="gate-num">'+String(i+1).padStart(2,"0")+'</div><div><b>'+esc(g.label)+'</b><small>'+esc(g.raw==null?"No fresh evidence yet":g.raw)+'</small></div><span class="gate-status '+g.status+'">'+g.status+'</span></div>').join("")+'</div>';
+  el("drawer").classList.add("show");el("backdrop").classList.add("show");
+}
+function bindTaskClicks(){
+  document.querySelectorAll("[data-task]").forEach(n=>{n.onclick=e=>{e.stopPropagation();openTask(n.getAttribute("data-task"))}});
+}
+function renderFreshness(){
+  const dt=new Date(data.generated_at),age=(Date.now()-dt.getTime())/1000;
+  const fresh=!isNaN(dt)&&age<180;
+  el("livePulse").classList.toggle("off",!fresh);
+  el("freshness").textContent=isNaN(dt)?"Live feed connected":"Updated "+dt.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})+(fresh?" · LIVE":" · STALE");
+}
+function render(){if(!data)return;renderStats();renderFilters();renderPipeline();renderTaskList();renderRun();renderActivity();renderFreshness()}
+async function load(silent){
+  try{
+    const r=await fetch("status.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);
+    data=await r.json();lastGood=data;render();if(!silent)toast("Pipeline refreshed");
+  }catch(e){if(lastGood){data=lastGood;render()}el("livePulse").classList.add("off");el("freshness").textContent="Feed reconnecting…"}
+}
+["search","domainFilter","stateFilter"].forEach(id=>el(id).addEventListener(id==="search"?"input":"change",()=>{renderPipeline();renderTaskList()}));
+el("refreshBtn").onclick=()=>load(false);
+el("drawerClose").onclick=()=>{el("drawer").classList.remove("show");el("backdrop").classList.remove("show")};
+el("backdrop").onclick=el("drawerClose").onclick;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")el("drawerClose").click()});
+load(true);setInterval(()=>load(true),15000);
+})();
+</script>
 </body>
 </html>
