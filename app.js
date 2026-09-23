@@ -187,6 +187,26 @@ function renderFreshness(){
   el("livePulse").classList.toggle("off",!fresh);
   el("freshness").textContent=isNaN(dt)?"Live feed connected":"Updated "+dt.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})+(fresh?" · LIVE":" · STALE");
 }
+
+function initControlRoomMotion(){
+  const scene=document.querySelector(".machine-scene");
+  if(!scene)return;
+  let tx=0,ty=0,cx=0,cy=0,raf=0;
+  const draw=()=>{
+    cx+=(tx-cx)*.075;cy+=(ty-cy)*.075;
+    scene.style.setProperty("--mx",cx.toFixed(1)+"px");
+    scene.style.setProperty("--my",cy.toFixed(1)+"px");
+    raf=requestAnimationFrame(draw);
+  };
+  const move=e=>{
+    const x=(e.clientX/window.innerWidth-.5)*34;
+    const y=(e.clientY/window.innerHeight-.5)*24;
+    tx=x;ty=y;
+  };
+  window.addEventListener("pointermove",move,{passive:true});
+  if(!raf)draw();
+}
+
 function render(){if(!data)return;renderStats();renderFilters();renderPipeline();renderTaskList();renderRun();renderActivity();renderFreshness()}
 async function load(silent){
   try{
@@ -199,5 +219,5 @@ el("refreshBtn").onclick=()=>load(false);
 el("drawerClose").onclick=()=>{el("drawer").classList.remove("show");el("backdrop").classList.remove("show")};
 el("backdrop").onclick=el("drawerClose").onclick;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")el("drawerClose").click()});
-load(true);setInterval(()=>load(true),15000);
+initControlRoomMotion();load(true);setInterval(()=>load(true),15000);
 })();
