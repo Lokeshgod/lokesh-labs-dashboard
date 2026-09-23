@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23T22:45:02.007069+00:00",
+  "generated_at": "2026-09-23T22:59:33.637928+00:00",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -49,31 +49,31 @@
   },
   "automations": [
     {
-      "name": "Creator",
+      "name": "Pipeline Worker A",
       "minute": 0,
-      "role": "Create candidates",
-      "short": "CREATE"
+      "role": "Full task pipeline",
+      "short": "WORKER A"
     },
     {
-      "name": "Executor",
+      "name": "Pipeline Worker B",
       "minute": 5,
-      "role": "Execution / solvability",
-      "short": "EXECUTE"
+      "role": "Full task pipeline",
+      "short": "WORKER B"
     },
     {
-      "name": "Strong Agent",
+      "name": "Pipeline Worker C",
       "minute": 15,
-      "role": "Independent difficulty run",
-      "short": "DIFFICULTY"
+      "role": "Full task pipeline",
+      "short": "WORKER C"
     },
     {
-      "name": "Repairer",
+      "name": "Pipeline Worker D",
       "minute": 35,
-      "role": "Repair / revalidate / finalize",
-      "short": "REPAIR"
+      "role": "Full task pipeline",
+      "short": "WORKER D"
     },
     {
-      "name": "Audit",
+      "name": "Pipeline Audit",
       "minute": 55,
       "role": "Independent oversight",
       "short": "AUDIT"
@@ -256,6 +256,7 @@
         "Verification"
       ],
       "stage": "REPAIRING",
+      "current_pipeline_stage": "REPAIRING",
       "lifecycle": "candidate",
       "failure_codes": [
         "CHECKER_CANONICAL_RUNTIME_LAYOUT"
@@ -407,6 +408,7 @@
         "Verification"
       ],
       "stage": "REPAIRING",
+      "current_pipeline_stage": "REPAIRING",
       "lifecycle": "candidate",
       "failure_codes": [
         "CHECKER_CANONICAL_RUNTIME_LAYOUT"
@@ -559,6 +561,7 @@
         "Verification"
       ],
       "stage": "REPAIRING",
+      "current_pipeline_stage": "REPAIRING",
       "lifecycle": "candidate",
       "failure_codes": [
         "CHECKER_CANONICAL_RUNTIME_LAYOUT"
@@ -710,6 +713,7 @@
         "Verification"
       ],
       "stage": "REPAIRING",
+      "current_pipeline_stage": "REPAIRING",
       "lifecycle": "candidate",
       "failure_codes": [
         "CHECKER_CANONICAL_RUNTIME_LAYOUT"
@@ -862,6 +866,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -1012,6 +1017,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -1160,6 +1166,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -1309,6 +1316,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -1459,6 +1467,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -1608,6 +1617,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -1756,6 +1766,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -1906,6 +1917,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [
         "EXECUTION_EVIDENCE_PENDING"
@@ -2063,6 +2075,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -2213,6 +2226,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -2361,6 +2375,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -2510,6 +2525,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -2661,6 +2677,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -2810,6 +2827,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -2957,6 +2975,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -3106,6 +3125,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -3255,6 +3275,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -3403,6 +3424,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -3554,6 +3576,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -3704,6 +3727,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [
         "EXECUTION_EVIDENCE_PENDING"
@@ -3862,6 +3886,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -4011,6 +4036,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [
         "CREATOR_VERIFIER_COVERAGE_GAP_CONCURRENCY"
@@ -4163,6 +4189,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -4313,6 +4340,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -4461,6 +4489,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -4611,6 +4640,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [
         "EXECUTION_EVIDENCE_PENDING"
@@ -4770,6 +4800,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -4919,6 +4950,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -5067,6 +5099,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -5217,6 +5250,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -5367,6 +5401,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [],
       "unresolved_gates": [
@@ -5516,6 +5551,7 @@
         "Verification"
       ],
       "stage": "CANDIDATE",
+      "current_pipeline_stage": "CANDIDATE",
       "lifecycle": "candidate",
       "failure_codes": [
         "EXECUTION_EVIDENCE_PENDING"
