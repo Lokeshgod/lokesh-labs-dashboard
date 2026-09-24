@@ -979,10 +979,19 @@ function bindTaskClicks(){
   document.querySelectorAll("[data-task]").forEach(n=>{n.onclick=e=>{e.stopPropagation();openTask(n.getAttribute("data-task"))}});
 }
 function renderFreshness(){
-  const dt=new Date(data.generated_at),age=(Date.now()-dt.getTime())/1000;
-  const fresh=!isNaN(dt)&&age<180;
-  el("livePulse").classList.toggle("off",!fresh);
-  el("freshness").textContent=isNaN(dt)?"Live feed connected":"Updated "+dt.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})+(fresh?" · LIVE":" · STALE");
+  const now=new Date();
+  const dt=new Date(data&&data.generated_at);
+  const age=isNaN(dt)?null:Math.max(0,(now-dt)/1000);
+  const liveClock=now.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+  let last="no event yet";
+  if(age!==null){
+    if(age<5) last="event just now";
+    else if(age<60) last="event "+Math.floor(age)+"s ago";
+    else if(age<3600) last="event "+Math.floor(age/60)+"m ago";
+    else last="event "+Math.floor(age/3600)+"h ago";
+  }
+  el("livePulse").classList.remove("off");
+  el("freshness").textContent="LIVE "+liveClock+" · "+last;
 }
 
 function initControlRoomMotion(){
@@ -1016,7 +1025,7 @@ el("refreshBtn").onclick=()=>load(false);
 el("drawerClose").onclick=()=>{el("drawer").classList.remove("show");el("backdrop").classList.remove("show")};
 el("backdrop").onclick=el("drawerClose").onclick;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")el("drawerClose").click()});
-initControlRoomMotion();load(true);setInterval(()=>load(true),15000);
+initControlRoomMotion();load(true);setInterval(()=>load(true),3000);setInterval(()=>{if(data)renderFreshness()},1000);
 })();
 </script>
 </body>
