@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T00:25:39.487Z",
+  "generated_at": "2026-09-24T00:25:59.816Z",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -186,6 +186,16 @@
     {
       "type": "GATE_PASS",
       "title": "llb-aiml-build-001",
+      "detail": "Attempt 2 · Gate 02 Schema · PASS"
+    },
+    {
+      "type": "GATE_START",
+      "title": "llb-aiml-build-001",
+      "detail": "Attempt 2 · Gate 03 Static · RUNNING"
+    },
+    {
+      "type": "GATE_PASS",
+      "title": "llb-aiml-build-001",
       "detail": "Attempt 2 · Gate 01 Package · PASS"
     },
     {
@@ -278,22 +288,6 @@
         "llb-aiml-integrate-001",
         "llb-aiml-investigate-001"
       ]
-    },
-    {
-      "type": "REPAIR",
-      "title": "CHECKER_CANONICAL_RUNTIME_LAYOUT",
-      "detail": "execution_infrastructure",
-      "tasks": [
-        "llb-aiml-build-001",
-        "llb-aiml-configure-001",
-        "llb-aiml-integrate-001",
-        "llb-aiml-investigate-001"
-      ]
-    },
-    {
-      "type": "AUDIT",
-      "title": "NO_PROMOTIONS_CORRECTED_EXECUTION_ARTIFACT_NOT_YET_INGESTED",
-      "detail": "reviewed=36 promoted=0"
     }
   ],
   "tasks": [
@@ -5758,7 +5752,7 @@
     "batch_size": 10,
     "status": "RUNNING",
     "current_task": "llb-aiml-build-001",
-    "current_gate": "SCHEMA",
+    "current_gate": "STATIC",
     "completed": 0,
     "accepted": 0,
     "retired": 0,
@@ -5779,9 +5773,9 @@
     "task_status": {
       "llb-aiml-build-001": {
         "state": "RUNNING",
-        "gate": "SCHEMA",
+        "gate": "STATIC",
         "result": "RUNNING",
-        "updated_at": "2026-09-24T00:25:39.487Z",
+        "updated_at": "2026-09-24T00:25:59.816Z",
         "attempt": 2
       },
       "llb-aiml-configure-001": {
