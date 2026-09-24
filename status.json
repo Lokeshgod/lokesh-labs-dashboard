@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T00:22:05.006Z",
+  "generated_at": "2026-09-24T00:23:46.655Z",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -183,6 +183,16 @@
     }
   ],
   "activity": [
+    {
+      "type": "GATE_PASS",
+      "title": "llb-aiml-build-001",
+      "detail": "Gate 04 Similarity / Novelty · PASS across 36-candidate set"
+    },
+    {
+      "type": "GATE_START",
+      "title": "llb-aiml-build-001",
+      "detail": "Gate 05 Environment Build · RUNNING"
+    },
     {
       "type": "GATE_PASS",
       "title": "llb-aiml-build-001",
@@ -5728,7 +5738,7 @@
     "batch_size": 10,
     "status": "RUNNING",
     "current_task": "llb-aiml-build-001",
-    "current_gate": "NOVELTY_1",
+    "current_gate": "BUILD",
     "completed": 0,
     "accepted": 0,
     "retired": 0,
@@ -5749,9 +5759,9 @@
     "task_status": {
       "llb-aiml-build-001": {
         "state": "RUNNING",
-        "gate": "NOVELTY_1",
+        "gate": "BUILD",
         "result": "RUNNING",
-        "updated_at": "2026-09-24T00:22:05.006Z"
+        "updated_at": "2026-09-24T00:23:46.655Z"
       },
       "llb-aiml-configure-001": {
         "state": "QUEUED",
