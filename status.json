@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T00:25:59.816Z",
+  "generated_at": "2026-09-24T00:26:21.099Z",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -186,6 +186,16 @@
     {
       "type": "GATE_PASS",
       "title": "llb-aiml-build-001",
+      "detail": "Attempt 2 · Gate 03 Static · PASS"
+    },
+    {
+      "type": "GATE_START",
+      "title": "llb-aiml-build-001",
+      "detail": "Attempt 2 · Gate 04 Similarity / Novelty · RUNNING"
+    },
+    {
+      "type": "GATE_PASS",
+      "title": "llb-aiml-build-001",
       "detail": "Attempt 2 · Gate 02 Schema · PASS"
     },
     {
@@ -272,22 +282,6 @@
       "type": "TASK_START",
       "title": "llb-aiml-build-001",
       "detail": "Manual strict pipeline run started at Gate 01 · Package"
-    },
-    {
-      "type": "CREATOR",
-      "title": "HOLD_CREATION_VALIDATION_BACKLOG",
-      "detail": "36 staged candidates and 0 accepted; all 36 are awaiting execution-backed validation, so another batch would increase validation debt without improving accepted progress. Resume creation after executor/repair/checker throughput materially reduces the backlog or establishes accepted conversions."
-    },
-    {
-      "type": "EXECUTOR",
-      "title": "4 task(s) in latest execution batch",
-      "detail": "All four images build, but NOP and Oracle execute against an invalid checker runtime layout that does not preserve canonical environment/tests/solution paths. Raw nonzero NOP results are invalid infrastructure failures, not semantic NOP passes. Routed to Repair with CHECKER_CANONICAL_RUNTIME_LAYOUT. Independent participant evidence remains pending.",
-      "tasks": [
-        "llb-aiml-build-001",
-        "llb-aiml-configure-001",
-        "llb-aiml-integrate-001",
-        "llb-aiml-investigate-001"
-      ]
     }
   ],
   "tasks": [
@@ -5752,7 +5746,7 @@
     "batch_size": 10,
     "status": "RUNNING",
     "current_task": "llb-aiml-build-001",
-    "current_gate": "STATIC",
+    "current_gate": "NOVELTY_1",
     "completed": 0,
     "accepted": 0,
     "retired": 0,
@@ -5773,9 +5767,9 @@
     "task_status": {
       "llb-aiml-build-001": {
         "state": "RUNNING",
-        "gate": "STATIC",
+        "gate": "NOVELTY_1",
         "result": "RUNNING",
-        "updated_at": "2026-09-24T00:25:59.816Z",
+        "updated_at": "2026-09-24T00:26:21.099Z",
         "attempt": 2
       },
       "llb-aiml-configure-001": {
