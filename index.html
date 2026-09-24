@@ -601,6 +601,151 @@ body:after{
   .bay-footer{gap:10px;justify-content:flex-start}.bay-footer span{font-size:6px}
 }
 
+
+/* === Five-theme switcher === */
+html{color-scheme:dark}
+.top-actions{display:flex;align-items:center;gap:9px}
+.theme-switcher{position:relative;z-index:120}
+.theme-trigger{
+  min-width:158px;height:42px;border:1px solid #29435e;border-radius:13px;
+  background:rgba(10,25,42,.78);color:var(--text);display:flex;align-items:center;gap:9px;
+  padding:6px 9px;backdrop-filter:blur(15px);box-shadow:0 8px 24px rgba(0,0,0,.12)
+}
+.theme-trigger>span:nth-child(2){text-align:left;min-width:0;flex:1}
+.theme-trigger small{display:block;font:800 6px ui-monospace,monospace;letter-spacing:.14em;color:var(--muted)}
+.theme-trigger b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.theme-trigger em{font-style:normal;color:var(--muted);font-size:13px;transition:.2s}
+.theme-switcher.open .theme-trigger em{transform:rotate(180deg)}
+.theme-mini{width:29px;height:29px;border-radius:9px;border:1px solid rgba(255,255,255,.08);display:flex;gap:2px;align-items:end;padding:5px;background:#0c1c2e}
+.theme-mini i{flex:1;border-radius:3px;display:block}.theme-mini i:nth-child(1){height:55%;background:var(--cyan)}.theme-mini i:nth-child(2){height:82%;background:var(--blue)}.theme-mini i:nth-child(3){height:68%;background:var(--violet)}
+.theme-menu{
+  position:absolute;right:0;top:50px;width:310px;padding:8px;border-radius:16px;
+  border:1px solid #2b4660;background:rgba(6,19,32,.96);backdrop-filter:blur(24px);
+  box-shadow:0 24px 70px rgba(0,0,0,.38);opacity:0;transform:translateY(-8px) scale(.98);
+  pointer-events:none;transition:.18s;transform-origin:top right
+}
+.theme-switcher.open .theme-menu{opacity:1;transform:none;pointer-events:auto}
+.theme-option{
+  width:100%;border:1px solid transparent;background:transparent;color:#e9f3fb;border-radius:12px;
+  padding:8px;display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:center;text-align:left
+}
+.theme-option:hover,.theme-option.active{background:rgba(72,215,255,.065);border-color:rgba(72,215,255,.14)}
+.theme-option b{display:block;font-size:10px}.theme-option small{display:block;color:#738ba1;font-size:8px;margin-top:2px}
+.theme-preview{height:44px;border-radius:9px;display:flex;align-items:flex-end;gap:4px;padding:7px;border:1px solid rgba(255,255,255,.1);overflow:hidden}
+.theme-preview i{flex:1;border-radius:4px 4px 2px 2px}.theme-preview i:nth-child(1){height:52%}.theme-preview i:nth-child(2){height:82%}.theme-preview i:nth-child(3){height:66%}
+.theme-preview.reactor{background:#071827}.theme-preview.reactor i:nth-child(1){background:#48d7ff}.theme-preview.reactor i:nth-child(2){background:#5f87ff}.theme-preview.reactor i:nth-child(3){background:#9a7cff}
+.theme-preview.arctic{background:#eaf4fa}.theme-preview.arctic i:nth-child(1){background:#2ca6c7}.theme-preview.arctic i:nth-child(2){background:#7da9c8}.theme-preview.arctic i:nth-child(3){background:#d2e6f2}
+.theme-preview.carbon{background:#090b0d}.theme-preview.carbon i:nth-child(1){background:#f3f6f8}.theme-preview.carbon i:nth-child(2){background:#7f8a92}.theme-preview.carbon i:nth-child(3){background:#32383d}
+.theme-preview.solar{background:#1d1209}.theme-preview.solar i:nth-child(1){background:#ffcc65}.theme-preview.solar i:nth-child(2){background:#ff7e3b}.theme-preview.solar i:nth-child(3){background:#d54424}
+.theme-preview.aurora{background:#071b18}.theme-preview.aurora i:nth-child(1){background:#44f5be}.theme-preview.aurora i:nth-child(2){background:#22b8a6}.theme-preview.aurora i:nth-child(3){background:#a56cff}
+
+/* Theme 1 — Reactor (default) */
+html[data-theme="reactor"]{--theme-accent:#48d7ff}
+
+/* Theme 2 — Arctic Glass */
+html[data-theme="arctic"]{
+  color-scheme:light;
+  --bg:#eaf2f7;--bg2:#dfeaf1;--panel:rgba(245,250,253,.83);--panel2:#edf5f9;
+  --line:#bad0dc;--line2:#91b7c8;--text:#10202c;--muted:#5f7785;
+  --cyan:#159abd;--blue:#4d83a4;--green:#1f9e72;--amber:#c88622;--red:#d34f5a;
+  --violet:#7886c8;--pipe:#c7dce7;--pipe-edge:#91afbf;--shadow:0 24px 70px rgba(55,91,110,.16)
+}
+html[data-theme="arctic"] body{
+  background:
+    radial-gradient(circle at 15% 0%,rgba(76,174,204,.18),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(121,142,207,.16),transparent 26%),
+    linear-gradient(180deg,#eef6fa,#dfeaf1 70%,#e8f1f6)
+}
+html[data-theme="arctic"] body:before{opacity:.7;background-size:36px 36px;background-image:linear-gradient(rgba(18,63,82,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(18,63,82,.045) 1px,transparent 1px)}
+html[data-theme="arctic"] .topbar,
+html[data-theme="arctic"] .brand strong,
+html[data-theme="arctic"] .hero h1{color:#10202c}
+html[data-theme="arctic"] .livebox,
+html[data-theme="arctic"] .theme-trigger,
+html[data-theme="arctic"] .searchbox,
+html[data-theme="arctic"] .control-row select,
+html[data-theme="arctic"] .control-row button{background:rgba(244,250,253,.82);border-color:#bad0dc;color:#17303f}
+html[data-theme="arctic"] .theme-menu{background:rgba(239,247,251,.98);border-color:#b4cbd6}
+html[data-theme="arctic"] .theme-option{color:#152b38}
+html[data-theme="arctic"] .theme-option:hover,html[data-theme="arctic"] .theme-option.active{background:rgba(21,154,189,.08)}
+html[data-theme="arctic"] .theme-mini{background:#e7f2f7}
+html[data-theme="arctic"] .hero-stats div,
+html[data-theme="arctic"] .pipeline-shell,
+html[data-theme="arctic"] .panel,
+html[data-theme="arctic"] .task-row,
+html[data-theme="arctic"] .run-main,
+html[data-theme="arctic"] .reactor-bay{background:rgba(244,250,253,.78);border-color:#bdd1dc;color:#142a37}
+html[data-theme="arctic"] .reactor-bay{background:linear-gradient(180deg,rgba(238,248,252,.97),rgba(221,237,245,.97))}
+html[data-theme="arctic"] .bay-stage{background:radial-gradient(circle at 50% 45%,rgba(39,159,193,.15),transparent 36%),linear-gradient(180deg,rgba(236,247,252,.85),rgba(215,233,242,.92))}
+html[data-theme="arctic"] .bay-hud{background:rgba(234,245,250,.9);border-color:#b7ccd6}
+html[data-theme="arctic"] .bay-module{background:rgba(245,251,253,.92);border-color:#aac2cf;color:#17303f}
+html[data-theme="arctic"] .bay-module b{color:#17303f}
+html[data-theme="arctic"] .main-pipe{background:linear-gradient(180deg,#d0e1ea,#abc8d7)}
+html[data-theme="arctic"] .drawer{background:#e9f3f8;color:#122835}
+html[data-theme="arctic"] .gate-row{background:#edf6fa;border-color:#c0d4df}
+html[data-theme="arctic"] .task-row{background:#edf6fa}
+html[data-theme="arctic"] .panel-head p,html[data-theme="arctic"] .hero p,html[data-theme="arctic"] .task-domain{color:#617985}
+
+/* Theme 3 — Carbon Ops */
+html[data-theme="carbon"]{
+  --bg:#080a0c;--bg2:#111416;--panel:rgba(15,18,20,.9);--panel2:#131719;
+  --line:#30363a;--line2:#535d63;--text:#f3f6f8;--muted:#89949b;
+  --cyan:#e6f0f5;--blue:#9daab2;--green:#79d6a3;--amber:#d7ba77;--red:#ff6e78;
+  --violet:#a8aeb3;--pipe:#24292d;--pipe-edge:#4b555b;--shadow:0 28px 80px rgba(0,0,0,.48)
+}
+html[data-theme="carbon"] body{background:radial-gradient(circle at 50% -20%,rgba(255,255,255,.065),transparent 38%),linear-gradient(180deg,#080a0c,#0d1012)}
+html[data-theme="carbon"] body:before{background-size:32px 32px;opacity:.35}
+html[data-theme="carbon"] .ambient{display:none}
+html[data-theme="carbon"] .reactor-bay,html[data-theme="carbon"] .pipeline-shell,html[data-theme="carbon"] .panel{background:linear-gradient(180deg,rgba(18,21,23,.97),rgba(8,10,12,.98));border-color:#343a3e}
+html[data-theme="carbon"] .bay-stage{background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.055),transparent 34%),linear-gradient(180deg,#111416,#090b0d)}
+html[data-theme="carbon"] .bay-grid,.theme-preview.carbon{filter:grayscale(1)}
+html[data-theme="carbon"] .reactor-core,html[data-theme="carbon"] .engine-face{filter:grayscale(.85)}
+html[data-theme="carbon"] .task-capsule,html[data-theme="carbon"] .task-row,html[data-theme="carbon"] .run-main{background:#111619;border-color:#343b40}
+html[data-theme="carbon"] .signal-track span:before{background:#d6e1e7}
+
+/* Theme 4 — Solar Core */
+html[data-theme="solar"]{
+  --bg:#160d08;--bg2:#24140b;--panel:rgba(35,20,12,.86);--panel2:#28170d;
+  --line:#5c3821;--line2:#87512b;--text:#fff5e8;--muted:#b99a7d;
+  --cyan:#ffc55d;--blue:#ff8b47;--green:#9fd26b;--amber:#ffd06b;--red:#ff5c4d;
+  --violet:#d46b38;--pipe:#482719;--pipe-edge:#754328;--shadow:0 30px 80px rgba(74,31,8,.32)
+}
+html[data-theme="solar"] body{background:radial-gradient(circle at 30% 0%,rgba(255,142,55,.15),transparent 32%),radial-gradient(circle at 86% 10%,rgba(255,87,50,.12),transparent 27%),linear-gradient(180deg,#160d08,#201108 72%,#140b07)}
+html[data-theme="solar"] .ambient-a{background:#ff8b47}.html[data-theme="solar"] .ambient-b{background:#ff5140}
+html[data-theme="solar"] .reactor-bay{background:linear-gradient(180deg,rgba(45,23,12,.98),rgba(21,11,7,.98));border-color:#684029}
+html[data-theme="solar"] .bay-stage{background:radial-gradient(circle at 50% 44%,rgba(255,145,63,.17),transparent 36%),linear-gradient(180deg,rgba(37,18,10,.72),rgba(17,8,6,.92))}
+html[data-theme="solar"] .engine-face,html[data-theme="solar"] .reactor-core{background:radial-gradient(circle at 35% 27%,rgba(255,255,255,.22),transparent 22%),radial-gradient(circle,#9c4c1d 0,#542716 48%,#211008 100%);border-color:#ffb054;box-shadow:0 0 52px rgba(255,126,50,.34)}
+html[data-theme="solar"] .engine-ring,html[data-theme="solar"] .bay-orbit{border-color:rgba(255,167,82,.4)}
+html[data-theme="solar"] .bay-module,html[data-theme="solar"] .task-row,html[data-theme="solar"] .run-main{background:#29160d;border-color:#60391f}
+html[data-theme="solar"] .main-pipe{background:linear-gradient(180deg,#5b321e,#31170d)}
+html[data-theme="solar"] .flow-lights{filter:hue-rotate(-35deg) saturate(1.7)}
+
+/* Theme 5 — Aurora Matrix */
+html[data-theme="aurora"]{
+  --bg:#061310;--bg2:#091c18;--panel:rgba(8,29,25,.86);--panel2:#0b241f;
+  --line:#1c5147;--line2:#2b7466;--text:#ecfff9;--muted:#7da99f;
+  --cyan:#42f0bd;--blue:#21b9a4;--green:#56f59a;--amber:#d5c56c;--red:#ff647d;
+  --violet:#ad75ff;--pipe:#163e37;--pipe-edge:#286d60;--shadow:0 28px 80px rgba(0,50,40,.28)
+}
+html[data-theme="aurora"] body{background:radial-gradient(circle at 14% 0%,rgba(36,243,190,.12),transparent 30%),radial-gradient(circle at 88% 8%,rgba(170,100,255,.15),transparent 28%),linear-gradient(180deg,#061310,#071c17 62%,#09131b)}
+html[data-theme="aurora"] .ambient-a{background:#28e4b6}.html[data-theme="aurora"] .ambient-b{background:#9f6cff}
+html[data-theme="aurora"] .reactor-bay{background:linear-gradient(180deg,rgba(8,32,27,.97),rgba(5,19,18,.98));border-color:#21574c}
+html[data-theme="aurora"] .bay-stage{background:radial-gradient(circle at 50% 44%,rgba(41,244,190,.12),transparent 36%),radial-gradient(circle at 68% 30%,rgba(166,100,255,.10),transparent 26%),linear-gradient(180deg,#08221c,#061512)}
+html[data-theme="aurora"] .engine-face,html[data-theme="aurora"] .reactor-core{background:radial-gradient(circle at 35% 27%,rgba(255,255,255,.2),transparent 22%),radial-gradient(circle,#176c5a 0,#0d4138 48%,#061b18 100%);border-color:#54efc4;box-shadow:0 0 50px rgba(66,240,189,.27)}
+html[data-theme="aurora"] .bay-module,html[data-theme="aurora"] .task-row,html[data-theme="aurora"] .run-main{background:#0b2923;border-color:#20574c}
+html[data-theme="aurora"] .main-pipe{background:linear-gradient(180deg,#185046,#0d302a)}
+
+.theme-transition *, .theme-transition *:before, .theme-transition *:after{
+  transition:background-color .35s ease,border-color .35s ease,color .35s ease,box-shadow .35s ease,filter .35s ease!important
+}
+@media(max-width:700px){
+  .top-actions{gap:5px}
+  .theme-trigger{min-width:0;width:44px;padding:6px}
+  .theme-trigger>span:nth-child(2),.theme-trigger em{display:none}
+  .theme-mini{width:30px;height:30px}
+  .theme-menu{position:fixed;left:12px;right:12px;top:62px;width:auto}
+}
+
 </style>
 </head>
 <body>
@@ -614,9 +759,40 @@ body:after{
     <div class="brand-mark"><i></i><i></i><i></i></div>
     <div><strong>LOKESH LABS</strong><small>LIVE BENCHMARK PIPELINE</small></div>
   </div>
-  <div class="livebox">
-    <span class="pulse" id="livePulse"></span>
-    <span id="freshness">Connecting…</span>
+  <div class="top-actions">
+    <div class="theme-switcher" id="themeSwitcher">
+      <button class="theme-trigger" id="themeTrigger" type="button" aria-expanded="false">
+        <span class="theme-mini" id="themeMini"><i></i><i></i><i></i></span>
+        <span><small>THEME</small><b id="themeName">Reactor</b></span>
+        <em>⌄</em>
+      </button>
+      <div class="theme-menu" id="themeMenu">
+        <button class="theme-option active" data-theme="reactor" type="button">
+          <span class="theme-preview reactor"><i></i><i></i><i></i></span>
+          <span><b>Reactor</b><small>Cyan + violet control room</small></span>
+        </button>
+        <button class="theme-option" data-theme="arctic" type="button">
+          <span class="theme-preview arctic"><i></i><i></i><i></i></span>
+          <span><b>Arctic Glass</b><small>Ice glass + bright steel</small></span>
+        </button>
+        <button class="theme-option" data-theme="carbon" type="button">
+          <span class="theme-preview carbon"><i></i><i></i><i></i></span>
+          <span><b>Carbon Ops</b><small>Black steel + white telemetry</small></span>
+        </button>
+        <button class="theme-option" data-theme="solar" type="button">
+          <span class="theme-preview solar"><i></i><i></i><i></i></span>
+          <span><b>Solar Core</b><small>Amber reactor + hot metal</small></span>
+        </button>
+        <button class="theme-option" data-theme="aurora" type="button">
+          <span class="theme-preview aurora"><i></i><i></i><i></i></span>
+          <span><b>Aurora Matrix</b><small>Emerald + electric violet</small></span>
+        </button>
+      </div>
+    </div>
+    <div class="livebox">
+      <span class="pulse" id="livePulse"></span>
+      <span id="freshness">Connecting…</span>
+    </div>
   </div>
 </header>
 
@@ -1244,6 +1420,35 @@ function renderFreshness(){
   el("freshness").textContent="LIVE "+liveClock+" · "+last;
 }
 
+
+const THEME_NAMES={reactor:"Reactor",arctic:"Arctic Glass",carbon:"Carbon Ops",solar:"Solar Core",aurora:"Aurora Matrix"};
+function applyTheme(theme,animate){
+  if(!THEME_NAMES[theme]) theme="reactor";
+  if(animate){
+    document.documentElement.classList.add("theme-transition");
+    setTimeout(()=>document.documentElement.classList.remove("theme-transition"),430);
+  }
+  document.documentElement.dataset.theme=theme;
+  try{localStorage.setItem("lokesh-labs-theme",theme)}catch(e){}
+  const name=el("themeName");if(name)name.textContent=THEME_NAMES[theme];
+  document.querySelectorAll(".theme-option").forEach(btn=>btn.classList.toggle("active",btn.dataset.theme===theme));
+}
+function initThemeSwitcher(){
+  let saved="reactor";
+  try{saved=localStorage.getItem("lokesh-labs-theme")||"reactor"}catch(e){}
+  applyTheme(saved,false);
+  const sw=el("themeSwitcher"),trigger=el("themeTrigger");
+  if(!sw||!trigger)return;
+  trigger.addEventListener("click",e=>{
+    e.stopPropagation();const open=sw.classList.toggle("open");
+    trigger.setAttribute("aria-expanded",open?"true":"false");
+  });
+  document.querySelectorAll(".theme-option").forEach(btn=>btn.addEventListener("click",e=>{
+    e.stopPropagation();applyTheme(btn.dataset.theme,true);sw.classList.remove("open");trigger.setAttribute("aria-expanded","false");
+  }));
+  document.addEventListener("click",()=>{sw.classList.remove("open");trigger.setAttribute("aria-expanded","false")});
+}
+
 function initControlRoomMotion(){
   const scene=document.querySelector(".machine-scene");
   if(!scene)return;
@@ -1275,7 +1480,7 @@ el("refreshBtn").onclick=()=>load(false);
 el("drawerClose").onclick=()=>{el("drawer").classList.remove("show");el("backdrop").classList.remove("show")};
 el("backdrop").onclick=el("drawerClose").onclick;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")el("drawerClose").click()});
-initControlRoomMotion();load(true);setInterval(()=>load(true),3000);setInterval(()=>{if(data){renderFreshness();renderReactorBay()}},1000);
+initThemeSwitcher();initControlRoomMotion();load(true);setInterval(()=>load(true),3000);setInterval(()=>{if(data){renderFreshness();renderReactorBay()}},1000);
 })();
 </script>
 </body>
