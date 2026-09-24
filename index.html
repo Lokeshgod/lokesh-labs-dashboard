@@ -635,7 +635,7 @@ function renderFreshness(){
 function render(){if(!data)return;renderStats();renderFilters();renderPipeline();renderTaskList();renderRun();renderActivity();renderFreshness()}
 async function load(silent){
   try{
-    const r=await fetch("status.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);
+    const r=await fetch("https://raw.githubusercontent.com/Lokeshgod/lokesh-labs-dashboard/main/status.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);
     data=await r.json();lastGood=data;render();if(!silent)toast("Pipeline refreshed");
   }catch(e){if(lastGood){data=lastGood;render()}el("livePulse").classList.add("off");el("freshness").textContent="Feed reconnecting…"}
 }

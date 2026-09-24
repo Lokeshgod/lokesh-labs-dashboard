@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23T23:36:42.376Z",
+  "generated_at": "2026-09-24T05:30:31+05:30",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -183,6 +183,11 @@
     }
   ],
   "activity": [
+    {
+      "type": "STATUS_SYNC",
+      "title": "llb-aiml-build-001",
+      "detail": "Manual pipeline paused at Gate 01 · Package. Live feed switched to raw branch polling."
+    },
     {
       "type": "TASK_START",
       "title": "llb-aiml-build-001",
@@ -5681,7 +5686,7 @@
     "mode": "sequential_end_to_end",
     "frozen_set_size": 36,
     "batch_size": 10,
-    "status": "RUNNING",
+    "status": "PAUSED",
     "current_task": "llb-aiml-build-001",
     "current_gate": "PACKAGE",
     "completed": 0,
@@ -5703,10 +5708,10 @@
     ],
     "task_status": {
       "llb-aiml-build-001": {
-        "state": "RUNNING",
+        "state": "WAITING",
         "gate": "PACKAGE",
-        "result": "RUNNING",
-        "updated_at": "2026-09-23T23:36:42.372Z"
+        "result": "PAUSED",
+        "updated_at": "2026-09-24T05:30:31+05:30"
       },
       "llb-aiml-configure-001": {
         "state": "QUEUED",
