@@ -436,6 +436,171 @@ body:after{
   .hero-stats{width:100%}
 }
 
+
+/* === Reactor Bay: unmistakable visual centerpiece === */
+.reactor-bay{
+  margin:12px 0 16px;
+  border:1px solid #254661;
+  border-radius:24px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 15%,rgba(72,215,255,.08),transparent 34%),
+    linear-gradient(180deg,rgba(8,27,45,.96),rgba(5,17,30,.98));
+  box-shadow:0 30px 80px rgba(0,0,0,.28),inset 0 0 70px rgba(72,215,255,.025);
+}
+.bay-hud{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:16px 18px;border-bottom:1px solid rgba(61,101,132,.34);
+  background:linear-gradient(90deg,rgba(12,34,54,.92),rgba(9,26,43,.75));
+}
+.bay-kicker{font:800 8px ui-monospace,monospace;letter-spacing:.16em;color:#59d9ff}
+.bay-hud h2{margin:3px 0 0;font-size:19px;letter-spacing:-.035em}
+.bay-live{display:flex;align-items:center;gap:7px;font:800 8px ui-monospace,monospace;color:#8fa7bb}
+.bay-live i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 14px rgba(57,217,138,.75);animation:pulse 1.5s infinite}
+
+.bay-stage{
+  position:relative;height:510px;overflow:hidden;isolation:isolate;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(29,118,151,.14),transparent 34%),
+    linear-gradient(180deg,rgba(5,18,31,.36),rgba(4,14,25,.72));
+}
+.bay-grid{
+  position:absolute;inset:0;opacity:.42;
+  background-image:
+    linear-gradient(rgba(77,145,181,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(77,145,181,.055) 1px,transparent 1px);
+  background-size:34px 34px;
+  mask-image:linear-gradient(to bottom,transparent,#000 14%,#000 82%,transparent);
+}
+.bay-scan{
+  position:absolute;left:-10%;right:-10%;top:0;height:86px;z-index:1;
+  background:linear-gradient(180deg,transparent,rgba(72,215,255,.035),rgba(72,215,255,.13),transparent);
+  border-bottom:1px solid rgba(72,215,255,.26);
+  animation:bayScan 5s linear infinite;
+}
+@keyframes bayScan{from{transform:translateY(-110px)}to{transform:translateY(570px)}}
+
+.bay-stars i{
+  position:absolute;width:3px;height:3px;border-radius:50%;background:#65dfff;
+  box-shadow:0 0 9px rgba(72,215,255,.75);animation:starBlink 2.5s ease-in-out infinite
+}
+.bay-stars i:nth-child(1){left:8%;top:17%}.bay-stars i:nth-child(2){left:22%;top:66%;animation-delay:-.8s}
+.bay-stars i:nth-child(3){left:35%;top:13%;animation-delay:-1.4s}.bay-stars i:nth-child(4){left:69%;top:18%;animation-delay:-.3s}
+.bay-stars i:nth-child(5){left:85%;top:63%;animation-delay:-1.8s}.bay-stars i:nth-child(6){left:73%;top:78%;animation-delay:-.6s}
+.bay-stars i:nth-child(7){left:14%;top:82%;animation-delay:-2s}.bay-stars i:nth-child(8){left:91%;top:28%;animation-delay:-1.1s}
+@keyframes starBlink{50%{opacity:.2;transform:scale(.6)}}
+
+.bay-engine{
+  position:absolute;left:50%;top:44%;width:190px;height:190px;
+  transform:translate(-50%,-50%);display:grid;place-items:center;z-index:6;
+}
+.engine-ring{position:absolute;border-radius:50%;border:1px solid rgba(83,190,226,.48)}
+.engine-ring.er1{inset:0;animation:erSpin 12s linear infinite}
+.engine-ring.er2{inset:20px;border-style:dashed;border-color:rgba(154,124,255,.52);animation:erSpinR 7s linear infinite}
+.engine-ring.er3{inset:43px;border-color:rgba(57,217,138,.38);animation:erSpin 4.4s linear infinite}
+.engine-ring:before,.engine-ring:after{
+  content:"";position:absolute;width:9px;height:9px;border-radius:3px;background:var(--cyan);
+  box-shadow:0 0 14px rgba(72,215,255,.7)
+}
+.engine-ring:before{left:49%;top:-5px}.engine-ring:after{left:15%;bottom:5%;background:var(--violet);box-shadow:0 0 14px rgba(154,124,255,.65)}
+@keyframes erSpin{to{transform:rotate(360deg)}}@keyframes erSpinR{to{transform:rotate(-360deg)}}
+.engine-face{
+  width:84px;height:84px;border-radius:24px;display:grid;place-items:center;align-content:center;
+  background:
+    radial-gradient(circle at 35% 27%,rgba(255,255,255,.22),transparent 22%),
+    radial-gradient(circle,#1d5872 0,#123951 45%,#081a2a 100%);
+  border:1px solid rgba(116,218,251,.62);
+  box-shadow:0 0 46px rgba(72,215,255,.26),inset 0 0 28px rgba(72,215,255,.13);
+  animation:enginePulse 2.2s ease-in-out infinite;
+}
+.engine-face b{font-size:20px;line-height:1}.engine-face span{font:800 10px ui-monospace,monospace;color:#73e6ff;margin-top:3px}
+.engine-face small{font:800 6px ui-monospace,monospace;color:#6e899e;letter-spacing:.18em;margin-top:4px}
+@keyframes enginePulse{50%{transform:scale(1.07);box-shadow:0 0 62px rgba(72,215,255,.42),inset 0 0 30px rgba(72,215,255,.2)}}
+
+.bay-orbit{position:absolute;left:50%;top:44%;border:1px solid rgba(74,130,163,.26);border-radius:50%;z-index:3}
+.bay-orbit i{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px rgba(72,215,255,.7)}
+.orbit-x{width:330px;height:330px;margin:-165px;animation:bayOrbit 18s linear infinite}
+.orbit-y{width:420px;height:160px;margin:-80px -210px;animation:bayOrbit 12s linear infinite reverse}
+.orbit-z{width:270px;height:430px;margin:-215px -135px;animation:bayOrbit 23s linear infinite}
+.orbit-x i:nth-child(1){top:-4px;left:49%}.orbit-x i:nth-child(2){right:7%;bottom:18%;background:var(--violet)}.orbit-x i:nth-child(3){left:4%;bottom:25%;background:var(--green)}
+.orbit-y i:nth-child(1){left:-4px;top:48%}.orbit-y i:nth-child(2){right:-4px;top:48%;background:var(--amber)}
+.orbit-z i{left:48%;bottom:-4px;background:var(--violet)}
+@keyframes bayOrbit{to{transform:rotate(360deg)}}
+
+.servo{position:absolute;width:150px;height:26px;z-index:4;transform-origin:13px 13px}
+.servo:before{content:"";position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;border:5px solid #35536d;background:#0b1d2e;box-shadow:0 0 18px rgba(0,0,0,.25)}
+.servo span{position:absolute;left:22px;top:8px;width:98px;height:10px;border:1px solid #365a76;background:linear-gradient(180deg,#15344d,#0b2237);border-radius:99px}
+.servo b{position:absolute;right:0;top:2px;width:34px;height:22px;border-radius:7px;border:1px solid #3e6581;background:#102b41}
+.servo b:after{content:"";position:absolute;right:-10px;top:7px;width:12px;height:8px;border:1px solid #4a7794;border-left:0}
+.servo-a{left:9%;top:25%;transform:rotate(18deg);animation:servoA 4.8s ease-in-out infinite}
+.servo-b{right:9%;top:25%;transform:rotate(162deg);animation:servoB 5.5s ease-in-out infinite}
+.servo-c{left:12%;bottom:26%;transform:rotate(-17deg);animation:servoC 5.2s ease-in-out infinite}
+.servo-d{right:12%;bottom:26%;transform:rotate(197deg);animation:servoD 4.6s ease-in-out infinite}
+@keyframes servoA{50%{transform:rotate(28deg)}}@keyframes servoB{50%{transform:rotate(151deg)}}@keyframes servoC{50%{transform:rotate(-27deg)}}@keyframes servoD{50%{transform:rotate(207deg)}}
+
+.bay-module{
+  position:absolute;top:41%;width:190px;z-index:7;padding:12px 13px;
+  border:1px solid rgba(54,91,118,.7);border-radius:14px;
+  background:linear-gradient(180deg,rgba(13,39,60,.92),rgba(7,23,38,.88));
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+.bay-module small{display:block;font:800 7px ui-monospace,monospace;letter-spacing:.12em;color:#678298}
+.bay-module b{display:block;margin-top:5px;font:800 10px ui-monospace,monospace;color:#d9e8f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bay-module span{display:inline-block;margin-top:7px;font:800 7px ui-monospace,monospace;padding:4px 6px;border-radius:6px;background:#102f3b;color:#71e3ff}
+.module-left{left:4%}.module-right{right:4%}
+.module-right span{background:#1d2140;color:#a99bff}
+
+.conveyor{position:absolute;left:7%;right:7%;bottom:73px;height:46px;z-index:8}
+.conveyor-line{
+  position:absolute;left:0;right:0;top:20px;height:7px;border-radius:99px;
+  background:repeating-linear-gradient(90deg,#18334a 0 28px,#264b64 28px 34px);
+  border:1px solid #2e536d;box-shadow:inset 0 0 9px rgba(0,0,0,.38);
+  animation:conveyorMove 2s linear infinite;
+}
+@keyframes conveyorMove{to{background-position:34px 0}}
+.packet{
+  position:absolute;top:6px;width:58px;height:32px;border-radius:8px;border:1px solid #3a6885;
+  display:grid;place-items:center;background:#102d44;color:#92def5;
+  font:800 7px ui-monospace,monospace;box-shadow:0 7px 18px rgba(0,0,0,.24);
+  animation:packetRun 12s linear infinite;
+}
+.packet.p2{animation-delay:-3s}.packet.p3{animation-delay:-6s}.packet.p4{animation-delay:-9s}
+@keyframes packetRun{from{left:-70px;opacity:0}5%{opacity:1}95%{opacity:1}to{left:100%;opacity:0}}
+
+.bay-footer{
+  position:absolute;left:14px;right:14px;bottom:12px;display:flex;justify-content:center;gap:22px;flex-wrap:wrap;
+  font:800 7px ui-monospace,monospace;letter-spacing:.08em;color:#638097;z-index:9
+}
+.bay-footer span{display:flex;align-items:center;gap:5px}.bay-footer i{width:5px;height:5px;border-radius:50%}
+.bay-footer .cyan{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.bay-footer .green{background:var(--green)}.bay-footer .amber{background:var(--amber)}.bay-footer .violet{background:var(--violet)}
+
+@media(max-width:850px){
+  .bay-stage{height:560px}
+  .bay-module{top:auto;bottom:130px;width:42%}
+  .bay-engine{top:39%}.bay-orbit{top:39%}
+  .servo-a,.servo-b{top:22%}.servo-c,.servo-d{bottom:38%}
+}
+@media(max-width:600px){
+  .reactor-bay{border-radius:18px}
+  .bay-hud{padding:13px 14px}.bay-hud h2{font-size:17px}
+  .bay-stage{height:610px}
+  .bay-engine{top:33%;width:160px;height:160px}
+  .orbit-x{width:270px;height:270px;margin:-135px}
+  .orbit-y{width:330px;height:130px;margin:-65px -165px}
+  .orbit-z{width:220px;height:340px;margin:-170px -110px}
+  .bay-orbit{top:33%}
+  .servo{width:112px;transform-origin:13px 13px}
+  .servo span{width:68px}.servo b{width:29px}
+  .servo-a{left:2%;top:20%}.servo-b{right:2%;top:20%}
+  .servo-c{left:4%;bottom:42%}.servo-d{right:4%;bottom:42%}
+  .bay-module{bottom:126px;width:46%;padding:10px}
+  .module-left{left:2%}.module-right{right:2%}
+  .bay-module b{font-size:8px}.bay-module small{font-size:6px}
+  .conveyor{left:4%;right:4%;bottom:70px}
+  .bay-footer{gap:10px;justify-content:flex-start}.bay-footer span{font-size:6px}
+}
+
 </style>
 </head>
 <body>
@@ -495,6 +660,71 @@ body:after{
         <span class="telemetry-badge">MODE <strong>MANUAL</strong></span>
         <span class="telemetry-badge">POLICY <strong>FULL RESTART</strong></span>
         <span class="telemetry-badge">AGENT <strong>ISOLATED</strong></span>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="reactor-bay" id="reactorBay">
+    <div class="bay-hud">
+      <div>
+        <span class="bay-kicker">LOKESH LABS · PIPELINE REACTOR BAY</span>
+        <h2>Live task engine</h2>
+      </div>
+      <div class="bay-live"><i></i><span id="bayLiveText">SYNCING</span></div>
+    </div>
+
+    <div class="bay-stage">
+      <div class="bay-grid"></div>
+      <div class="bay-scan"></div>
+      <div class="bay-stars">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <div class="servo servo-a"><span></span><b></b></div>
+      <div class="servo servo-b"><span></span><b></b></div>
+      <div class="servo servo-c"><span></span><b></b></div>
+      <div class="servo servo-d"><span></span><b></b></div>
+
+      <div class="bay-orbit orbit-x"><i></i><i></i><i></i></div>
+      <div class="bay-orbit orbit-y"><i></i><i></i></div>
+      <div class="bay-orbit orbit-z"><i></i></div>
+
+      <div class="bay-engine">
+        <div class="engine-ring er1"></div>
+        <div class="engine-ring er2"></div>
+        <div class="engine-ring er3"></div>
+        <div class="engine-face">
+          <b>LL</b>
+          <span id="bayGateNo">01</span>
+          <small>PIPELINE</small>
+        </div>
+      </div>
+
+      <div class="bay-module module-left">
+        <small>CURRENT TASK</small>
+        <b id="bayTask">llb-aiml-build-001</b>
+        <span id="bayState">PAUSED</span>
+      </div>
+      <div class="bay-module module-right">
+        <small>CURRENT GATE</small>
+        <b id="bayGate">PACKAGE</b>
+        <span id="bayProgress">01 / 18</span>
+      </div>
+
+      <div class="conveyor">
+        <div class="conveyor-line"></div>
+        <div class="packet p1">TASK</div>
+        <div class="packet p2">VERIFY</div>
+        <div class="packet p3">AGENT</div>
+        <div class="packet p4">PASS</div>
+      </div>
+
+      <div class="bay-footer">
+        <span><i class="cyan"></i> LIVE STATUS CHANNEL</span>
+        <span><i class="green"></i> ORACLE 100%</span>
+        <span><i class="amber"></i> FULL RESTART ON FAIL</span>
+        <span><i class="violet"></i> ISOLATED STRONG AGENT</span>
       </div>
     </div>
   </section>
@@ -779,7 +1009,27 @@ function renderFreshness(){
   el("livePulse").classList.toggle("off",!fresh);
   el("freshness").textContent=isNaN(dt)?"Live feed connected":"Updated "+dt.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})+(fresh?" · LIVE":" · STALE");
 }
-function render(){if(!data)return;renderStats();renderFilters();renderPipeline();renderTaskList();renderRun();renderActivity();renderFreshness()}
+
+function renderReactorBay(){
+  const b=data.marathon_batch||{};
+  const id=b.current_task||(data.tasks&&data.tasks[0]?data.tasks[0].id:"—");
+  const task=(data.tasks||[]).find(t=>t.id===id);
+  const gate=b.current_gate||(task?STAGES[currentGate(task)][0]:"PACKAGE");
+  let gateIndex=0;
+  if(task) gateIndex=currentGate(task);
+  else {
+    const x=STAGES.findIndex(s=>s[0]===String(gate).toUpperCase().replace(/\s+/g,"_"));
+    if(x>=0) gateIndex=x;
+  }
+  const state=(b.task_status&&b.task_status[id]&&b.task_status[id].state)||b.status||"WAITING";
+  if(el("bayTask")) el("bayTask").textContent=id||"—";
+  if(el("bayGate")) el("bayGate").textContent=STAGES[gateIndex]?STAGES[gateIndex][1]:gate;
+  if(el("bayGateNo")) el("bayGateNo").textContent=String(gateIndex+1).padStart(2,"0");
+  if(el("bayProgress")) el("bayProgress").textContent=String(gateIndex+1).padStart(2,"0")+" / "+STAGES.length;
+  if(el("bayState")) el("bayState").textContent=String(state).toUpperCase();
+  if(el("bayLiveText")) el("bayLiveText").textContent="LIVE · "+new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+}
+function render(){if(!data)return;renderStats();renderReactorBay();renderFilters();renderPipeline();renderTaskList();renderRun();renderActivity();renderFreshness()}
 async function load(silent){
   try{
     const r=await fetch("https://raw.githubusercontent.com/Lokeshgod/lokesh-labs-dashboard/main/status.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);
@@ -1025,7 +1275,7 @@ el("refreshBtn").onclick=()=>load(false);
 el("drawerClose").onclick=()=>{el("drawer").classList.remove("show");el("backdrop").classList.remove("show")};
 el("backdrop").onclick=el("drawerClose").onclick;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")el("drawerClose").click()});
-initControlRoomMotion();load(true);setInterval(()=>load(true),3000);setInterval(()=>{if(data)renderFreshness()},1000);
+initControlRoomMotion();load(true);setInterval(()=>load(true),3000);setInterval(()=>{if(data){renderFreshness();renderReactorBay()}},1000);
 })();
 </script>
 </body>
