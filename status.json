@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T00:28:56.078Z",
+  "generated_at": "2026-09-24T00:29:08.450Z",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -186,6 +186,16 @@
     {
       "type": "GATE_PASS",
       "title": "llb-aiml-build-001",
+      "detail": "Attempt 2 · Gate 09 Verifier Integrity · PASS"
+    },
+    {
+      "type": "GATE_START",
+      "title": "llb-aiml-build-001",
+      "detail": "Attempt 2 · Gate 10 Anti-cheat · RUNNING"
+    },
+    {
+      "type": "GATE_PASS",
+      "title": "llb-aiml-build-001",
       "detail": "Attempt 2 · Gate 08 Oracle · PASS ×2"
     },
     {
@@ -272,16 +282,6 @@
       "type": "PIPELINE_RESTART",
       "title": "llb-aiml-build-001",
       "detail": "Strict restart from Gate 01 · Attempt 2"
-    },
-    {
-      "type": "GATE_PASS",
-      "title": "llb-aiml-build-001",
-      "detail": "Gate 04 Similarity / Novelty · PASS across 36-candidate set"
-    },
-    {
-      "type": "GATE_START",
-      "title": "llb-aiml-build-001",
-      "detail": "Gate 05 Environment Build · RUNNING"
     }
   ],
   "tasks": [
@@ -5746,7 +5746,7 @@
     "batch_size": 10,
     "status": "RUNNING",
     "current_task": "llb-aiml-build-001",
-    "current_gate": "VERIFIER",
+    "current_gate": "ADVERSARIAL",
     "completed": 0,
     "accepted": 0,
     "retired": 0,
@@ -5767,9 +5767,9 @@
     "task_status": {
       "llb-aiml-build-001": {
         "state": "RUNNING",
-        "gate": "VERIFIER",
+        "gate": "ADVERSARIAL",
         "result": "RUNNING",
-        "updated_at": "2026-09-24T00:28:56.078Z",
+        "updated_at": "2026-09-24T00:29:08.450Z",
         "attempt": 2
       },
       "llb-aiml-configure-001": {
