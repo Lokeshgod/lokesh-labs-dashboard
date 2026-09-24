@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T00:41:46.671Z",
+  "generated_at": "2026-09-24T00:42:18.546Z",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -184,6 +184,16 @@
   ],
   "activity": [
     {
+      "type": "GATE_FAIL",
+      "title": "llb-aiml-build-001",
+      "detail": "Attempt 3 · Gate 13 Structural + ESS · FAIL: Hard label unsupported; structural 12/20"
+    },
+    {
+      "type": "REPAIR_START",
+      "title": "llb-aiml-build-001",
+      "detail": "Reclassifying task from Hard to Medium; semantics unchanged; full pipeline restart required"
+    },
+    {
       "type": "GATE_PASS",
       "title": "llb-aiml-build-001",
       "detail": "Attempt 3 · Gate 12 Feasibility · PASS (1.88s, ~91MB)"
@@ -272,16 +282,6 @@
       "type": "GATE_START",
       "title": "llb-aiml-build-001",
       "detail": "Attempt 3 · Gate 05 Environment Build · RUNNING"
-    },
-    {
-      "type": "GATE_PASS",
-      "title": "llb-aiml-build-001",
-      "detail": "Attempt 3 · Gate 03 Static · PASS"
-    },
-    {
-      "type": "GATE_START",
-      "title": "llb-aiml-build-001",
-      "detail": "Attempt 3 · Gate 04 Similarity / Novelty · RUNNING"
     }
   ],
   "tasks": [
@@ -5751,7 +5751,7 @@
     "accepted": 0,
     "retired": 0,
     "blocked": 0,
-    "repairing": 0,
+    "repairing": 1,
     "tasks": [
       "llb-aiml-build-001",
       "llb-aiml-configure-001",
@@ -5766,13 +5766,14 @@
     ],
     "task_status": {
       "llb-aiml-build-001": {
-        "state": "RUNNING",
+        "state": "REPAIRING",
         "gate": "STRUCTURAL",
-        "result": "RUNNING",
-        "updated_at": "2026-09-24T00:41:46.671Z",
+        "result": "FAIL",
+        "updated_at": "2026-09-24T00:42:18.546Z",
         "attempt": 3,
-        "failure_code": null,
-        "version": 2
+        "failure_code": "DIF_HARD_LABEL_UNSUPPORTED",
+        "version": 2,
+        "structural_score": 12
       },
       "llb-aiml-configure-001": {
         "state": "QUEUED",
