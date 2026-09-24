@@ -746,6 +746,100 @@ html[data-theme="aurora"] .main-pipe{background:linear-gradient(180deg,#185046,#
   .theme-menu{position:fixed;left:12px;right:12px;top:62px;width:auto}
 }
 
+
+/* === Coherent single-reactor layout + live task traveler === */
+.hero-simple{
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(360px,.75fr);
+  gap:34px;
+  align-items:end;
+  min-height:0;
+  padding:44px 4px 28px;
+  overflow:visible;
+}
+.hero-simple .hero-summary{display:grid;gap:10px;align-self:end}
+.hero-simple .hero-stats{width:100%}
+.hero-simple .telemetry-badges{margin-top:0}
+.hero-simple:after{display:none!important}
+
+.bay-task-route{
+  position:absolute;left:7%;right:7%;top:44%;height:54px;z-index:9;pointer-events:none;
+}
+.bay-route-line{
+  position:absolute;left:0;right:0;top:25px;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(72,215,255,.22) 8%,rgba(72,215,255,.52) 50%,rgba(154,124,255,.34) 75%,transparent);
+  box-shadow:0 0 16px rgba(72,215,255,.15);
+}
+.bay-route-line:after{
+  content:"";position:absolute;left:0;top:-2px;width:54px;height:6px;border-radius:99px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  filter:blur(1px);animation:routePulse 3.4s linear infinite;
+}
+@keyframes routePulse{to{left:calc(100% - 54px)}}
+.bay-task-capsule{
+  position:absolute;left:0;top:3px;min-width:154px;max-width:220px;height:44px;
+  border:1px solid #3d718e;border-radius:999px;padding:7px 13px 7px 34px;
+  background:linear-gradient(180deg,#12324b,#0a2236);
+  box-shadow:0 12px 30px rgba(0,0,0,.3),0 0 24px rgba(72,215,255,.13);
+  transition:left .9s cubic-bezier(.2,.75,.2,1),border-color .25s,box-shadow .25s,background .25s;
+}
+.bay-task-capsule i{
+  position:absolute;left:12px;top:50%;width:9px;height:9px;border-radius:50%;
+  transform:translateY(-50%);background:var(--cyan);box-shadow:0 0 14px var(--cyan)
+}
+.bay-task-capsule b{display:block;font:800 8px ui-monospace,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#e1f3fb}
+.bay-task-capsule small{display:block;margin-top:2px;font:800 6px ui-monospace,monospace;color:#73a3b9;letter-spacing:.08em}
+.bay-task-capsule.repairing{border-color:#a84855;background:#2b1720;box-shadow:0 10px 28px rgba(0,0,0,.3),0 0 22px rgba(255,100,113,.13)}
+.bay-task-capsule.repairing i{background:var(--red);box-shadow:0 0 14px var(--red)}
+.bay-task-capsule.accepted{border-color:#318d69;background:#102b23}
+.bay-task-capsule.accepted i{background:var(--green);box-shadow:0 0 14px var(--green)}
+
+.active-traveler{
+  position:absolute;top:167px;left:90px;z-index:20;transform:translateX(-50%);
+  transition:left 1.05s cubic-bezier(.18,.75,.2,1),filter .25s,opacity .25s;
+  pointer-events:none;
+}
+.traveler-body{
+  position:relative;min-width:138px;max-width:190px;padding:8px 13px 8px 31px;border-radius:13px;
+  border:1px solid #3a708c;background:linear-gradient(180deg,#12344d,#0b2337);
+  box-shadow:0 14px 30px rgba(0,0,0,.28),0 0 24px rgba(72,215,255,.17);
+}
+.traveler-body:after{
+  content:"";position:absolute;left:50%;bottom:-17px;width:1px;height:16px;
+  background:linear-gradient(var(--cyan),rgba(72,215,255,.12));
+}
+.traveler-body i{
+  position:absolute;left:11px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 14px var(--cyan);animation:pulse 1.5s infinite
+}
+.traveler-body b{display:block;font:800 8px ui-monospace,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#e1f3fb}
+.traveler-body small{display:block;margin-top:2px;font:800 6px ui-monospace,monospace;color:#71a3ba;letter-spacing:.08em}
+.traveler-arrow{
+  width:0;height:0;margin:16px auto 0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--cyan);
+  filter:drop-shadow(0 0 5px rgba(72,215,255,.5));
+}
+.active-traveler.repairing .traveler-body{border-color:#a84855;background:linear-gradient(180deg,#321922,#231219);box-shadow:0 14px 30px rgba(0,0,0,.28),0 0 24px rgba(255,100,113,.16)}
+.active-traveler.repairing .traveler-body i{background:var(--red);box-shadow:0 0 14px var(--red)}
+.active-traveler.repairing .traveler-arrow{border-top-color:var(--red)}
+.active-traveler.accepted .traveler-body{border-color:#318d69;background:linear-gradient(180deg,#143226,#0d241c)}
+.active-traveler.accepted .traveler-body i{background:var(--green);box-shadow:0 0 14px var(--green)}
+.active-traveler.accepted .traveler-arrow{border-top-color:var(--green)}
+.active-traveler.waiting{opacity:.58}
+
+@media(max-width:1100px){
+  .hero-simple{grid-template-columns:1fr}
+  .hero-simple .hero-summary{max-width:760px}
+}
+@media(max-width:700px){
+  .hero-simple{display:block;padding:28px 0 18px}
+  .hero-simple .hero-summary{margin-top:20px}
+  .bay-task-route{left:4%;right:4%;top:48%}
+  .bay-task-capsule{min-width:132px;max-width:174px;height:41px}
+  .active-traveler{top:164px}
+  .traveler-body{min-width:118px;max-width:148px;padding:7px 10px 7px 27px}
+  .traveler-body b{font-size:7px}
+}
+
 </style>
 </head>
 <body>
@@ -797,42 +891,25 @@ html[data-theme="aurora"] .main-pipe{background:linear-gradient(180deg,#185046,#
 </header>
 
 <main>
-  <section class="hero">
+  <section class="hero hero-simple">
     <div class="hero-copyblock">
       <div class="eyebrow">36 TASKS · STRICT RESTART PIPELINE</div>
-      <h1>Watch every task travel through the pipe.</h1>
-      <p>Each task must clear every gate on one clean final version. A failure sends it to repair and back to Gate 1 — no stale passes, no skipped reruns.</p>
+      <h1>One task. One pipe. Every gate.</h1>
+      <p>Each task must clear the full validation chain on one clean final version. Any failure goes to repair and restarts from Gate 01.</p>
       <div class="hero-signals">
         <span><i></i> deterministic verification</span>
         <span><i></i> isolated strong-agent run</span>
         <span><i></i> full restart after repair</span>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="machine-scene" id="machineScene" aria-hidden="true">
-        <div class="scene-grid"></div>
-        <div class="orbit orbit-a"><i></i><i></i><i></i></div>
-        <div class="orbit orbit-b"><i></i><i></i></div>
-        <div class="reactor">
-          <div class="reactor-ring r1"></div>
-          <div class="reactor-ring r2"></div>
-          <div class="reactor-ring r3"></div>
-          <div class="reactor-core"><b>LL</b><small>LIVE</small></div>
-        </div>
-        <div class="scan-arm"><span></span></div>
-        <div class="machine-chip chip-a"><i></i><b>NOP</b><small>0%</small></div>
-        <div class="machine-chip chip-b"><i></i><b>ORACLE</b><small>100%</small></div>
-        <div class="machine-chip chip-c"><i></i><b>AGENT</b><small>ISOLATED</small></div>
-        <div class="data-rail rail-a"><i></i><i></i><i></i><i></i></div>
-        <div class="data-rail rail-b"><i></i><i></i><i></i></div>
-      </div>
+    <div class="hero-summary">
       <div class="hero-stats">
         <div><b id="acceptedCount">0</b><span>Accepted</span></div>
         <div><b id="activeCount">0</b><span>In pipeline</span></div>
         <div><b id="repairCount">0</b><span>Repairing</span></div>
         <div><b id="remainingCount">36</b><span>Remaining</span></div>
       </div>
-    <div class="telemetry-badges">
+      <div class="telemetry-badges">
         <span class="telemetry-badge">MODE <strong>MANUAL</strong></span>
         <span class="telemetry-badge">POLICY <strong>FULL RESTART</strong></span>
         <span class="telemetry-badge">AGENT <strong>ISOLATED</strong></span>
@@ -840,7 +917,6 @@ html[data-theme="aurora"] .main-pipe{background:linear-gradient(180deg,#185046,#
     </div>
   </section>
 
-  
   <section class="reactor-bay" id="reactorBay">
     <div class="bay-hud">
       <div>
@@ -865,6 +941,15 @@ html[data-theme="aurora"] .main-pipe{background:linear-gradient(180deg,#185046,#
       <div class="bay-orbit orbit-x"><i></i><i></i><i></i></div>
       <div class="bay-orbit orbit-y"><i></i><i></i></div>
       <div class="bay-orbit orbit-z"><i></i></div>
+
+      <div class="bay-task-route">
+        <div class="bay-route-line"></div>
+        <div class="bay-task-capsule" id="bayTaskCapsule">
+          <i></i>
+          <b id="bayCapsuleTask">CURRENT TASK</b>
+          <small id="bayCapsuleGate">GATE 01</small>
+        </div>
+      </div>
 
       <div class="bay-engine">
         <div class="engine-ring er1"></div>
@@ -963,6 +1048,14 @@ html[data-theme="aurora"] .main-pipe{background:linear-gradient(180deg,#185046,#
             <i class="pipe-packet p4"></i><i class="pipe-packet p5"></i><i class="pipe-packet p6"></i>
           </div>
           <div class="pipe-scan"></div>
+        </div>
+        <div class="active-traveler waiting" id="activeTraveler">
+          <div class="traveler-body">
+            <i></i>
+            <b id="travelerTask">NO ACTIVE TASK</b>
+            <small id="travelerGate">GATE 01</small>
+          </div>
+          <div class="traveler-arrow"></div>
         </div>
         <div class="stations" id="stations"></div>
       </div>
@@ -1186,6 +1279,35 @@ function renderFreshness(){
   el("freshness").textContent=isNaN(dt)?"Live feed connected":"Updated "+dt.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})+(fresh?" · LIVE":" · STALE");
 }
 
+
+function renderActiveTraveler(){
+  const b=data.marathon_batch||{};
+  const id=b.current_task||null;
+  const traveler=el("activeTraveler"),bayCap=el("bayTaskCapsule");
+  if(!traveler||!bayCap)return;
+
+  let task=id?(data.tasks||[]).find(t=>t.id===id):null;
+  if(!task){
+    task=(data.tasks||[]).find(t=>taskState(t)==="RUNNING"||taskState(t)==="REPAIRING")||null;
+  }
+  const taskId=task?task.id:(id||"NO ACTIVE TASK");
+  const idx=task?currentGate(task):0;
+  const state=task?taskState(task):String(b.status||"WAITING").toUpperCase();
+  const label=STAGES[idx]?STAGES[idx][1]:"Package";
+  const x=stationX(idx);
+
+  traveler.style.left=x+"px";
+  traveler.className="active-traveler "+(state==="REPAIRING"?"repairing":state==="ACCEPTED"?"accepted":state==="RUNNING"?"running":"waiting");
+  el("travelerTask").textContent=taskId;
+  el("travelerGate").textContent="GATE "+String(idx+1).padStart(2,"0")+" · "+label.toUpperCase();
+
+  const pct=idx/(STAGES.length-1);
+  bayCap.style.left="calc("+Math.round(pct*100)+"% - "+Math.round(pct*154)+"px)";
+  bayCap.className="bay-task-capsule "+(state==="REPAIRING"?"repairing":state==="ACCEPTED"?"accepted":"running");
+  el("bayCapsuleTask").textContent=taskId;
+  el("bayCapsuleGate").textContent="GATE "+String(idx+1).padStart(2,"0")+" · "+label.toUpperCase();
+}
+
 function renderReactorBay(){
   const b=data.marathon_batch||{};
   const id=b.current_task||(data.tasks&&data.tasks[0]?data.tasks[0].id:"—");
@@ -1205,7 +1327,7 @@ function renderReactorBay(){
   if(el("bayState")) el("bayState").textContent=String(state).toUpperCase();
   if(el("bayLiveText")) el("bayLiveText").textContent="LIVE · "+new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",second:"2-digit"});
 }
-function render(){if(!data)return;renderStats();renderReactorBay();renderFilters();renderPipeline();renderTaskList();renderRun();renderActivity();renderFreshness()}
+function render(){if(!data)return;renderStats();renderReactorBay();renderActiveTraveler();renderFilters();renderPipeline();renderTaskList();renderRun();renderActivity();renderFreshness()}
 async function load(silent){
   try{
     const r=await fetch("https://raw.githubusercontent.com/Lokeshgod/lokesh-labs-dashboard/main/status.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);
@@ -1480,7 +1602,7 @@ el("refreshBtn").onclick=()=>load(false);
 el("drawerClose").onclick=()=>{el("drawer").classList.remove("show");el("backdrop").classList.remove("show")};
 el("backdrop").onclick=el("drawerClose").onclick;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")el("drawerClose").click()});
-initThemeSwitcher();initControlRoomMotion();load(true);setInterval(()=>load(true),3000);setInterval(()=>{if(data){renderFreshness();renderReactorBay()}},1000);
+initThemeSwitcher();initControlRoomMotion();load(true);setInterval(()=>load(true),3000);setInterval(()=>{if(data){renderFreshness();renderReactorBay();renderActiveTraveler()}},1000);
 })();
 </script>
 </body>
