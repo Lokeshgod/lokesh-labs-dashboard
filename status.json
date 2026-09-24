@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T00:39:03.621Z",
+  "generated_at": "2026-09-24T00:39:16.939Z",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -186,6 +186,16 @@
     {
       "type": "GATE_PASS",
       "title": "llb-aiml-build-001",
+      "detail": "Attempt 3 · Gate 08 Oracle · PASS ×2"
+    },
+    {
+      "type": "GATE_START",
+      "title": "llb-aiml-build-001",
+      "detail": "Attempt 3 · Gate 09 Verifier Integrity · RUNNING"
+    },
+    {
+      "type": "GATE_PASS",
+      "title": "llb-aiml-build-001",
       "detail": "Attempt 3 · Gate 07 NOP · PASS (rc=1)"
     },
     {
@@ -272,16 +282,6 @@
       "type": "REPAIR_START",
       "title": "llb-aiml-build-001",
       "detail": "Repairing verifier weakness and Oracle/instruction semantic mismatch; version bump required"
-    },
-    {
-      "type": "GATE_PASS",
-      "title": "llb-aiml-build-001",
-      "detail": "Attempt 2 · Gate 09 Verifier Integrity · PASS"
-    },
-    {
-      "type": "GATE_START",
-      "title": "llb-aiml-build-001",
-      "detail": "Attempt 2 · Gate 10 Anti-cheat · RUNNING"
     }
   ],
   "tasks": [
@@ -5746,7 +5746,7 @@
     "batch_size": 10,
     "status": "RUNNING",
     "current_task": "llb-aiml-build-001",
-    "current_gate": "ORACLE",
+    "current_gate": "VERIFIER",
     "completed": 0,
     "accepted": 0,
     "retired": 0,
@@ -5767,9 +5767,9 @@
     "task_status": {
       "llb-aiml-build-001": {
         "state": "RUNNING",
-        "gate": "ORACLE",
+        "gate": "VERIFIER",
         "result": "RUNNING",
-        "updated_at": "2026-09-24T00:39:03.621Z",
+        "updated_at": "2026-09-24T00:39:16.939Z",
         "attempt": 3,
         "failure_code": null,
         "version": 2
