@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T00:30:03.389Z",
+  "generated_at": "2026-09-24T00:32:34.423Z",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -184,6 +184,16 @@
   ],
   "activity": [
     {
+      "type": "REPAIR_COMPLETE",
+      "title": "llb-aiml-build-001",
+      "detail": "v2 committed: exact global assignment semantics + hardened verifier"
+    },
+    {
+      "type": "PIPELINE_RESTART",
+      "title": "llb-aiml-build-001",
+      "detail": "Strict full restart from Gate 01 · Attempt 3 · Version 2"
+    },
+    {
       "type": "GATE_FAIL",
       "title": "llb-aiml-build-001",
       "detail": "Attempt 2 · Gate 10 Anti-cheat · FAIL: hardcoded visible-case router passed"
@@ -272,16 +282,6 @@
       "type": "GATE_START",
       "title": "llb-aiml-build-001",
       "detail": "Attempt 2 · Gate 03 Static · RUNNING"
-    },
-    {
-      "type": "GATE_PASS",
-      "title": "llb-aiml-build-001",
-      "detail": "Attempt 2 · Gate 01 Package · PASS"
-    },
-    {
-      "type": "GATE_START",
-      "title": "llb-aiml-build-001",
-      "detail": "Attempt 2 · Gate 02 Schema · RUNNING"
     }
   ],
   "tasks": [
@@ -5746,12 +5746,12 @@
     "batch_size": 10,
     "status": "RUNNING",
     "current_task": "llb-aiml-build-001",
-    "current_gate": "ADVERSARIAL",
+    "current_gate": "PACKAGE",
     "completed": 0,
     "accepted": 0,
     "retired": 0,
     "blocked": 0,
-    "repairing": 1,
+    "repairing": 0,
     "tasks": [
       "llb-aiml-build-001",
       "llb-aiml-configure-001",
@@ -5766,12 +5766,13 @@
     ],
     "task_status": {
       "llb-aiml-build-001": {
-        "state": "REPAIRING",
-        "gate": "ADVERSARIAL",
-        "result": "FAIL",
-        "updated_at": "2026-09-24T00:30:03.389Z",
-        "attempt": 2,
-        "failure_code": "ADV_HARDCODE_BYPASS"
+        "state": "RUNNING",
+        "gate": "PACKAGE",
+        "result": "RUNNING",
+        "updated_at": "2026-09-24T00:32:34.423Z",
+        "attempt": 3,
+        "failure_code": null,
+        "version": 2
       },
       "llb-aiml-configure-001": {
         "state": "QUEUED",
