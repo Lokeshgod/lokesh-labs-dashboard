@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T00:28:20.223Z",
+  "generated_at": "2026-09-24T00:28:40.441Z",
   "benchmark_version": "1.0",
   "target_tasks": 100,
   "counts": {
@@ -186,6 +186,16 @@
     {
       "type": "GATE_PASS",
       "title": "llb-aiml-build-001",
+      "detail": "Attempt 2 · Gate 07 NOP · PASS (rc=1)"
+    },
+    {
+      "type": "GATE_START",
+      "title": "llb-aiml-build-001",
+      "detail": "Attempt 2 · Gate 08 Oracle · RUNNING"
+    },
+    {
+      "type": "GATE_PASS",
+      "title": "llb-aiml-build-001",
       "detail": "Attempt 2 · Gate 06 Security / Leakage · PASS"
     },
     {
@@ -272,16 +282,6 @@
       "type": "GATE_START",
       "title": "llb-aiml-build-001",
       "detail": "Gate 04 Similarity / Novelty · RUNNING"
-    },
-    {
-      "type": "GATE_PASS",
-      "title": "llb-aiml-build-001",
-      "detail": "Gate 02 Schema · PASS"
-    },
-    {
-      "type": "GATE_START",
-      "title": "llb-aiml-build-001",
-      "detail": "Gate 03 Static · RUNNING"
     }
   ],
   "tasks": [
@@ -5746,7 +5746,7 @@
     "batch_size": 10,
     "status": "RUNNING",
     "current_task": "llb-aiml-build-001",
-    "current_gate": "NOP",
+    "current_gate": "ORACLE",
     "completed": 0,
     "accepted": 0,
     "retired": 0,
@@ -5767,9 +5767,9 @@
     "task_status": {
       "llb-aiml-build-001": {
         "state": "RUNNING",
-        "gate": "NOP",
+        "gate": "ORACLE",
         "result": "RUNNING",
-        "updated_at": "2026-09-24T00:28:20.223Z",
+        "updated_at": "2026-09-24T00:28:40.441Z",
         "attempt": 2
       },
       "llb-aiml-configure-001": {
